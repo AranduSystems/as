@@ -83,7 +83,7 @@ public class JFrmInformeCompra extends javax.swing.JInternalFrame {
             Class.forName(db.getDriver());
             con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
 
-            InputStream reporteInputStream  = JFrmInformeCompra.class.getResourceAsStream("/Informes/" + ruta_archivo);
+            InputStream reporteInputStream = JFrmInformeCompra.class.getResourceAsStream("/Informes/" + ruta_archivo);
             JasperPrint jp = JasperFillManager.fillReport(reporteInputStream, parametros, con);
             JasperViewer jv = new JasperViewer(jp, false);
             jv.setVisible(true);
@@ -95,10 +95,28 @@ public class JFrmInformeCompra extends javax.swing.JInternalFrame {
     }
 
     private void generarInforme() {
-        Date fechaDesde = txtFechaDesde.getDate();
-        java.sql.Date fechaDesdeSQL = new java.sql.Date(fechaDesde.getTime());
-        Date fechaHasta = txtFechaHasta.getDate();
-        java.sql.Date fechaHastaSQL = new java.sql.Date(fechaHasta.getTime());
+
+        String msj = "";
+        Date fechaDesde = null;
+        java.sql.Date fechaDesdeSQL = null;
+        Date fechaHasta = null;
+        java.sql.Date fechaHastaSQL = null;
+
+        if (txtFechaDesde.getDate() != null) {
+            fechaDesde = txtFechaDesde.getDate();
+            fechaDesdeSQL = new java.sql.Date(fechaDesde.getTime());
+        }
+        if (txtFechaHasta.getDate() != null) {
+            fechaHasta = txtFechaHasta.getDate();
+            fechaHastaSQL = new java.sql.Date(fechaHasta.getTime());
+        }
+        if (fechaDesde == null) {
+            msj += "NO HA CARGADO UNA FECHA INICIAL PARA EL FILTRO DEL INFORME. \n";
+        }
+        if (fechaHasta == null) {
+            msj += "NO HA CARGADO UNA FECHA FINAL PARA EL FILTRO DEL INFORME. \n";
+        }
+
         String ruta = "";
         String moneda = txtCodigoMoneda.getText();
         int idmoneda = 0;
@@ -117,10 +135,15 @@ public class JFrmInformeCompra extends javax.swing.JInternalFrame {
         parametros.put("P_FECHA_INICIAL", fechaDesdeSQL);
         parametros.put("P_FECHA_FINAL", fechaHastaSQL);
         parametros.put("P_MONEDA", idmoneda);
-        abrirReporte(ruta, parametros);
+
+        if (msj.isEmpty()) {
+            abrirReporte(ruta, parametros);
+        } else {
+            JOptionPane.showMessageDialog(null, msj, "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        }
     }
-    
-    private void limpiarCampos(){
+
+    private void limpiarCampos() {
         txtFechaDesde.setDate(null);
         txtFechaHasta.setDate(null);
         txtCodigoMoneda.setText(null);

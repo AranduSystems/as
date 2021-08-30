@@ -26,6 +26,7 @@ import Vistas.JFrmCuenta;
 import Vistas.JFrmDeposito;
 import Vistas.JFrmEmpresa;
 import Vistas.JFrmImpresora;
+import Vistas.JFrmImpresoraTimbrado;
 import Vistas.JFrmImpuesto;
 import Vistas.JFrmInformeCompra;
 import Vistas.JFrmLinea;
@@ -174,6 +175,7 @@ public class Principal extends javax.swing.JFrame {
         itemTipoProveedor = new javax.swing.JMenuItem();
         itemTipoTarjeta = new javax.swing.JMenuItem();
         itemUsuarios = new javax.swing.JMenuItem();
+        itemImpresoraTimbrado = new javax.swing.JMenuItem();
         menuConsultasSistemas = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -711,6 +713,15 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         menuMantenimientoSistemas.add(itemUsuarios);
+
+        itemImpresoraTimbrado.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        itemImpresoraTimbrado.setText("Timbrados de Impresoras");
+        itemImpresoraTimbrado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemImpresoraTimbradoActionPerformed(evt);
+            }
+        });
+        menuMantenimientoSistemas.add(itemImpresoraTimbrado);
 
         jMenu7.add(menuMantenimientoSistemas);
 
@@ -1515,6 +1526,24 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_itemInformeResumenCompraActionPerformed
 
+    private void itemImpresoraTimbradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemImpresoraTimbradoActionPerformed
+        JFrmImpresoraTimbrado fm = new JFrmImpresoraTimbrado();
+        panelInterno.add(fm);
+        Dimension desktopSize = panelInterno.getSize();
+        Dimension frameSize = fm.getSize();
+        fm.setLocation((desktopSize.width - frameSize.width) / 2, (desktopSize.height - frameSize.height) / 2);
+        try {
+            fm.setSelected(true);
+        } catch (PropertyVetoException e) {
+            JOptionPane.showMessageDialog(null, "ERROR AL ABRIR EL FORMULARIO: " + fm.getTitle(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        if (verificarPermisos(App.appLogin.IDUSUARIO, fm.getTitle()) == true) {
+            fm.show();
+        } else {
+            JOptionPane.showMessageDialog(null, "EL PROGRAMA NO ESTA HABILITADO PARA EL USUARIO\nPROGRAMA: " + fm.getTitle() + " USUARIO: " + App.appLogin.LOGIN, "ACCESO RESTRINGIDO", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_itemImpresoraTimbradoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1568,6 +1597,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemDeposito;
     private javax.swing.JMenuItem itemEmpresa;
     private javax.swing.JMenuItem itemImpresora;
+    private javax.swing.JMenuItem itemImpresoraTimbrado;
     private javax.swing.JMenuItem itemImpuesto;
     private javax.swing.JMenuItem itemInformeResumenCompra;
     private javax.swing.JMenuItem itemLinea;

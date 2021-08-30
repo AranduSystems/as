@@ -79,6 +79,8 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                 txtCodigoTipoMovimiento.setEnabled(true);
                 txtCodigoTipoMovimientoCCRER.setEnabled(true);
                 txtCodigoTipoMovimientoRPAGR.setEnabled(true);
+                txtCodigoTipoMovimientoFCONE.setEnabled(true);
+                txtCodigoTipoMovimientoFCREE.setEnabled(true);
                 //BOTONES
                 btnNuevo.setEnabled(false);
                 btnConfirmar.setEnabled(true);
@@ -93,6 +95,8 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                 txtCodigoTipoMovimiento.setEnabled(true);
                 txtCodigoTipoMovimientoCCRER.setEnabled(true);
                 txtCodigoTipoMovimientoRPAGR.setEnabled(true);
+                txtCodigoTipoMovimientoFCONE.setEnabled(true);
+                txtCodigoTipoMovimientoFCREE.setEnabled(true);
                 //BOTONES
                 btnNuevo.setEnabled(false);
                 btnConfirmar.setEnabled(true);
@@ -108,6 +112,8 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                 txtCodigoTipoMovimiento.setEnabled(false);
                 txtCodigoTipoMovimientoCCRER.setEnabled(false);
                 txtCodigoTipoMovimientoRPAGR.setEnabled(false);
+                txtCodigoTipoMovimientoFCONE.setEnabled(false);
+                txtCodigoTipoMovimientoFCREE.setEnabled(false);
                 //BOTONES
                 btnNuevo.setEnabled(false);
                 btnConfirmar.setEnabled(true);
@@ -123,6 +129,8 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                 txtCodigoTipoMovimiento.setEnabled(false);
                 txtCodigoTipoMovimientoCCRER.setEnabled(false);
                 txtCodigoTipoMovimientoRPAGR.setEnabled(false);
+                txtCodigoTipoMovimientoFCONE.setEnabled(false);
+                txtCodigoTipoMovimientoFCREE.setEnabled(false);
                 //BOTONES
                 btnNuevo.setEnabled(true);
                 btnConfirmar.setEnabled(false);
@@ -138,6 +146,8 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                 txtCodigoTipoMovimiento.setEnabled(false);
                 txtCodigoTipoMovimientoCCRER.setEnabled(false);
                 txtCodigoTipoMovimientoRPAGR.setEnabled(false);
+                txtCodigoTipoMovimientoFCONE.setEnabled(false);
+                txtCodigoTipoMovimientoFCREE.setEnabled(false);
                 //BOTONES
                 btnNuevo.setEnabled(true);
                 btnConfirmar.setEnabled(false);
@@ -158,9 +168,13 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
         txtCodigoTipoMovimiento.setText(null);
         txtCodigoTipoMovimientoCCRER.setText(null);
         txtCodigoTipoMovimientoRPAGR.setText(null);
+        txtCodigoTipoMovimientoFCONE.setText(null);
+        txtCodigoTipoMovimientoFCREE.setText(null);
         txtDescripcionTipoMovimiento.setText(null);
         txtDescripcionTipoMovimientoCCRER.setText(null);
         txtDescripcionTipoMovimientoRPAGR.setText(null);
+        txtDescripcionTipoMovimientoFCONE.setText(null);
+        txtDescripcionTipoMovimientoFCREE.setText(null);
         operacion = "";
     }
 
@@ -181,6 +195,8 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
         int cconr = Integer.parseInt(txtCodigoTipoMovimiento.getText());
         int ccrer = Integer.parseInt(txtCodigoTipoMovimientoCCRER.getText());
         int rpagr = Integer.parseInt(txtCodigoTipoMovimientoRPAGR.getText());
+        int fcone = Integer.parseInt(txtCodigoTipoMovimientoFCONE.getText());
+        int fcree = Integer.parseInt(txtCodigoTipoMovimientoFCREE.getText());
         switch (accion) {
             case "NUEVO":
                 if (idsucursal == 0) {
@@ -195,12 +211,20 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                 if (rpagr == 0) {
                     error += "NO PUEDE DEJAR EL CAMPO DE RECIBO DE PAGO RECIBIDA VACIO.\n";
                 }
+                if (fcone == 0) {
+                    error += "NO PUEDE DEJAR EL CAMPO DE VENTA CONTADO EMITIDA VACIO.\n";
+                }
+                if (fcree == 0) {
+                    error += "NO PUEDE DEJAR EL CAMPO DE VENTA CREDITO EMITIDA VACIO.\n";
+                }
                 if (error.isEmpty()) {
                     c.setIdconfiguracion(id);
                     c.setIdsucursal(idsucursal);
                     c.setFac_con_rec(cconr);
                     c.setFac_cre_rec(ccrer);
                     c.setRec_pag_rec(rpagr);
+                    c.setFac_con_emi(fcone);
+                    c.setFac_cre_emi(fcree);
                     dao.agregar(c);
                     cargar();
                 } else {
@@ -220,12 +244,20 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                 if (rpagr == 0) {
                     error += "NO PUEDE DEJAR EL CAMPO DE RECIBO DE PAGO RECIBIDA VACIO.\n";
                 }
+                if (fcone == 0) {
+                    error += "NO PUEDE DEJAR EL CAMPO DE VENTA CONTADO EMITIDA VACIO.\n";
+                }
+                if (fcree == 0) {
+                    error += "NO PUEDE DEJAR EL CAMPO DE VENTA CREDITO EMITIDA VACIO.\n";
+                }
                 if (error.isEmpty()) {
                     c.setIdconfiguracion(id);
                     c.setIdsucursal(idsucursal);
                     c.setFac_con_rec(cconr);
                     c.setFac_cre_rec(ccrer);
                     c.setRec_pag_rec(rpagr);
+                    c.setFac_con_emi(fcone);
+                    c.setFac_cre_emi(fcree);
                     dao.modificar(c);
                     cargar();
                 } else {
@@ -258,18 +290,31 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
             daoSucursal.consultarDatos(s);
             txtCodigoSucursal.setText("" + s.getIdsucursal());
             txtDescripcionSucursal.setText("" + s.getDescripcion());
+            
             tm.setIdtipomovimiento(c.getFac_con_rec());
             daoTipoMovimiento.consultarDatos(tm);
             txtCodigoTipoMovimiento.setText("" + tm.getIdtipomovimiento());
             txtDescripcionTipoMovimiento.setText(tm.getDescripcion());
+            
             tm.setIdtipomovimiento(c.getFac_cre_rec());
             daoTipoMovimiento.consultarDatos(tm);
             txtCodigoTipoMovimientoCCRER.setText("" + tm.getIdtipomovimiento());
             txtDescripcionTipoMovimientoCCRER.setText(tm.getDescripcion());
+            
             tm.setIdtipomovimiento(c.getRec_pag_rec());
             daoTipoMovimiento.consultarDatos(tm);
             txtCodigoTipoMovimientoRPAGR.setText("" + tm.getIdtipomovimiento());
             txtDescripcionTipoMovimientoRPAGR.setText(tm.getDescripcion());
+            
+            tm.setIdtipomovimiento(c.getFac_con_emi());
+            daoTipoMovimiento.consultarDatos(tm);
+            txtCodigoTipoMovimientoFCONE.setText("" + tm.getIdtipomovimiento());
+            txtDescripcionTipoMovimientoFCONE.setText(tm.getDescripcion());
+            
+            tm.setIdtipomovimiento(c.getFac_cre_emi());
+            daoTipoMovimiento.consultarDatos(tm);
+            txtCodigoTipoMovimientoFCREE.setText("" + tm.getIdtipomovimiento());
+            txtDescripcionTipoMovimientoFCREE.setText(tm.getDescripcion());
             habilitarCampos(operacion);
         } else {
             JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA", "ADVERTENCIA", JOptionPane.ERROR_MESSAGE);
@@ -340,6 +385,38 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
         }
     }
 
+    private void buscarTipoMovimientoFCONE() {
+        cargarTipoMovimiento();
+        BuscadorTipoMovimiento.setModal(true);
+        BuscadorTipoMovimiento.setSize(540, 285);
+        BuscadorTipoMovimiento.setLocationRelativeTo(this);
+        BuscadorTipoMovimiento.setVisible(true);
+        int fila = tablaDatosTipoMovimiento.getSelectedRow();
+        if (fila >= 0) {
+            txtCodigoTipoMovimientoFCONE.setText(tablaDatosTipoMovimiento.getValueAt(fila, 0).toString());
+            txtDescripcionTipoMovimientoFCONE.setText(tablaDatosTipoMovimiento.getValueAt(fila, 1).toString());
+        } else {
+            txtCodigoTipoMovimientoFCONE.setText(null);
+            txtDescripcionTipoMovimientoFCONE.setText(null);
+        }
+    }
+    
+    private void buscarTipoMovimientoFCREE() {
+        cargarTipoMovimiento();
+        BuscadorTipoMovimiento.setModal(true);
+        BuscadorTipoMovimiento.setSize(540, 285);
+        BuscadorTipoMovimiento.setLocationRelativeTo(this);
+        BuscadorTipoMovimiento.setVisible(true);
+        int fila = tablaDatosTipoMovimiento.getSelectedRow();
+        if (fila >= 0) {
+            txtCodigoTipoMovimientoFCREE.setText(tablaDatosTipoMovimiento.getValueAt(fila, 0).toString());
+            txtDescripcionTipoMovimientoFCREE.setText(tablaDatosTipoMovimiento.getValueAt(fila, 1).toString());
+        } else {
+            txtCodigoTipoMovimientoFCREE.setText(null);
+            txtDescripcionTipoMovimientoFCREE.setText(null);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -390,6 +467,12 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         txtCodigoTipoMovimientoRPAGR = new org.jdesktop.swingx.JXTextField();
         txtDescripcionTipoMovimientoRPAGR = new org.jdesktop.swingx.JXTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtCodigoTipoMovimientoFCONE = new org.jdesktop.swingx.JXTextField();
+        txtDescripcionTipoMovimientoFCONE = new org.jdesktop.swingx.JXTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txtCodigoTipoMovimientoFCREE = new org.jdesktop.swingx.JXTextField();
+        txtDescripcionTipoMovimientoFCREE = new org.jdesktop.swingx.JXTextField();
 
         Modificar.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         Modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8_edit_file_16px.png"))); // NOI18N
@@ -904,6 +987,75 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel8.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jLabel8.setText("Ven.Con.Emi.:");
+
+        txtCodigoTipoMovimientoFCONE.setToolTipText("Cód. T.M.");
+        txtCodigoTipoMovimientoFCONE.setEnabled(false);
+        txtCodigoTipoMovimientoFCONE.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtCodigoTipoMovimientoFCONE.setPrompt("Cód. T.C.");
+        txtCodigoTipoMovimientoFCONE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoTipoMovimientoFCONEActionPerformed(evt);
+            }
+        });
+        txtCodigoTipoMovimientoFCONE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodigoTipoMovimientoFCONEKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoTipoMovimientoFCONEKeyTyped(evt);
+            }
+        });
+
+        txtDescripcionTipoMovimientoFCONE.setEnabled(false);
+        txtDescripcionTipoMovimientoFCONE.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtDescripcionTipoMovimientoFCONE.setPrompt("Descripción o nombre del tipo de movimiento...");
+        txtDescripcionTipoMovimientoFCONE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDescripcionTipoMovimientoFCONEActionPerformed(evt);
+            }
+        });
+        txtDescripcionTipoMovimientoFCONE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDescripcionTipoMovimientoFCONEKeyTyped(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jLabel9.setText("Ven.Cre.Emi.:");
+
+        txtCodigoTipoMovimientoFCREE.setEnabled(false);
+        txtCodigoTipoMovimientoFCREE.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtCodigoTipoMovimientoFCREE.setPrompt("Cód. T.C.");
+        txtCodigoTipoMovimientoFCREE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoTipoMovimientoFCREEActionPerformed(evt);
+            }
+        });
+        txtCodigoTipoMovimientoFCREE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodigoTipoMovimientoFCREEKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoTipoMovimientoFCREEKeyTyped(evt);
+            }
+        });
+
+        txtDescripcionTipoMovimientoFCREE.setEnabled(false);
+        txtDescripcionTipoMovimientoFCREE.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtDescripcionTipoMovimientoFCREE.setPrompt("Descripción o nombre del tipo de movimiento...");
+        txtDescripcionTipoMovimientoFCREE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDescripcionTipoMovimientoFCREEActionPerformed(evt);
+            }
+        });
+        txtDescripcionTipoMovimientoFCREE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDescripcionTipoMovimientoFCREEKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout pestanhaABMLayout = new javax.swing.GroupLayout(pestanhaABM);
         pestanhaABM.setLayout(pestanhaABMLayout);
         pestanhaABMLayout.setHorizontalGroup(
@@ -920,6 +1072,8 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pestanhaABMLayout.createSequentialGroup()
                         .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -941,9 +1095,15 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtDescripcionTipoMovimientoCCRER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(pestanhaABMLayout.createSequentialGroup()
-                                .addComponent(txtCodigoTipoMovimientoRPAGR, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtCodigoTipoMovimientoFCREE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtCodigoTipoMovimientoFCONE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtCodigoTipoMovimientoRPAGR, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtDescripcionTipoMovimientoRPAGR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtDescripcionTipoMovimientoRPAGR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtDescripcionTipoMovimientoFCONE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtDescripcionTipoMovimientoFCREE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addContainerGap())
         );
         pestanhaABMLayout.setVerticalGroup(
@@ -954,15 +1114,17 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCodigoSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDescripcionSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                    .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtCodigoSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtDescripcionSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCodigoTipoMovimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDescripcionTipoMovimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                    .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtCodigoTipoMovimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtDescripcionTipoMovimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -974,7 +1136,17 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCodigoTipoMovimientoRPAGR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDescripcionTipoMovimientoRPAGR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(115, 115, 115)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCodigoTipoMovimientoFCONE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDescripcionTipoMovimientoFCONE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCodigoTipoMovimientoFCREE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDescripcionTipoMovimientoFCREE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(59, 59, 59)
                 .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1283,7 +1455,7 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
             boolean resultado = daoTipoMovimiento.consultarDatos(tm);
             if (resultado == true) {
                 txtDescripcionTipoMovimientoRPAGR.setText(tm.getDescripcion());
-                btnConfirmar.grabFocus();
+                txtCodigoTipoMovimientoFCONE.grabFocus();
             } else {
                 txtCodigoTipoMovimientoRPAGR.setText(null);
                 txtDescripcionTipoMovimientoRPAGR.setText(null);
@@ -1317,6 +1489,92 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDescripcionTipoMovimientoRPAGRKeyTyped
 
+    private void txtCodigoTipoMovimientoFCONEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoTipoMovimientoFCONEActionPerformed
+        if (txtCodigoTipoMovimientoFCONE.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "NO PUEDE DEJAR EL CAMPO DE TIPO DE MOVIMIENTO VACIO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int idtipomovimientO = Integer.parseInt(txtCodigoTipoMovimientoFCONE.getText());
+            tm.setIdtipomovimiento(idtipomovimientO);
+            boolean resultado = daoTipoMovimiento.consultarDatos(tm);
+            if (resultado == true) {
+                txtDescripcionTipoMovimientoFCONE.setText(tm.getDescripcion());
+                txtCodigoTipoMovimientoFCREE.grabFocus();
+            } else {
+                txtCodigoTipoMovimientoFCONE.setText(null);
+                txtDescripcionTipoMovimientoFCONE.setText(null);
+                txtCodigoTipoMovimientoFCONE.grabFocus();
+            }
+        }
+    }//GEN-LAST:event_txtCodigoTipoMovimientoFCONEActionPerformed
+
+    private void txtCodigoTipoMovimientoFCONEKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoTipoMovimientoFCONEKeyPressed
+        if (evt.VK_F1 == evt.getKeyCode()) {
+            buscarTipoMovimientoFCONE();
+        }
+    }//GEN-LAST:event_txtCodigoTipoMovimientoFCONEKeyPressed
+
+    private void txtCodigoTipoMovimientoFCONEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoTipoMovimientoFCONEKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+        if (txtCodigoTipoMovimientoFCONE.getText().length() == 10) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodigoTipoMovimientoFCONEKeyTyped
+
+    private void txtDescripcionTipoMovimientoFCONEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionTipoMovimientoFCONEActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDescripcionTipoMovimientoFCONEActionPerformed
+
+    private void txtDescripcionTipoMovimientoFCONEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionTipoMovimientoFCONEKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDescripcionTipoMovimientoFCONEKeyTyped
+
+    private void txtCodigoTipoMovimientoFCREEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoTipoMovimientoFCREEActionPerformed
+        if (txtCodigoTipoMovimientoFCREE.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "NO PUEDE DEJAR EL CAMPO DE TIPO DE MOVIMIENTO VACIO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int idtipomovimientO = Integer.parseInt(txtCodigoTipoMovimientoFCREE.getText());
+            tm.setIdtipomovimiento(idtipomovimientO);
+            boolean resultado = daoTipoMovimiento.consultarDatos(tm);
+            if (resultado == true) {
+                txtDescripcionTipoMovimientoFCREE.setText(tm.getDescripcion());
+                btnConfirmar.grabFocus();
+            } else {
+                txtCodigoTipoMovimientoFCREE.setText(null);
+                txtDescripcionTipoMovimientoFCREE.setText(null);
+                txtCodigoTipoMovimientoFCREE.grabFocus();
+            }
+        }
+    }//GEN-LAST:event_txtCodigoTipoMovimientoFCREEActionPerformed
+
+    private void txtCodigoTipoMovimientoFCREEKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoTipoMovimientoFCREEKeyPressed
+        if (evt.VK_F1 == evt.getKeyCode()) {
+            buscarTipoMovimientoFCREE();
+        }
+    }//GEN-LAST:event_txtCodigoTipoMovimientoFCREEKeyPressed
+
+    private void txtCodigoTipoMovimientoFCREEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoTipoMovimientoFCREEKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+        if (txtCodigoTipoMovimientoFCREE.getText().length() == 10) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodigoTipoMovimientoFCREEKeyTyped
+
+    private void txtDescripcionTipoMovimientoFCREEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionTipoMovimientoFCREEActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDescripcionTipoMovimientoFCREEActionPerformed
+
+    private void txtDescripcionTipoMovimientoFCREEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionTipoMovimientoFCREEKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDescripcionTipoMovimientoFCREEKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog BuscadorSucursal;
@@ -1334,6 +1592,8 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1352,6 +1612,8 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
     private org.jdesktop.swingx.JXTextField txtCodigoSucursal;
     private org.jdesktop.swingx.JXTextField txtCodigoTipoMovimiento;
     private org.jdesktop.swingx.JXTextField txtCodigoTipoMovimientoCCRER;
+    private org.jdesktop.swingx.JXTextField txtCodigoTipoMovimientoFCONE;
+    private org.jdesktop.swingx.JXTextField txtCodigoTipoMovimientoFCREE;
     private org.jdesktop.swingx.JXTextField txtCodigoTipoMovimientoRPAGR;
     private org.jdesktop.swingx.JXTextField txtCriterio;
     private org.jdesktop.swingx.JXTextField txtCriterioSucursal;
@@ -1359,6 +1621,8 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
     private org.jdesktop.swingx.JXTextField txtDescripcionSucursal;
     private org.jdesktop.swingx.JXTextField txtDescripcionTipoMovimiento;
     private org.jdesktop.swingx.JXTextField txtDescripcionTipoMovimientoCCRER;
+    private org.jdesktop.swingx.JXTextField txtDescripcionTipoMovimientoFCONE;
+    private org.jdesktop.swingx.JXTextField txtDescripcionTipoMovimientoFCREE;
     private org.jdesktop.swingx.JXTextField txtDescripcionTipoMovimientoRPAGR;
     // End of variables declaration//GEN-END:variables
 }

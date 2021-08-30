@@ -5,11 +5,14 @@ package Modelos;
  * @author armando
  */
 public class Configuracion {
+
     private int idconfiguracion;
     private int idsucursal;
     private int fac_con_rec;
     private int fac_cre_rec;
     private int rec_pag_rec;
+    private int fac_con_emi;
+    private int fac_cre_emi;
 
     public Configuracion() {
     }
@@ -53,5 +56,21 @@ public class Configuracion {
     public void setRec_pag_rec(int rec_pag_rec) {
         this.rec_pag_rec = rec_pag_rec;
     }
-   
+
+    public int getFac_con_emi() {
+        return fac_con_emi;
+    }
+
+    public void setFac_con_emi(int fac_con_emi) {
+        this.fac_con_emi = fac_con_emi;
+    }
+
+    public int getFac_cre_emi() {
+        return fac_cre_emi;
+    }
+
+    public void setFac_cre_emi(int fac_cre_emi) {
+        this.fac_cre_emi = fac_cre_emi;
+    }
+    
 }

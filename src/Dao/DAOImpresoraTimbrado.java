@@ -1,8 +1,6 @@
 package Dao;
 
 import Controladores.Database;
-import Controladores.OperacionesConfiguracion;
-import Modelos.Configuracion;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,36 +8,44 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import Controladores.OperacionesImpresoraTimbrado;
+import Modelos.ImpresoraTimbrado;
+import java.sql.Date;
 
 /**
  *
  * @author armando
  */
-public class DAOConfiguracion implements OperacionesConfiguracion {
+public class DAOImpresoraTimbrado implements OperacionesImpresoraTimbrado {
 
     //CONEXION A LAS CLASE DE MODELOS Y CONTROLADORES
     Database db = new Database();
-    Configuracion c = new Configuracion();
+    ImpresoraTimbrado it = new ImpresoraTimbrado();
 
     @Override
     public boolean agregar(Object obj) {
-        c = (Configuracion) obj;
-        String sql = "INSERT INTO configuracion\n"
-                + "(idconfiguracion, idsucursal, fac_con_rec, fac_cre_rec, rec_pag_rec, fac_con_emi, fac_cre_emi)\n"
-                + "VALUES (?, ?, ?, ?, ?, ?, ?);";
+        it = (ImpresoraTimbrado) obj;
+        String sql = "INSERT INTO impresora_timbrado\n"
+                + "(idimpresora, idtimbrado, idtipocomprobante, \n"
+                + "establecimiento, puntoemision, numerotimbrado, numeroinicial, \n"
+                + "numerofinal, fechainicial, fechafinal)\n"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         Connection con;
         PreparedStatement ps;
         try {
             Class.forName(db.getDriver());
             con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
             ps = con.prepareStatement(sql);
-            ps.setInt(1, c.getIdconfiguracion());
-            ps.setInt(2, c.getIdsucursal());
-            ps.setInt(3, c.getFac_con_rec());
-            ps.setInt(4, c.getFac_cre_rec());
-            ps.setInt(5, c.getRec_pag_rec());
-            ps.setInt(6, c.getFac_con_emi());
-            ps.setInt(7, c.getFac_cre_emi());
+            ps.setInt(1, it.getIdimpresora());
+            ps.setInt(2, it.getIdtimbrado());
+            ps.setInt(3, it.getIdtipocomprobante());
+            ps.setInt(4, it.getEstablecimiento());
+            ps.setInt(5, it.getPuntoemision());
+            ps.setInt(6, it.getNumerotimbrado());
+            ps.setInt(7, it.getNumeroinicial());
+            ps.setInt(8, it.getNumerofinal());
+            ps.setDate(9, (Date) it.getFechainicial());
+            ps.setDate(10, (Date) it.getFechafinal());
             int filas = ps.executeUpdate();
             if (filas > 0) {
                 con.close();
@@ -57,29 +63,34 @@ public class DAOConfiguracion implements OperacionesConfiguracion {
 
     @Override
     public boolean modificar(Object obj) {
-        c = (Configuracion) obj;
-        String sql = "UPDATE configuracion\n"
+        it = (ImpresoraTimbrado) obj;
+        String sql = "UPDATE impresora_timbrado\n"
                 + "	SET\n"
-                + "		idsucursal=?,\n"
-                + "		fac_con_rec=?,\n"
-                + "		fac_cre_rec=?,\n"
-                + "		rec_pag_rec=?,\n"
-                + "		fac_con_emi=?,\n"
-                + "		fac_cre_emi=?\n"
-                + "	WHERE idconfiguracion=?;";
+                + "		idtipocomprobante=?,\n"
+                + "		establecimiento=?,\n"
+                + "		puntoemision=?,\n"
+                + "		numerotimbrado=?,\n"
+                + "		numeroinicial=?,\n"
+                + "		numerofinal=?,\n"
+                + "		fechainicial=?,\n"
+                + "		fechafinal=?\n"
+                + "	WHERE idimpresora=? AND idtimbrado=?;";
         Connection con;
         PreparedStatement ps;
         try {
             Class.forName(db.getDriver());
             con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
             ps = con.prepareStatement(sql);
-            ps.setInt(1, c.getIdsucursal());
-            ps.setInt(2, c.getFac_con_rec());
-            ps.setInt(3, c.getFac_cre_rec());
-            ps.setInt(4, c.getRec_pag_rec());
-            ps.setInt(5, c.getFac_con_emi());
-            ps.setInt(6, c.getFac_cre_emi());
-            ps.setInt(7, c.getIdconfiguracion());
+            ps.setInt(1, it.getIdtipocomprobante());
+            ps.setInt(2, it.getEstablecimiento());
+            ps.setInt(3, it.getPuntoemision());
+            ps.setInt(4, it.getNumerotimbrado());
+            ps.setInt(5, it.getNumeroinicial());
+            ps.setInt(6, it.getNumerofinal());
+            ps.setDate(7, (Date) it.getFechainicial());
+            ps.setDate(8, (Date) it.getFechafinal());
+            ps.setInt(9, it.getIdimpresora());
+            ps.setInt(10, it.getIdtimbrado());
             int filas = ps.executeUpdate();
             if (filas > 0) {
                 con.close();
@@ -97,15 +108,16 @@ public class DAOConfiguracion implements OperacionesConfiguracion {
 
     @Override
     public boolean eliminar(Object obj) {
-        c = (Configuracion) obj;
-        String sql = "DELETE FROM configuracion WHERE idconfiguracion=?;";
+        it = (ImpresoraTimbrado) obj;
+        String sql = "DELETE FROM impresora_timbrado WHERE idimpresora=? AND idtimbrado=?;";
         Connection con;
         PreparedStatement ps;
         try {
             Class.forName(db.getDriver());
             con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
             ps = con.prepareStatement(sql);
-            ps.setInt(1, c.getIdconfiguracion());
+            ps.setInt(1, it.getIdimpresora());
+            ps.setInt(2, it.getIdtimbrado());
             int filas = ps.executeUpdate();
             if (filas > 0) {
                 con.close();
@@ -123,15 +135,15 @@ public class DAOConfiguracion implements OperacionesConfiguracion {
 
     @Override
     public int nuevoID() {
-        String sql = "select idconfiguracion + 1 as proximo_cod_libre\n"
-                + "  from (select 0 as idconfiguracion\n"
+        String sql = "select idtimbrado + 1 as proximo_cod_libre\n"
+                + "  from (select 0 as idtimbrado\n"
                 + "         union all\n"
-                + "        select idconfiguracion\n"
-                + "          from configuracion) t1\n"
+                + "        select idtimbrado\n"
+                + "          from impresora_timbrado) t1\n"
                 + " where not exists (select null\n"
-                + "                     from configuracion t2\n"
-                + "                    where t2.idconfiguracion = t1.idconfiguracion + 1)\n"
-                + " order by idconfiguracion\n"
+                + "                     from impresora_timbrado t2\n"
+                + "                    where t2.idtimbrado = t1.idtimbrado + 1)\n"
+                + " order by idtimbrado\n"
                 + " LIMIT 1;";
         Connection con;
         PreparedStatement ps;
@@ -153,21 +165,25 @@ public class DAOConfiguracion implements OperacionesConfiguracion {
     }
 
     @Override
-    public ArrayList<Object[]> consultar(String criterio) {
+    public ArrayList<Object[]> consultar(int idimpresora) {
         String sql = "SELECT\n"
-                + "C.idconfiguracion,\n"
-                + "C.idsucursal,\n"
-                + "S.descripcion,\n"
-                + "C.fac_con_rec,\n"
-                + "TMCCONR.abreviacion,\n"
-                + "C.fac_cre_rec,\n"
-                + "TMCCRER.abreviacion\n"
-                + "FROM configuracion AS C\n"
-                + "INNER JOIN sucursal AS S ON S.idsucursal = C.idsucursal\n"
-                + "INNER JOIN tipo_movimiento AS TMCCONR ON TMCCONR.idtipomovimiento = C.fac_con_rec\n"
-                + "INNER JOIN tipo_movimiento AS TMCCRER ON TMCCRER.idtipomovimiento = C.fac_cre_rec\n"
-                + "WHERE CONCAT(S.descripcion, TMCCONR.descripcion, TMCCRER.descripcion) LIKE ?\n"
-                + "ORDER BY 1 ASC;";
+                + "IT.idimpresora,\n"
+                + "I.descripcion AS impresora,\n"
+                + "IT.idtimbrado,\n"
+                + "IT.idtipocomprobante,\n"
+                + "TC.descripcion AS tipo_comprobante,\n"
+                + "LPAD(IT.establecimiento, 3, 0) AS establecimiento,\n"
+                + "LPAD(IT.puntoemision, 3, 0) AS puntoemision,\n"
+                + "IT.numerotimbrado,\n"
+                + "IT.numeroinicial,\n"
+                + "IT.numerofinal,\n"
+                + "DATE_FORMAT(IT.fechainicial, '%d/%m/%Y') AS FECHA_INICIAL,\n"
+                + "DATE_FORMAT(IT.fechafinal, '%d/%m/%Y') AS FECHA_FINAL\n"
+                + "FROM impresora_timbrado AS IT\n"
+                + "INNER JOIN impresora AS I ON I.idimpresora = IT.idimpresora\n"
+                + "INNER JOIN tipo_comprobante AS TC ON TC.idtipo = IT.idtipocomprobante\n"
+                + "WHERE IT.idimpresora = ?\n"
+                + "ORDER BY I.descripcion;";
         Connection con;
         PreparedStatement ps;
         ResultSet rs;
@@ -176,17 +192,22 @@ public class DAOConfiguracion implements OperacionesConfiguracion {
             Class.forName(db.getDriver());
             con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
             ps = con.prepareStatement(sql);
-            ps.setString(1, "%" + criterio + "%");
+            ps.setInt(1, idimpresora);
             rs = ps.executeQuery();
             while (rs.next()) {
-                Object[] fila = new Object[7];
+                Object[] fila = new Object[12];
                 fila[0] = rs.getInt(1);
-                fila[1] = rs.getInt(2);
-                fila[2] = rs.getString(3);
+                fila[1] = rs.getString(2);
+                fila[2] = rs.getInt(3);
                 fila[3] = rs.getInt(4);
                 fila[4] = rs.getString(5);
-                fila[5] = rs.getInt(6);
+                fila[5] = rs.getString(6);
                 fila[6] = rs.getString(7);
+                fila[7] = rs.getString(8);
+                fila[8] = rs.getInt(9);
+                fila[9] = rs.getInt(10);
+                fila[10] = rs.getString(11);
+                fila[11] = rs.getString(12);
                 datos.add(fila);
             }
             con.close();
@@ -198,8 +219,10 @@ public class DAOConfiguracion implements OperacionesConfiguracion {
 
     @Override
     public boolean consultarDatos(Object obj) {
-        c = (Configuracion) obj;
-        String sql = "SELECT * FROM configuracion WHERE idsucursal = ?;";
+        it = (ImpresoraTimbrado) obj;
+        String sql = "SELECT * \n"
+                + "FROM impresora_timbrado\n"
+                + "WHERE idimpresora=? AND idtimbrado=?;";
         Connection con;
         PreparedStatement ps;
         ResultSet rs;
@@ -207,20 +230,24 @@ public class DAOConfiguracion implements OperacionesConfiguracion {
             Class.forName(db.getDriver());
             con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
             ps = con.prepareStatement(sql);
-            ps.setInt(1, c.getIdsucursal());
+            ps.setInt(1, it.getIdimpresora());
+            ps.setInt(2, it.getIdtimbrado());
             rs = ps.executeQuery();
             if (rs.next()) {
-                c.setIdconfiguracion(rs.getInt(1));
-                c.setIdsucursal(rs.getInt(2));
-                c.setFac_con_rec(rs.getInt(3));
-                c.setFac_cre_rec(rs.getInt(4));
-                c.setRec_pag_rec(rs.getInt(5));
-                c.setFac_con_emi(rs.getInt(6));
-                c.setFac_cre_emi(rs.getInt(7));
+                it.setIdimpresora(rs.getInt(1));
+                it.setIdtimbrado(rs.getInt(2));
+                it.setIdtipocomprobante(rs.getInt(3));
+                it.setEstablecimiento(rs.getInt(4));
+                it.setPuntoemision(rs.getInt(5));
+                it.setNumerotimbrado(rs.getInt(6));
+                it.setNumeroinicial(rs.getInt(7));
+                it.setNumerofinal(rs.getInt(8));
+                it.setFechainicial(rs.getDate(9));
+                it.setFechafinal(rs.getDate(10));
                 con.close();
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "NO EXISTE CONFIGURACION CON EL CÓDIGO INGRESADO...", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "NO EXISTE TIMBRADO DE IMPRESORA CON LOS CÓDIGO INGRESADO...", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                 con.close();
                 return false;
             }
@@ -228,32 +255,6 @@ public class DAOConfiguracion implements OperacionesConfiguracion {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR AL OBTENER EL REGISTRO SELECCIONADO \n" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             return false;
         }
-    }
-
-    @Override
-    public int verificarConfiguracion(int idsucursal) {
-        String sql = "SELECT\n"
-                + "COUNT(*)\n"
-                + "FROM configuracion AS C\n"
-                + "WHERE C.idsucursal = ?;";
-        Connection con;
-        PreparedStatement ps;
-        ResultSet rs;
-        int existe = 0;
-        try {
-            Class.forName(db.getDriver());
-            con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, idsucursal);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                existe = rs.getInt(1);
-            }
-            con.close();
-        } catch (SQLException | ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR AL VERIFICAR CONFIGURACIÓNV \n" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
-        return existe;
     }
 
 }
