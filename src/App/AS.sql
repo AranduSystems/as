@@ -589,6 +589,7 @@ CREATE TABLE IF NOT EXISTS `articulo_deposito` (
 /*!40000 ALTER TABLE `articulo_deposito` DISABLE KEYS */;
 REPLACE INTO `articulo_deposito` (`idarticulo`, `iddeposito`, `cantidad`) VALUES
 	(1, 1, 15),
+	(353, 1, -1),
 	(458, 1, 0);
 /*!40000 ALTER TABLE `articulo_deposito` ENABLE KEYS */;
 
@@ -3301,7 +3302,7 @@ CREATE TABLE IF NOT EXISTS `cuenta_saldo` (
 -- Volcando datos para la tabla as.cuenta_saldo: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `cuenta_saldo` DISABLE KEYS */;
 REPLACE INTO `cuenta_saldo` (`idcuenta`, `fecha`, `entrada`, `salida`, `anulado`) VALUES
-	(1, '2021-08-31', 0, 300000, 75000);
+	(1, '2021-08-31', 750000, 300000, 75000);
 /*!40000 ALTER TABLE `cuenta_saldo` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.deposito
@@ -7378,7 +7379,7 @@ CREATE TABLE IF NOT EXISTS `tarjeta` (
   CONSTRAINT `FK_TARJETA_TIPO_TARJETA` FOREIGN KEY (`idtipo`) REFERENCES `tipo_tarjeta` (`idtipo`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.tarjeta: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.tarjeta: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `tarjeta` DISABLE KEYS */;
 REPLACE INTO `tarjeta` (`idtarjeta`, `descripcion`, `idtipo`) VALUES
 	(1, '82001256325', 1),
@@ -7605,6 +7606,110 @@ REPLACE INTO `usuario_programa` (`idusuario`, `idprograma`) VALUES
 	(1, 45);
 /*!40000 ALTER TABLE `usuario_programa` ENABLE KEYS */;
 
+-- Volcando estructura para tabla as.venta
+CREATE TABLE IF NOT EXISTS `venta` (
+  `idventa` int(11) NOT NULL,
+  `numerodocumento` varchar(25) NOT NULL,
+  `numerotimbrado` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `observacion` varchar(255) DEFAULT NULL,
+  `idmoneda` int(11) NOT NULL,
+  `iddeposito` int(11) NOT NULL,
+  `idtipomovimiento` int(11) NOT NULL,
+  `idcliente` int(11) NOT NULL,
+  `idusuario` int(11) NOT NULL,
+  `totalneto` double NOT NULL,
+  `totaliva` double NOT NULL,
+  `idcuenta` int(11) DEFAULT NULL,
+  `idempresa` int(11) NOT NULL,
+  `idsucursal` int(11) NOT NULL,
+  PRIMARY KEY (`idventa`),
+  KEY `FK_VENTA_MONEDA` (`idmoneda`),
+  KEY `FK_VENTA_TIPO_MOVIMIENTO` (`idtipomovimiento`),
+  KEY `FK_VENTA_DEPOSITO` (`iddeposito`),
+  KEY `FK_VENTA_CLIENTE` (`idcliente`),
+  KEY `FK_VENTA_USUARIO` (`idusuario`),
+  KEY `FK_VENTA_EMPRESA` (`idempresa`),
+  KEY `FK_VENTA_SUCURSAL` (`idsucursal`),
+  CONSTRAINT `FK_VENTA_CLIENTE` FOREIGN KEY (`idcliente`) REFERENCES `cliente` (`idcliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_VENTA_DEPOSITO` FOREIGN KEY (`iddeposito`) REFERENCES `deposito` (`iddeposito`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_VENTA_EMPRESA` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_VENTA_MONEDA` FOREIGN KEY (`idmoneda`) REFERENCES `moneda` (`idmoneda`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_VENTA_SUCURSAL` FOREIGN KEY (`idsucursal`) REFERENCES `sucursal` (`idsucursal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_VENTA_TIPO_MOVIMIENTO` FOREIGN KEY (`idtipomovimiento`) REFERENCES `tipo_movimiento` (`idtipomovimiento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_VENTA_USUARIO` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla as.venta: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `venta` DISABLE KEYS */;
+REPLACE INTO `venta` (`idventa`, `numerodocumento`, `numerotimbrado`, `fecha`, `observacion`, `idmoneda`, `iddeposito`, `idtipomovimiento`, `idcliente`, `idusuario`, `totalneto`, `totaliva`, `idcuenta`, `idempresa`, `idsucursal`) VALUES
+	(1, '001-001-0000001', 11112222, '2021-08-31', NULL, 1, 1, 3, 2, 1, 500000, 250000, 1, 1, 1);
+/*!40000 ALTER TABLE `venta` ENABLE KEYS */;
+
+-- Volcando estructura para tabla as.venta_cobro_cuota
+CREATE TABLE IF NOT EXISTS `venta_cobro_cuota` (
+  `idcobro` int(11) NOT NULL,
+  `idcompra` int(11) NOT NULL,
+  `numero` int(11) NOT NULL,
+  `fechacobro` date NOT NULL,
+  `monto` double NOT NULL,
+  `idcuenta` int(11) NOT NULL,
+  `idusuario` int(11) NOT NULL,
+  `numerocomprobante` varchar(25) NOT NULL,
+  `idtipomovimiento` int(11) NOT NULL,
+  PRIMARY KEY (`idcobro`,`idcompra`,`numero`),
+  KEY `FK_VENTA_COBRO_CUOTA_VENTA_CUOTA` (`idcompra`,`numero`),
+  KEY `FK_VENTA_COBRO_CUOTA_CUENTA` (`idcuenta`),
+  KEY `FK_VENTA_COBRO_CUOTA_USUARIO` (`idusuario`),
+  KEY `FK_VENTA_COBRO_CUOTA_TIPO_MOVIMIENTO` (`idtipomovimiento`),
+  CONSTRAINT `FK_VENTA_COBRO_CUOTA_CUENTA` FOREIGN KEY (`idcuenta`) REFERENCES `cuenta` (`idcuenta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_VENTA_COBRO_CUOTA_TIPO_MOVIMIENTO` FOREIGN KEY (`idtipomovimiento`) REFERENCES `tipo_movimiento` (`idtipomovimiento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_VENTA_COBRO_CUOTA_USUARIO` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_VENTA_COBRO_CUOTA_VENTA_CUOTA` FOREIGN KEY (`idcompra`, `numero`) REFERENCES `venta_cuota` (`idventa`, `numero`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla as.venta_cobro_cuota: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `venta_cobro_cuota` DISABLE KEYS */;
+/*!40000 ALTER TABLE `venta_cobro_cuota` ENABLE KEYS */;
+
+-- Volcando estructura para tabla as.venta_cuota
+CREATE TABLE IF NOT EXISTS `venta_cuota` (
+  `idventa` int(11) NOT NULL,
+  `numero` int(11) NOT NULL,
+  `monto` double NOT NULL,
+  `fechavencimiento` date NOT NULL,
+  PRIMARY KEY (`idventa`,`numero`),
+  KEY `FK_VENTA_CUOTA_VENTA` (`idventa`),
+  CONSTRAINT `FK_VENTA_CUOTA_VENTA` FOREIGN KEY (`idventa`) REFERENCES `venta` (`idventa`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla as.venta_cuota: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `venta_cuota` DISABLE KEYS */;
+/*!40000 ALTER TABLE `venta_cuota` ENABLE KEYS */;
+
+-- Volcando estructura para tabla as.venta_detalle
+CREATE TABLE IF NOT EXISTS `venta_detalle` (
+  `idventa` int(11) NOT NULL,
+  `idarticulo` int(11) NOT NULL,
+  `precio` double NOT NULL,
+  `cantidad` double NOT NULL,
+  `numeroitem` int(11) NOT NULL,
+  `iva` double NOT NULL,
+  `porcentajeiva` double NOT NULL,
+  `referencia` varchar(100) NOT NULL,
+  PRIMARY KEY (`idventa`,`idarticulo`),
+  KEY `FK_VENTA_DETALLE_ARTICULO` (`idarticulo`),
+  KEY `FK_VENTA_DETALLE_VENTA` (`idventa`),
+  CONSTRAINT `FK_VENTA_DETALLE_ARTICULO` FOREIGN KEY (`idarticulo`) REFERENCES `articulo` (`idarticulo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_VENTA_DETALLE_VENTA` FOREIGN KEY (`idventa`) REFERENCES `venta` (`idventa`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Volcando datos para la tabla as.venta_detalle: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `venta_detalle` DISABLE KEYS */;
+REPLACE INTO `venta_detalle` (`idventa`, `idarticulo`, `precio`, `cantidad`, `numeroitem`, `iva`, `porcentajeiva`, `referencia`) VALUES
+	(1, 353, 500000, 1, 1, 250000, 10, '353');
+/*!40000 ALTER TABLE `venta_detalle` ENABLE KEYS */;
+
 -- Volcando estructura para vista as.v_compra_anulado
 -- Creando tabla temporal para superar errores de dependencia de VIEW
 CREATE TABLE `v_compra_anulado` (
@@ -7796,6 +7901,7 @@ BEGIN
 		
 		-- INSERT INTO excepciones (datos) VALUES (CONCAT("xIDCOMPRA_VENTA: ",xIDCOMPRA_VENTA)); 
 		
+		-- BLOQUE DE CODIGO QUE SE DISPARA SOLO CUANDO ES UN MOVIMIENTO DE COMPRAS
 		IF xTABLA = 'compra' THEN
 			SELECT CO.idmoneda, CO.idcuenta AS idcuenta, CO.fecha INTO V_MONEDA, V_CUENTA, V_FECHA FROM compra AS CO WHERE CO.idcompra = xIDCOMPRA_VENTA;
 		END IF;
@@ -7803,6 +7909,17 @@ BEGIN
 			SELECT (SELECT CU.idmoneda FROM cuenta AS CU WHERE CU.idcuenta = CPC.idcuenta) AS idmoneda, CPC.idcuenta AS idcuenta, CPC.fechapago INTO V_MONEDA, V_CUENTA, V_FECHA 
 			FROM compra_pago_cuota AS CPC WHERE CPC.idpago = xIDCOMPRA_VENTA;
 		END IF;
+		
+		
+		-- BLOQUE DE CODIGO QUE SE DISPARA SOLO CUANDO ES UN MOVIMIENTO DE VENTAS
+		IF xTABLA = 'venta' THEN
+			SELECT VE.idmoneda, VE.idcuenta AS idcuenta, VE.fecha INTO V_MONEDA, V_CUENTA, V_FECHA FROM venta AS VE WHERE VE.idventa = xIDCOMPRA_VENTA;
+		END IF;
+		IF xTABLA = 'venta_cobro_cuota' THEN
+			SELECT (SELECT CU.idmoneda FROM cuenta AS CU WHERE CU.idcuenta = CPC.idcuenta) AS idmoneda, VCC.idcuenta AS idcuenta, VCC.fechacobro INTO V_MONEDA, V_CUENTA, V_FECHA 
+			FROM venta_cobro_cuota AS VCC WHERE VCC.idcobro = xIDCOMPRA_VENTA;
+		END IF;
+		
 		
 		-- INSERT INTO excepciones (datos) VALUES (CONCAT(V_MONEDA,'-',V_CUENTA,'-',V_FECHA)); 
 		IF V_MONEDA != 1 THEN
@@ -7900,11 +8017,13 @@ BEGIN
 	DECLARE V_CANTIDAD_ENTRADA DOUBLE;
 	DECLARE V_CANTIDAD_SALIDA DOUBLE;
 	
-		/*IF xTABLA = 'venta' THEN
-			SELECT iddeposito INTO V_DEPOSITO FROM venta WHERE idventa = xIDVENTA_COMPRA;
-		END IF;*/
+
 		IF xTABLA = 'compra' THEN
 			SELECT iddeposito INTO V_DEPOSITO FROM compra WHERE idcompra = xIDVENTA_COMPRA;
+		END IF;
+		
+		IF xTABLA = 'venta' THEN
+			SELECT iddeposito INTO V_DEPOSITO FROM venta WHERE idventa = xIDVENTA_COMPRA;
 		END IF;
 		
 		IF xOPERACION = 'E' THEN
@@ -8192,11 +8311,38 @@ END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
 
+-- Volcando estructura para disparador as.TR_CUENTA_SALDO_VENTA_INS
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `TR_CUENTA_SALDO_VENTA_INS` AFTER INSERT ON `venta` FOR EACH ROW BEGIN
+		CALL P_ACT_CUENTA_SALDO('E', (NEW.totalneto + NEW.totaliva), NEW.idventa, 'venta');
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
 -- Volcando estructura para disparador as.TR_PAGO_ANULADO_DEL
 SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
 DELIMITER //
 CREATE TRIGGER `TR_PAGO_ANULADO_DEL` BEFORE INSERT ON `compra_pago_cuota_anulado` FOR EACH ROW BEGIN
 	DELETE FROM compra_pago_cuota WHERE idpago = NEW.idpago;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- Volcando estructura para disparador as.TR_VENTA_DETALLE_STOCK_DEL
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `TR_VENTA_DETALLE_STOCK_DEL` BEFORE DELETE ON `venta_detalle` FOR EACH ROW BEGIN
+	CALL P_ACT_ITEM_DEP(OLD.idarticulo, OLD.idventa, OLD.cantidad, 'E', 'venta');
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- Volcando estructura para disparador as.TR_VENTA_DETALLE_STOCK_INS
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `TR_VENTA_DETALLE_STOCK_INS` AFTER INSERT ON `venta_detalle` FOR EACH ROW BEGIN
+	CALL P_ACT_ITEM_DEP(NEW.idarticulo, NEW.idventa, NEW.cantidad, 'S', 'venta');
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
