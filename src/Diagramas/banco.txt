@@ -1,0 +1,11 @@
+banco
+--
+idbanco PK int(11)
+descripcion varchar(1009
+idpais int(11) FK >- pais.idpais
+
+pais
+--
+idpais PK int(11)
+descripcion varchar(100)
+nacionalidad varchar(100)

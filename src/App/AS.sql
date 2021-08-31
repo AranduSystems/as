@@ -585,7 +585,7 @@ CREATE TABLE IF NOT EXISTS `articulo_deposito` (
   CONSTRAINT `FK_ARTICULO_DEPOSITO_DEPOSITO` FOREIGN KEY (`iddeposito`) REFERENCES `deposito` (`iddeposito`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.articulo_deposito: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla as.articulo_deposito: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `articulo_deposito` DISABLE KEYS */;
 REPLACE INTO `articulo_deposito` (`idarticulo`, `iddeposito`, `cantidad`) VALUES
 	(1, 1, 15),
@@ -645,7 +645,7 @@ CREATE TABLE IF NOT EXISTS `articulo_periodo` (
   CONSTRAINT `FK_ARTICULO_PERIODO_PERIODO` FOREIGN KEY (`idperiodo`) REFERENCES `periodo` (`idperiodo`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.articulo_periodo: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla as.articulo_periodo: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `articulo_periodo` DISABLE KEYS */;
 REPLACE INTO `articulo_periodo` (`idarticulo`, `idperiodo`, `idmoneda`, `costo`) VALUES
 	(1, 1, 1, 15000),
@@ -3127,7 +3127,7 @@ CREATE TABLE IF NOT EXISTS `compra_anulado` (
   CONSTRAINT `FK_COMPRA_ANULADO_USUARIO` FOREIGN KEY (`idusuarioanulado`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.compra_anulado: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla as.compra_anulado: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `compra_anulado` DISABLE KEYS */;
 REPLACE INTO `compra_anulado` (`idcompraanulado`, `fechahoraanulado`, `observacionanulado`, `idmotivo`, `idusuarioanulado`, `idcompra`, `numerodocumento`, `numerotimbrado`, `fecha`, `observacion`, `idmoneda`, `iddeposito`, `idtipomovimiento`, `idproveedor`, `idusuario`, `totalneto`, `totaliva`, `idcuenta`, `idempresa`, `idsucursal`) VALUES
 	(1, '2021-08-31 10:32:29', 'PRUEBA DE ANULACION', 1, 1, 4, '001-001-0000005', 11112222, '2021-08-31', '', 1, 1, 1, 1, 1, 68182, 6818, 1, 1, 2);
@@ -3245,7 +3245,7 @@ CREATE TABLE IF NOT EXISTS `configuracion` (
   CONSTRAINT `FK_CONFIGURACION_TIPO_MOV_RPAGR` FOREIGN KEY (`rec_pag_rec`) REFERENCES `tipo_movimiento` (`idtipomovimiento`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.configuracion: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla as.configuracion: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `configuracion` DISABLE KEYS */;
 REPLACE INTO `configuracion` (`idconfiguracion`, `idsucursal`, `fac_con_rec`, `fac_cre_rec`, `rec_pag_rec`, `fac_con_emi`, `fac_cre_emi`) VALUES
 	(1, 1, 1, 2, 12, 3, 4),
@@ -3315,7 +3315,7 @@ CREATE TABLE IF NOT EXISTS `deposito` (
   CONSTRAINT `FK_DEPOSITO_SUCURSAL` FOREIGN KEY (`idsucursal`) REFERENCES `sucursal` (`idsucursal`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.deposito: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.deposito: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `deposito` DISABLE KEYS */;
 REPLACE INTO `deposito` (`iddeposito`, `descripcion`, `idsucursal`) VALUES
 	(1, 'SALON', 1);
@@ -3331,7 +3331,7 @@ CREATE TABLE IF NOT EXISTS `empresa` (
   PRIMARY KEY (`idempresa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.empresa: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.empresa: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `empresa` DISABLE KEYS */;
 REPLACE INTO `empresa` (`idempresa`, `razonsocial`, `ruc`, `telefono`, `direccion`) VALUES
 	(1, 'ARANDU SYSTEMS DE ARMANDO ARIEL PERALTA MARTINEZ', '5955455-0', '(+595) 975 489 075', 'SAN ANTONIO GUAZU CASI RUTA 7 - DR. JUAN MANUEL FRUTOS');
@@ -3415,7 +3415,7 @@ CREATE TABLE IF NOT EXISTS `linea` (
   PRIMARY KEY (`idlinea`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla as.linea: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.linea: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `linea` DISABLE KEYS */;
 REPLACE INTO `linea` (`idlinea`, `descripcion`) VALUES
 	(1, 'LÍNEA GENERAL');
@@ -3447,7 +3447,7 @@ CREATE TABLE IF NOT EXISTS `marca` (
   PRIMARY KEY (`idmarca`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla as.marca: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.marca: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `marca` DISABLE KEYS */;
 REPLACE INTO `marca` (`idmarca`, `descripcion`) VALUES
 	(1, 'GENERICA');
@@ -3529,7 +3529,7 @@ CREATE TABLE IF NOT EXISTS `periodo` (
   PRIMARY KEY (`idperiodo`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla as.periodo: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.periodo: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `periodo` DISABLE KEYS */;
 REPLACE INTO `periodo` (`idperiodo`, `fecha_desde`, `fecha_hasta`) VALUES
 	(1, '2021-08-01', '2021-08-31');
@@ -3542,7 +3542,7 @@ CREATE TABLE IF NOT EXISTS `programa` (
   PRIMARY KEY (`idprograma`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.programa: ~44 rows (aproximadamente)
+-- Volcando datos para la tabla as.programa: ~45 rows (aproximadamente)
 /*!40000 ALTER TABLE `programa` DISABLE KEYS */;
 REPLACE INTO `programa` (`idprograma`, `descripcion`) VALUES
 	(1, 'JFrmPrograma'),
@@ -3607,7 +3607,7 @@ CREATE TABLE IF NOT EXISTS `proveedor` (
   CONSTRAINT `FK_PROVEEDOR_TIPO_PROVEEDOR` FOREIGN KEY (`idtipo`) REFERENCES `tipo_proveedor` (`idtipo`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- Volcando datos para la tabla as.proveedor: ~3.763 rows (aproximadamente)
+-- Volcando datos para la tabla as.proveedor: ~3.725 rows (aproximadamente)
 /*!40000 ALTER TABLE `proveedor` DISABLE KEYS */;
 REPLACE INTO `proveedor` (`idproveedor`, `razonsocial`, `propietario`, `ruc`, `telefono`, `direccion`, `estado`, `idtipo`) VALUES
 	(1, 'PROVEEDOR', 'OCASIONAL', 'XXX', 'XXX', 'XXX', 'A', 3),
@@ -7344,7 +7344,7 @@ CREATE TABLE IF NOT EXISTS `seccion` (
   PRIMARY KEY (`idseccion`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla as.seccion: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.seccion: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `seccion` DISABLE KEYS */;
 REPLACE INTO `seccion` (`idseccion`, `descripcion`) VALUES
 	(1, 'SECCION GENERAL');
@@ -7362,7 +7362,7 @@ CREATE TABLE IF NOT EXISTS `sucursal` (
   CONSTRAINT `FK_SUCURSAL_EMPRESA` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.sucursal: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla as.sucursal: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `sucursal` DISABLE KEYS */;
 REPLACE INTO `sucursal` (`idsucursal`, `descripcion`, `telefono`, `direccion`, `idempresa`) VALUES
 	(1, 'CASA CENTRAL', '(+595) 975 489 075', 'BARRIO SAN BLAS - EX CAMPO 9', 1),
@@ -7640,7 +7640,7 @@ CREATE TABLE IF NOT EXISTS `venta` (
   CONSTRAINT `FK_VENTA_USUARIO` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.venta: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.venta: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `venta` DISABLE KEYS */;
 REPLACE INTO `venta` (`idventa`, `numerodocumento`, `numerotimbrado`, `fecha`, `observacion`, `idmoneda`, `iddeposito`, `idtipomovimiento`, `idcliente`, `idusuario`, `totalneto`, `totaliva`, `idcuenta`, `idempresa`, `idsucursal`) VALUES
 	(1, '001-001-0000001', 11112222, '2021-08-31', NULL, 1, 1, 3, 2, 1, 500000, 250000, 1, 1, 1);
@@ -7704,7 +7704,7 @@ CREATE TABLE IF NOT EXISTS `venta_detalle` (
   CONSTRAINT `FK_VENTA_DETALLE_VENTA` FOREIGN KEY (`idventa`) REFERENCES `venta` (`idventa`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.venta_detalle: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.venta_detalle: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `venta_detalle` DISABLE KEYS */;
 REPLACE INTO `venta_detalle` (`idventa`, `idarticulo`, `precio`, `cantidad`, `numeroitem`, `iva`, `porcentajeiva`, `referencia`) VALUES
 	(1, 353, 500000, 1, 1, 250000, 10, '353');
@@ -8307,6 +8307,15 @@ SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGIN
 DELIMITER //
 CREATE TRIGGER `TR_CUENTA_SALDO_COMPRA_PAGO_CUOTA_INS` AFTER INSERT ON `compra_pago_cuota` FOR EACH ROW BEGIN
 		CALL P_ACT_CUENTA_SALDO('S', NEW.monto, NEW.idpago, 'compra_pago_cuota');
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+-- Volcando estructura para disparador as.TR_CUENTA_SALDO_VENTA_DEL
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `TR_CUENTA_SALDO_VENTA_DEL` BEFORE DELETE ON `venta` FOR EACH ROW BEGIN
+		CALL P_ACT_CUENTA_SALDO('A', (OLD.totalneto + OLD.totaliva), OLD.idventa, 'venta');
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;

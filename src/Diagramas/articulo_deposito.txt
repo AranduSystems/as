@@ -1,0 +1,27 @@
+deposito
+-
+iddeposito PK int(11)
+descripcion varchar(100)
+idsucursal int(11)
+
+articulo
+-
+idarticulo PK int(11)
+descripcion varchar(100)
+referencia varchar(100)
+codigoalfanumerico varchar(50)
+codigobarra varchar(50)
+estado varchar(1)
+observacion varchar(255)
+idmarca int(11)
+idlinea int(11)
+idseccion int(11)
+idtipo int(11)
+idunidad int(11)
+idimpuesto int(11)
+
+articulo_deposito
+-
+idarticulo PK int(11) FK >- articulo.idarticulo
+iddeposito PK int(11) FK >- deposito.iddeposito
+cantidad double

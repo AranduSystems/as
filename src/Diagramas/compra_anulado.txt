@@ -1,0 +1,40 @@
+compra_anulado
+--
+idcompranulado PK int(11)
+fechahoraanulado datetime
+observacionanulado varchar(250)
+idmotivo int(11) FK >- motivo_anulacion.idmotivo
+idusuarioanulado int(11) FK >- usuario.idusuario
+idcompra int(11)
+numerodocumento varchar(25)
+numerotimbrado int(11)
+fecha date
+observacion varchar(250)
+idmoneda int(11)
+iddeposito int(11)
+idtipomovimiento int(11)
+idproveedor int(11)
+idusuario int(11)
+totalneto double
+totaliva double
+idcuenta int(11)
+idempresa int(11)
+idsucursal int(11)
+
+motivo_anulacion
+--
+idmotivo PK int(11)
+descripcion varchar(100)
+
+usuario
+--
+idusuario PK int(11)
+nombre varchar(100)
+apellido varchar(100)
+cedula varchar(25)
+telefono varchar(25)
+direccion varchar(250)
+alias varchar(25)
+clave varchar(256)
+idmpresa int(11)
+idsucursal int(11)

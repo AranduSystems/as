@@ -1,0 +1,50 @@
+articulo
+-
+idarticulo PK int(11)
+descripcion varchar(100)
+referencia varchar(100)
+codigoalfanumerico varchar(50)
+codigobarra varchar(50)
+estado varchar(1)
+observacion varchar(255)
+idmarca int(11) FK >- marca.idmarca
+idlinea int(11) FK >- linea.idlinea
+idseccion int(11) FK >- seccion.idseccion
+idtipo int(11) FK >- tipo_articulo.idtipo
+idunidad int(11) FK >- unidad_medida.idunidad
+idimpuesto int(11) FK >- impuesto.idimpuesto
+
+marca
+-
+idmarca PK int(11)
+descripcion varchar(100)
+
+linea
+-
+idlinea PK int(11)
+descripcion varchar(100)
+
+seccion
+-
+idseccion PK int(11)
+descripcion varchar(100)
+
+tipo_articulo
+-
+idtipo PK int(11)
+descripcion varchar(100)
+
+unidad_medida
+-
+idunidad PK int(11)
+descripcion varchar(100)
+simbolo varchar(5)
+
+impuesto
+-
+idimpuesto PK int(11)
+descripcion varchar(100)
+porcentaje double
+
+
+

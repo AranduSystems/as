@@ -1,0 +1,15 @@
+cliente
+--
+idcliente PK int(11)
+nombre varchar(100)
+apellido varchar(100)
+ruc varchar(25)
+telefono varchar(25)
+direccion varchar(250)
+estado varchar(1)
+idtipo int(11) FK >- tipo_cliente.idtipo
+
+tipo_cliente
+--
+idtipo PK int(11)
+descripcion varchar(100)

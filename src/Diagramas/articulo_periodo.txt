@@ -1,0 +1,34 @@
+periodo
+--
+idperiodo PK int(11)
+fecha_desde date
+fecha_hasta date
+
+moneda
+--
+idmoneda PK int(11)
+descripcion varchar(100)
+simbolo varchar(5)
+
+articulo
+-
+idarticulo PK int(11)
+descripcion varchar(100)
+referencia varchar(100)
+codigoalfanumerico varchar(50)
+codigobarra varchar(50)
+estado varchar(1)
+observacion varchar(255)
+idmarca int(11)
+idlinea int(11)
+idseccion int(11)
+idtipo int(11)
+idunidad int(11)
+idimpuesto int(11)
+
+articulo_periodo
+--
+idarticulo PK int(11) FK >- articulo.idarticulo
+idperiodo PK int(11) FK >- periodo.idperiodo
+idmoneda PK iny(11) FK >- moneda.idmoneda
+costo double

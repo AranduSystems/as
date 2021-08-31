@@ -1,0 +1,83 @@
+compra
+--
+idcompra PK int(11)
+numerodocumento varchar(25)
+numerotimbrado int(11)
+fecha date
+observacion varchar(255)
+idmoneda int(11) FK >- moneda.idmoneda
+iddeposito int(11) FK >- deposito.iddeposito
+idtipomovimiento int(11) FK >- tipo_movimiento.idtipomovimiento
+idproveedor int(11) FK >- proveedor.idproveedor
+idusuario int(11) FK >- usuario.idusuario
+totalneto double
+totaliva double
+idcuenta int(11) FK >- cuenta.idcuenta
+idempresa int(11) FK >- empresa.idempresa
+idsucursal int(11) FK >- sucursal.idsucursal
+
+moneda
+--
+idmoneda PK int(11)
+descripcion varchar(100)
+simbolo varchar(5)
+
+deposito
+-
+iddeposito PK int(11)
+descripcion varchar(100)
+idsucursal int(11)
+
+tipo_movimiento
+--
+idtipomovimiento PK int(11)
+descripcion varchar(100)
+abreviaicon varchar(5)
+idtipo int(11)
+
+proveedor
+--
+idproveedor PK int(11)
+razonsocial varchar(100)
+propietario varchar(100)
+ruc varchar(25)
+telefono varchar(25)
+direccion varchar(250)
+estado varchar(1)
+idtipo int(11)
+
+usuario
+--
+idusuario PK int(11)
+nombre varchar(100)
+apellido varchar(100)
+cedula varchar(25)
+telefono varchar(25)
+direccion varchar(250)
+alias varchar(25)
+clave varchar(256)
+idmpresa int(11)
+idsucursal int(11)
+
+cuenta
+--
+idcuenta PK int(11)
+descripcion varchar(100)
+idbanco int(11)
+idmoneda int(11)
+
+empresa
+--
+idempresa PK int(11)
+razonsocial varchar(100)
+ruc varchar(25)
+telefono varchar(25)
+direccion varchar(250)
+
+sucursal
+--
+idsucursal PK int(11)
+descripcion varchar(100)
+telefono varchar(25)
+direccion varchar(250)
+idempresa int(11)
