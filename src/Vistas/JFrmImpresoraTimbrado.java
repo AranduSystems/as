@@ -6,7 +6,7 @@ import Dao.DAOTipoComprobante;
 import Modelos.Impresora;
 import Modelos.ImpresoraTimbrado;
 import Modelos.TipoComprobante;
-import Modelos.UsuarioPrograma;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -35,6 +35,7 @@ public class JFrmImpresoraTimbrado extends javax.swing.JInternalFrame {
 
     String tres_ceros = String.format("%%0%dd", 3);
     String siete_ceros = String.format("%%0%dd", 7);
+    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
     /**
      * Creates new form JFrmImpresoraTimbrado
@@ -42,7 +43,8 @@ public class JFrmImpresoraTimbrado extends javax.swing.JInternalFrame {
     public JFrmImpresoraTimbrado() {
         setTitle("JFrmImpresoraTimbrado");
         initComponents();
-        //cargar();
+        txtFechaInicial.setFormats(formato);
+        txtFechaFinal.setFormats(formato);
     }
 
     public void cargar() {
@@ -343,14 +345,27 @@ public class JFrmImpresoraTimbrado extends javax.swing.JInternalFrame {
     public void recuperarDatos() {
         int fila = tablaDatos.getSelectedRow();
         if (fila >= 0) {
-            String idusuario = txtCodigoImpresoraCriterio.getText();
-            String usuariodescripcion = txtDescripcionImpresoraCriterio.getText();
-            String idprograma = tablaDatos.getValueAt(fila, 0).toString();
-            String programadescripcion = tablaDatos.getValueAt(fila, 1).toString();
-            txtCodigoImpresora.setText(idusuario);
-            txtDescripcionImpresora.setText(usuariodescripcion);
-            txtCodigoTipoComprobante.setText(idprograma);
-            txtDescripcionTipoComprobante.setText(programadescripcion);
+            int idimpresora = Integer.parseInt(tablaDatos.getValueAt(fila, 0).toString());
+            int idtimbrado = Integer.parseInt(tablaDatos.getValueAt(fila, 2).toString());
+            it.setIdimpresora(idimpresora);
+            it.setIdtimbrado(idtimbrado);
+            dao.consultarDatos(it);
+            txtCodigo.setText(""+it.getIdtimbrado());
+            txtCodigoImpresora.setText(""+it.getIdimpresora());
+            i.setIdimpresora(idimpresora);
+            daoImpresora.consultarDatos(i);
+            txtDescripcionImpresora.setText(i.getDescripcion());
+            tc.setIdtipo(it.getIdtipocomprobante());
+            txtCodigoTipoComprobante.setText(""+it.getIdtipocomprobante());
+            txtDescripcionTipoComprobante.setText(tc.getDescripcion());
+            txtEstablecimiento.setText(String.format(tres_ceros, it.getEstablecimiento()));
+            txtPuntoEmision.setText(String.format(tres_ceros, it.getPuntoemision()));
+            txtTimbrado.setText(""+it.getNumerotimbrado());
+            txtFechaInicial.setDate(it.getFechainicial());
+            txtFechaFinal.setDate(it.getFechafinal());
+            txtNumeroInicial.setText(String.format(siete_ceros, it.getNumeroinicial()));
+            txtNumeroFinal.setText(String.format(siete_ceros, it.getNumerofinal()));
+            
             habilitarCampos(operacion);
         } else {
             JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA", "ADVERTENCIA", JOptionPane.ERROR_MESSAGE);
@@ -416,6 +431,7 @@ public class JFrmImpresoraTimbrado extends javax.swing.JInternalFrame {
 
         menuDesplegable = new javax.swing.JPopupMenu();
         Eliminar = new javax.swing.JMenuItem();
+        Modificar = new javax.swing.JMenuItem();
         BuscadorImpresoraCriterio = new javax.swing.JDialog();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -480,6 +496,16 @@ public class JFrmImpresoraTimbrado extends javax.swing.JInternalFrame {
             }
         });
         menuDesplegable.add(Eliminar);
+
+        Modificar.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        Modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8_edit_file_16px.png"))); // NOI18N
+        Modificar.setText("Modificar");
+        Modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModificarActionPerformed(evt);
+            }
+        });
+        menuDesplegable.add(Modificar);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -907,7 +933,7 @@ public class JFrmImpresoraTimbrado extends javax.swing.JInternalFrame {
                     .addComponent(txtCodigoImpresoraCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDescripcionImpresoraCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -1213,12 +1239,12 @@ public class JFrmImpresoraTimbrado extends javax.swing.JInternalFrame {
                     .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtFechaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(txtNumeroInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel16)
+                    .addComponent(txtNumeroFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel16)
-                        .addComponent(txtNumeroFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel15)
+                        .addComponent(txtNumeroInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
                 .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1615,12 +1641,18 @@ public class JFrmImpresoraTimbrado extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNumeroFinalKeyTyped
 
+    private void ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarActionPerformed
+        operacion = "MODIFICAR";
+        recuperarDatos();
+    }//GEN-LAST:event_ModificarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog BuscadorImpresora;
     private javax.swing.JDialog BuscadorImpresoraCriterio;
     private javax.swing.JDialog BuscadorTipoComprobante;
     private javax.swing.JMenuItem Eliminar;
+    private javax.swing.JMenuItem Modificar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnConfirmar;
     private javax.swing.JButton btnNuevo;
