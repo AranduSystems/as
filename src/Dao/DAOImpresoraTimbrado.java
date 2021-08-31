@@ -175,8 +175,8 @@ public class DAOImpresoraTimbrado implements OperacionesImpresoraTimbrado {
                 + "LPAD(IT.establecimiento, 3, 0) AS establecimiento,\n"
                 + "LPAD(IT.puntoemision, 3, 0) AS puntoemision,\n"
                 + "IT.numerotimbrado,\n"
-                + "IT.numeroinicial,\n"
-                + "IT.numerofinal,\n"
+                + "LPAD(IT.numeroinicial, 7, 0) AS numeroinicial,\n"
+                + "LPAD(IT.numerofinal, 7, 0) AS numerofinal,\n"
                 + "DATE_FORMAT(IT.fechainicial, '%d/%m/%Y') AS FECHA_INICIAL,\n"
                 + "DATE_FORMAT(IT.fechafinal, '%d/%m/%Y') AS FECHA_FINAL\n"
                 + "FROM impresora_timbrado AS IT\n"
@@ -204,8 +204,8 @@ public class DAOImpresoraTimbrado implements OperacionesImpresoraTimbrado {
                 fila[5] = rs.getString(6);
                 fila[6] = rs.getString(7);
                 fila[7] = rs.getString(8);
-                fila[8] = rs.getInt(9);
-                fila[9] = rs.getInt(10);
+                fila[8] = rs.getString(9);
+                fila[9] = rs.getString(10);
                 fila[10] = rs.getString(11);
                 fila[11] = rs.getString(12);
                 datos.add(fila);

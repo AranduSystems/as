@@ -51,6 +51,7 @@ import Vistas.JFrmTipoProveedor;
 import Vistas.JFrmTipoTarjeta;
 import Vistas.JFrmUnidadMedida;
 import Vistas.JFrmUsuario;
+import Vistas.JFrmUsuarioImpresora;
 import Vistas.JFrmUsuarioPrograma;
 import com.formdev.flatlaf.*;
 import java.awt.Dimension;
@@ -160,6 +161,7 @@ public class Principal extends javax.swing.JFrame {
         itemConfiguracion = new javax.swing.JMenuItem();
         itemDeposito = new javax.swing.JMenuItem();
         itemEmpresa = new javax.swing.JMenuItem();
+        itemUsuarioImpresora = new javax.swing.JMenuItem();
         itemImpresora = new javax.swing.JMenuItem();
         itemMoneda = new javax.swing.JMenuItem();
         itemMotivoAjuste = new javax.swing.JMenuItem();
@@ -585,6 +587,15 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         menuMantenimientoSistemas.add(itemEmpresa);
+
+        itemUsuarioImpresora.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        itemUsuarioImpresora.setText("Habilitar Impresora a Usuario");
+        itemUsuarioImpresora.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemUsuarioImpresoraActionPerformed(evt);
+            }
+        });
+        menuMantenimientoSistemas.add(itemUsuarioImpresora);
 
         itemImpresora.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         itemImpresora.setText("Impresoras");
@@ -1515,6 +1526,24 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_itemImpresoraTimbradoActionPerformed
 
+    private void itemUsuarioImpresoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemUsuarioImpresoraActionPerformed
+        JFrmUsuarioImpresora fm = new JFrmUsuarioImpresora();
+        panelInterno.add(fm);
+        Dimension desktopSize = panelInterno.getSize();
+        Dimension frameSize = fm.getSize();
+        fm.setLocation((desktopSize.width - frameSize.width) / 2, (desktopSize.height - frameSize.height) / 2);
+        try {
+            fm.setSelected(true);
+        } catch (PropertyVetoException e) {
+            JOptionPane.showMessageDialog(null, "ERROR AL ABRIR EL FORMULARIO: " + fm.getTitle(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        if (verificarPermisos(App.appLogin.IDUSUARIO, fm.getTitle()) == true) {
+            fm.show();
+        } else {
+            JOptionPane.showMessageDialog(null, "EL PROGRAMA NO ESTA HABILITADO PARA EL USUARIO\nPROGRAMA: " + fm.getTitle() + " USUARIO: " + App.appLogin.LOGIN, "ACCESO RESTRINGIDO", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_itemUsuarioImpresoraActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1593,6 +1622,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemTipoProveedor;
     private javax.swing.JMenuItem itemTipoTarjeta;
     private javax.swing.JMenuItem itemUnidadMedida;
+    private javax.swing.JMenuItem itemUsuarioImpresora;
     private javax.swing.JMenuItem itemUsuarios;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

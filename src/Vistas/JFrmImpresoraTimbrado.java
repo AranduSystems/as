@@ -397,7 +397,7 @@ public class JFrmImpresoraTimbrado extends javax.swing.JInternalFrame {
         int fila = tablaDatosImpresoraDos.getSelectedRow();
         if (fila >= 0) {
             txtCodigoImpresora.setText(tablaDatosImpresoraDos.getValueAt(fila, 0).toString());
-            txtDescripcionImpresora.setText(tablaDatosImpresoraDos.getValueAt(fila, 1).toString() + " " + tablaDatosImpresoraDos.getValueAt(fila, 2).toString());
+            txtDescripcionImpresora.setText(tablaDatosImpresoraDos.getValueAt(fila, 1).toString());
         } else {
             txtCodigoImpresora.setText(null);
             txtDescripcionImpresora.setText(null);
@@ -836,7 +836,7 @@ public class JFrmImpresoraTimbrado extends javax.swing.JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false, false
