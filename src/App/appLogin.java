@@ -31,6 +31,7 @@ public class appLogin extends javax.swing.JFrame {
      */
     public static int IDUSUARIO;
     public static int IDSUCURSAL;
+    public static int IDEMPRESA;
     public static String LOGIN;
 
     boolean usuarioCorrecto = false;
@@ -56,7 +57,7 @@ public class appLogin extends javax.swing.JFrame {
     }
 
     private void verificarUsuario(String usuario){
-        String sql = "SELECT idusuario, alias, idsucursal FROM usuario WHERE alias LIKE ?;";
+        String sql = "SELECT idusuario, alias, idsucursal, idempresa FROM usuario WHERE alias LIKE ?;";
         Connection con;
         PreparedStatement ps;
         try {
@@ -70,6 +71,7 @@ public class appLogin extends javax.swing.JFrame {
                 IDUSUARIO = rs.getInt(1);
                 LOGIN = rs.getString(2);
                 IDSUCURSAL = rs.getInt(3);
+                IDEMPRESA = rs.getInt(4);
                 txtUsuario.setForeground(colorVerdeOscuro);
                 txtContrasena.grabFocus();
             } else {

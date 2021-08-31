@@ -43,6 +43,8 @@ public class JFrmCompraAnulacion extends javax.swing.JInternalFrame {
     Double montoTotalSinIva = 0.0;
     Double montoTotalIva = 0.0;
     Double montoTotal = 0.0;
+    int idempresa = 0;
+    int idsucursal = 0;
 
     //VARIABLE QUE MANEJA QUE TIPOS DE OPERACIONES SE REALIZARAN: SI VA A SER ALTA, BAJA O MODIFICACION DEL REGISTRO
     String operacion = "";
@@ -170,8 +172,9 @@ public class JFrmCompraAnulacion extends javax.swing.JInternalFrame {
                 txtDescripcionCuenta.setText("");
             } else {
                 txtDescripcionCuenta.setText(DescripcionCuenta);
-
             }
+            idempresa = Integer.parseInt(tablaDatosCompras.getValueAt(fila, 20).toString());
+            idsucursal = Integer.parseInt(tablaDatosCompras.getValueAt(fila, 21).toString());
             txtObservacionAnulacion.grabFocus();
         } else {
             txtEstablecimiento.setText(null);
@@ -198,6 +201,8 @@ public class JFrmCompraAnulacion extends javax.swing.JInternalFrame {
             montoTotalSinIva = 0.0;
             montoTotalIva = 0.0;
             montoTotal = 0.0;
+            idempresa = 0;
+            idsucursal = 0;
         }
     }
 
@@ -226,6 +231,8 @@ public class JFrmCompraAnulacion extends javax.swing.JInternalFrame {
         montoTotalSinIva = 0.0;
         montoTotalIva = 0.0;
         montoTotal = 0.0;
+        idempresa = 0;
+        idsucursal = 0;
         txtCodigoTipoMovimiento.setText(null);
         txtDescripcionTipoMovimiento.setText(null);
         txtObservacionAnulacion.setText(null);
@@ -291,6 +298,8 @@ public class JFrmCompraAnulacion extends javax.swing.JInternalFrame {
             ca.setTotalneto(totalneto);
             ca.setTotaliva(totaliva);
             ca.setIdcuenta(idcuenta);
+            ca.setIdempresa(idempresa);
+            ca.setIdsucursal(idsucursal);
             daoCompraAnulado.agregar(ca);
         } else {
             JOptionPane.showMessageDialog(null, msj, "ERRORES", JOptionPane.ERROR_MESSAGE);
@@ -600,14 +609,14 @@ public class JFrmCompraAnulacion extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "<html><p style=\"text-align:center\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Establecimiento</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">PuntoEmision</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Numero</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Comprobante</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Timbrado</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">CodigoCompra</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">FechaCompra</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">ObservacionCompra</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">CodigoMoneda</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">DescripcionMoneda</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">CodigoDeposito</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">DescripcionDeposito</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">CodigoProveedor</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Proveedor</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">CodigoUsuario</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">DescripcionUsuario</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">MontoTotalSinIva</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">MontoTotalIva</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">CodigoCuenta</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">DescripcionCuenta</span></span></span></p></html>"
+                "<html><p style=\"text-align:center\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Establecimiento</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">PuntoEmision</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Numero</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Comprobante</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Timbrado</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">CodigoCompra</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">FechaCompra</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">ObservacionCompra</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">CodigoMoneda</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">DescripcionMoneda</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">CodigoDeposito</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">DescripcionDeposito</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">CodigoProveedor</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Proveedor</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">CodigoUsuario</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">DescripcionUsuario</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">MontoTotalSinIva</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">MontoTotalIva</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">CodigoCuenta</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">DescripcionCuenta</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">CodigoEmpresa</span></span></span></p></html>", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">CodigoSucursal</span></span></span></p></html>"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -670,6 +679,12 @@ public class JFrmCompraAnulacion extends javax.swing.JInternalFrame {
             tablaDatosCompras.getColumnModel().getColumn(18).setMinWidth(0);
             tablaDatosCompras.getColumnModel().getColumn(18).setPreferredWidth(0);
             tablaDatosCompras.getColumnModel().getColumn(18).setMaxWidth(0);
+            tablaDatosCompras.getColumnModel().getColumn(20).setMinWidth(0);
+            tablaDatosCompras.getColumnModel().getColumn(20).setPreferredWidth(0);
+            tablaDatosCompras.getColumnModel().getColumn(20).setMaxWidth(0);
+            tablaDatosCompras.getColumnModel().getColumn(21).setMinWidth(0);
+            tablaDatosCompras.getColumnModel().getColumn(21).setPreferredWidth(0);
+            tablaDatosCompras.getColumnModel().getColumn(21).setMaxWidth(0);
         }
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);

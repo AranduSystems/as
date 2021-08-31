@@ -27,6 +27,8 @@ public class CompraAnulado {
     private double totalneto;
     private double totaliva;
     private int idcuenta;
+    private int idempresa;
+    private int idsucursal;
     
     public CompraAnulado() {
     }
@@ -174,6 +176,21 @@ public class CompraAnulado {
     public void setIdcuenta(int idcuenta) {
         this.idcuenta = idcuenta;
     }
-    
+
+    public int getIdempresa() {
+        return idempresa;
+    }
+
+    public void setIdempresa(int idempresa) {
+        this.idempresa = idempresa;
+    }
+
+    public int getIdsucursal() {
+        return idsucursal;
+    }
+
+    public void setIdsucursal(int idsucursal) {
+        this.idsucursal = idsucursal;
+    }
     
 }

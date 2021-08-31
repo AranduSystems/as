@@ -89,6 +89,9 @@ public class JFrmCompra extends javax.swing.JInternalFrame {
     Double valorTotalDocumentoCuota = 0.0;
     Double valorTotalDocumento = 0.0;
 
+    int idempresa = 0;
+    int idsucursal = 0;
+
     /**
      * Creates new form JFrmCompra
      */
@@ -105,6 +108,8 @@ public class JFrmCompra extends javax.swing.JInternalFrame {
     public void obtenerConfiguracion() {
         boolean resultado;
         int codigosucursal = appLogin.IDSUCURSAL;
+        idempresa = appLogin.IDEMPRESA;
+        idsucursal = appLogin.IDSUCURSAL;
         co.setIdsucursal(codigosucursal);
         resultado = daoConfiguracion.consultarDatos(co);
         if (resultado == true) {
@@ -502,6 +507,8 @@ public class JFrmCompra extends javax.swing.JInternalFrame {
                 c.setTotaliva(Math.round(totaliva * 1000.0) / 1000.0);
             }
             c.setIdcuenta(idcuenta);
+            c.setIdempresa(idempresa);
+            c.setIdsucursal(idsucursal);
             dao.agregar(c);
         }
         return id;

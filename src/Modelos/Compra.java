@@ -7,6 +7,7 @@ import java.util.Date;
  * @author armando
  */
 public class Compra {
+
     private int idcompra;
     private String numerodocumento;
     private int numerotimbrado;
@@ -20,6 +21,8 @@ public class Compra {
     private double totalneto;
     private double totaliva;
     private int idcuenta;
+    private int idempresa;
+    private int idsucursal;
 
     public Compra() {
     }
@@ -39,7 +42,7 @@ public class Compra {
     public void setNumerodocumento(String numerodocumento) {
         this.numerodocumento = numerodocumento;
     }
-    
+
     public int getNumerotimbrado() {
         return numerotimbrado;
     }
@@ -127,5 +130,21 @@ public class Compra {
     public void setIdcuenta(int idcuenta) {
         this.idcuenta = idcuenta;
     }
-    
+
+    public int getIdempresa() {
+        return idempresa;
+    }
+
+    public void setIdempresa(int idempresa) {
+        this.idempresa = idempresa;
+    }
+
+    public int getIdsucursal() {
+        return idsucursal;
+    }
+
+    public void setIdsucursal(int idsucursal) {
+        this.idsucursal = idsucursal;
+    }
+
 }

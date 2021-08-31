@@ -85,7 +85,7 @@ public class DAOUsuario implements OperacionesUsuario {
             ps.setString(6, u.getAlias());
             ps.setString(7, u.getClave());
             ps.setInt(8, u.getIdempresa());
-            ps.setInt(9, u.getIdusuario());
+            ps.setInt(9, u.getIdsucursal());
             ps.setInt(10, u.getIdusuario());
             int filas = ps.executeUpdate();
             if (filas > 0) {

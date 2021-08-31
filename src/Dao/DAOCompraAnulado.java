@@ -30,8 +30,8 @@ public class DAOCompraAnulado implements OperacionesCompraAnulado {
                 + "idmotivo, idusuarioanulado, idcompra, numerodocumento, \n"
                 + "numerotimbrado, fecha, observacion, idmoneda, \n"
                 + "iddeposito, idtipomovimiento, idproveedor, idusuario, \n"
-                + "totalneto, totaliva, idcuenta)\n"
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                + "totalneto, totaliva, idcuenta, idempresa, idsucursal)\n"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         Connection con;
         PreparedStatement ps;
         try {
@@ -56,6 +56,8 @@ public class DAOCompraAnulado implements OperacionesCompraAnulado {
             ps.setDouble(16, ca.getTotalneto());
             ps.setDouble(17, ca.getTotaliva());
             ps.setInt(18, ca.getIdcuenta());
+            ps.setInt(19, ca.getIdempresa());
+            ps.setInt(20, ca.getIdsucursal());
             int filas = ps.executeUpdate();
             if (filas > 0) {
                 con.close();
@@ -160,6 +162,8 @@ public class DAOCompraAnulado implements OperacionesCompraAnulado {
                 ca.setTotalneto(rs.getDouble(16));
                 ca.setTotaliva(rs.getDouble(17));
                 ca.setIdcuenta(rs.getInt(18));
+                ca.setIdempresa(rs.getInt(19));
+                ca.setIdsucursal(rs.getInt(20));
                 con.close();
                 return true;
             } else {

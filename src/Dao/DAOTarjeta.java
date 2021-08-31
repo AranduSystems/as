@@ -1,6 +1,9 @@
 package Dao;
 
 import Controladores.Database;
+import Controladores.OperacionesTarjeta;
+import Modelos.Banco;
+import Modelos.Tarjeta;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,31 +11,32 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import Modelos.TipoTarjeta;
-import Controladores.OperacionesTipoTarjeta;
 
 /**
  *
  * @author armando
  */
-public class DAOTipoTarjeta implements OperacionesTipoTarjeta {
+public class DAOTarjeta implements OperacionesTarjeta {
 
     //CONEXION A LAS CLASE DE MODELOS Y CONTROLADORES
     Database db = new Database();
-    TipoTarjeta tt = new TipoTarjeta();
+    Tarjeta t = new Tarjeta();
 
     @Override
     public boolean agregar(Object obj) {
-        tt = (TipoTarjeta) obj;
-        String sql = "INSERT INTO tipo_tarjeta VALUES(?, ?);";
+        t = (Tarjeta) obj;
+        String sql = "INSERT INTO tarjeta\n"
+                + "(idtarjeta, descripcion, idtipo)\n"
+                + "VALUES (?, ?, ?);";
         Connection con;
         PreparedStatement ps;
         try {
             Class.forName(db.getDriver());
             con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
             ps = con.prepareStatement(sql);
-            ps.setInt(1, tt.getIdtipo());
-            ps.setString(2, tt.getDescripcion());
+            ps.setInt(1, t.getIdtarjeta());
+            ps.setString(2, t.getDescripcion());
+            ps.setInt(3, t.getIdtipo());
             int filas = ps.executeUpdate();
             if (filas > 0) {
                 con.close();
@@ -50,16 +54,21 @@ public class DAOTipoTarjeta implements OperacionesTipoTarjeta {
 
     @Override
     public boolean modificar(Object obj) {
-        tt = (TipoTarjeta) obj;
-        String sql = "UPDATE tipo_tarjeta SET descripcion = ? WHERE idtipo = ?;";
+        t = (Tarjeta) obj;
+        String sql = "UPDATE tarjeta\n"
+                + "	SET\n"
+                + "		descripcion=?,\n"
+                + "		idtipo=?\n"
+                + "	WHERE idtarjeta=?;";
         Connection con;
         PreparedStatement ps;
         try {
             Class.forName(db.getDriver());
             con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
             ps = con.prepareStatement(sql);
-            ps.setString(1, tt.getDescripcion());
-            ps.setInt(2, tt.getIdtipo());
+            ps.setString(1, t.getDescripcion());
+            ps.setInt(2, t.getIdtipo());
+            ps.setInt(3, t.getIdtarjeta());
             int filas = ps.executeUpdate();
             if (filas > 0) {
                 con.close();
@@ -77,15 +86,15 @@ public class DAOTipoTarjeta implements OperacionesTipoTarjeta {
 
     @Override
     public boolean eliminar(Object obj) {
-        tt = (TipoTarjeta) obj;
-        String sql = "DELETE FROM tipo_tarjeta WHERE idtipo = ?;";
+        t = (Tarjeta) obj;
+        String sql = "DELETE FROM tarjeta WHERE idtarjeta=?;";
         Connection con;
         PreparedStatement ps;
         try {
             Class.forName(db.getDriver());
             con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
             ps = con.prepareStatement(sql);
-            ps.setInt(1, tt.getIdtipo());
+            ps.setInt(1, t.getIdtarjeta());
             int filas = ps.executeUpdate();
             if (filas > 0) {
                 con.close();
@@ -103,15 +112,15 @@ public class DAOTipoTarjeta implements OperacionesTipoTarjeta {
 
     @Override
     public int nuevoID() {
-        String sql = "select idtipo + 1 as proximo_cod_libre\n"
-                + "  from (select 0 as idtipo\n"
+        String sql = "select idtarjeta + 1 as proximo_cod_libre\n"
+                + "  from (select 0 as idtarjeta\n"
                 + "         union all\n"
-                + "        select idtipo\n"
-                + "          from tipo_tarjeta) t1\n"
+                + "        select idtarjeta\n"
+                + "          from tarjeta) t1\n"
                 + " where not exists (select null\n"
-                + "                     from TIPO_TARJETA t2\n"
-                + "                    where t2.idtipo = t1.idtipo + 1)\n"
-                + " order by idtipo\n"
+                + "                     from tarjeta t2\n"
+                + "                    where t2.idtarjeta = t1.idtarjeta + 1)\n"
+                + " order by idtarjeta\n"
                 + " LIMIT 1;";
         Connection con;
         PreparedStatement ps;
@@ -134,7 +143,15 @@ public class DAOTipoTarjeta implements OperacionesTipoTarjeta {
 
     @Override
     public ArrayList<Object[]> consultar(String criterio) {
-        String sql = "SELECT * FROM tipo_tarjeta WHERE CONCAT(descripcion, idtipo) LIKE ? ORDER BY descripcion;";
+        String sql = "SELECT \n"
+                + "T.idtarjeta,\n"
+                + "T.descripcion,\n"
+                + "T.idtipo,\n"
+                + "TT.descripcion\n"
+                + "FROM tarjeta AS T\n"
+                + "INNER JOIN tipo_tarjeta AS TT ON TT.idtipo = T.idtipo\n"
+                + "WHERE CONCAT(T.descripcion, TT.descripcion, T.idtarjeta) LIKE ?\n"
+                + "ORDER BY T.descripcion;";
         Connection con;
         PreparedStatement ps;
         ResultSet rs;
@@ -146,9 +163,11 @@ public class DAOTipoTarjeta implements OperacionesTipoTarjeta {
             ps.setString(1, "%" + criterio + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
-                Object[] fila = new Object[2];
+                Object[] fila = new Object[4];
                 fila[0] = rs.getInt(1);
                 fila[1] = rs.getString(2);
+                fila[2] = rs.getInt(3);
+                fila[3] = rs.getString(4);
                 datos.add(fila);
             }
             con.close();
@@ -160,8 +179,8 @@ public class DAOTipoTarjeta implements OperacionesTipoTarjeta {
 
     @Override
     public boolean consultarDatos(Object obj) {
-        tt = (TipoTarjeta) obj;
-        String sql = "SELECT * FROM tipo_tarjeta WHERE idtipo = ?;";
+        t = (Tarjeta) obj;
+        String sql = "SELECT * FROM tarjeta WHERE idtarjeta = ?;";
         Connection con;
         PreparedStatement ps;
         ResultSet rs;
@@ -169,15 +188,16 @@ public class DAOTipoTarjeta implements OperacionesTipoTarjeta {
             Class.forName(db.getDriver());
             con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
             ps = con.prepareStatement(sql);
-            ps.setInt(1, tt.getIdtipo());
+            ps.setInt(1, t.getIdtarjeta());
             rs = ps.executeQuery();
             if (rs.next()) {
-                tt.setIdtipo(rs.getInt(1));
-                tt.setDescripcion(rs.getString(2));
+                t.setIdtarjeta(rs.getInt(1));
+                t.setDescripcion(rs.getString(2));
+                t.setIdtipo(rs.getInt(3));
                 con.close();
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "NO EXISTE TIPO DE TARJETA CON EL CÓDIGO INGRESADO...", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "NO EXISTE TARJETA CON EL CÓDIGO INGRESADO...", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                 con.close();
                 return false;
             }

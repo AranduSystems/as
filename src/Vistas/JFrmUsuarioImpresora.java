@@ -614,7 +614,6 @@ public class JFrmUsuarioImpresora extends javax.swing.JInternalFrame {
             int idimpresora = Integer.parseInt(txtCodigoImpresora.getText());
             i.setIdimpresora(idimpresora);
             boolean resultado = daoImpresora.consultarDatos(i);
-            System.out.println("" + actualizar);
             if (resultado == true) {
                 txtDescripcionImpresora.setText(i.getDescripcion());
                 btnConfirmar.grabFocus();
