@@ -142,4 +142,33 @@ public class DAOUsuarioImpresora implements OperacionesUsuarioImpresora {
         }
         return datos;
     }
+
+    @Override
+    public boolean consultarDatosImpresora(Object obj) {
+        ui = (UsuarioImpresora) obj;
+        String sql = "SELECT *\n"
+                + "FROM usuario_impresora a WHERE a.idusuario = ?;";
+        Connection con;
+        PreparedStatement ps;
+        ResultSet rs;
+        try {
+            Class.forName(db.getDriver());
+            con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, ui.getIdusuario());
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                ui.setIdusuario(rs.getInt(1));
+                ui.setIdimpresora(rs.getInt(2));
+                con.close();
+                return true;
+            } else {
+                con.close();
+                return false;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR AL OBTENER EL REGISTRO SELECCIONADO \n" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
 }

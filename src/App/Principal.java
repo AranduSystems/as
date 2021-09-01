@@ -54,6 +54,7 @@ import Vistas.JFrmUnidadMedida;
 import Vistas.JFrmUsuario;
 import Vistas.JFrmUsuarioImpresora;
 import Vistas.JFrmUsuarioPrograma;
+import Vistas.JFrmVenta;
 import com.formdev.flatlaf.*;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -136,6 +137,7 @@ public class Principal extends javax.swing.JFrame {
         itemListaPrecio = new javax.swing.JMenuItem();
         itemArticuloListaPrecio = new javax.swing.JMenuItem();
         menuMovimientoVentas = new javax.swing.JMenu();
+        itemVenta = new javax.swing.JMenuItem();
         menuConsultaVentas = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         menuMantenimientoProducciones = new javax.swing.JMenu();
@@ -397,6 +399,16 @@ public class Principal extends javax.swing.JFrame {
         menuMovimientoVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8_course_16px.png"))); // NOI18N
         menuMovimientoVentas.setText("Movimientos");
         menuMovimientoVentas.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+
+        itemVenta.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        itemVenta.setText("Ventas");
+        itemVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemVentaActionPerformed(evt);
+            }
+        });
+        menuMovimientoVentas.add(itemVenta);
+
         jMenu3.add(menuMovimientoVentas);
 
         menuConsultaVentas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8_browse_folder_16px.png"))); // NOI18N
@@ -1573,6 +1585,24 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_itemTarjetaActionPerformed
 
+    private void itemVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemVentaActionPerformed
+        JFrmVenta fm = new JFrmVenta();
+        panelInterno.add(fm);
+        Dimension desktopSize = panelInterno.getSize();
+        Dimension frameSize = fm.getSize();
+        fm.setLocation((desktopSize.width - frameSize.width) / 2, (desktopSize.height - frameSize.height) / 2);
+        try {
+            fm.setSelected(true);
+        } catch (PropertyVetoException e) {
+            JOptionPane.showMessageDialog(null, "ERROR AL ABRIR EL FORMULARIO: " + fm.getTitle(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        if (verificarPermisos(App.appLogin.IDUSUARIO, fm.getTitle()) == true) {
+            fm.show();
+        } else {
+            JOptionPane.showMessageDialog(null, "EL PROGRAMA NO ESTA HABILITADO PARA EL USUARIO\nPROGRAMA: " + fm.getTitle() + " USUARIO: " + App.appLogin.LOGIN, "ACCESO RESTRINGIDO", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_itemVentaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1654,6 +1684,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemUnidadMedida;
     private javax.swing.JMenuItem itemUsuarioImpresora;
     private javax.swing.JMenuItem itemUsuarios;
+    private javax.swing.JMenuItem itemVenta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JMenu jMenu1;

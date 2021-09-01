@@ -11,4 +11,5 @@ public interface OperacionesUsuarioImpresora {
     public boolean eliminar(Object obj);
     public ArrayList<Object[]> consultar(String criterio);
     public boolean consultarDatos(Object obj);
+    public boolean consultarDatosImpresora(Object obj);
 }
