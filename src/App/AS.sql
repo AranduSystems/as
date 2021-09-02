@@ -3070,7 +3070,7 @@ CREATE TABLE IF NOT EXISTS `cliente_lista_precio` (
   CONSTRAINT `FK_CLIENTE_LISTA_PRECIO_LISTA_PRECIO` FOREIGN KEY (`idlista`) REFERENCES `lista_precio` (`idlista`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.cliente_lista_precio: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.cliente_lista_precio: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `cliente_lista_precio` DISABLE KEYS */;
 REPLACE INTO `cliente_lista_precio` (`idcliente`, `idlista`, `descuento`, `recargo`) VALUES
 	(2, 1, 5, 0),
@@ -3295,7 +3295,7 @@ CREATE TABLE IF NOT EXISTS `cotizacion` (
   CONSTRAINT `FK_COTIZACION_MONEDA` FOREIGN KEY (`idmoneda`) REFERENCES `moneda` (`idmoneda`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla as.cotizacion: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.cotizacion: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `cotizacion` DISABLE KEYS */;
 REPLACE INTO `cotizacion` (`idmoneda`, `fecha`, `tasacompra`, `tasaventa`) VALUES
 	(2, '2021-09-02', 6900, 7000);
@@ -3579,7 +3579,7 @@ CREATE TABLE IF NOT EXISTS `programa` (
   PRIMARY KEY (`idprograma`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.programa: ~46 rows (aproximadamente)
+-- Volcando datos para la tabla as.programa: ~47 rows (aproximadamente)
 /*!40000 ALTER TABLE `programa` DISABLE KEYS */;
 REPLACE INTO `programa` (`idprograma`, `descripcion`) VALUES
 	(1, 'JFrmPrograma'),
@@ -7597,7 +7597,7 @@ CREATE TABLE IF NOT EXISTS `usuario_programa` (
   KEY `FK_USUARIO_PROGRAMA_USUARIO` (`idusuario`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.usuario_programa: 46 rows
+-- Volcando datos para la tabla as.usuario_programa: 47 rows
 /*!40000 ALTER TABLE `usuario_programa` DISABLE KEYS */;
 REPLACE INTO `usuario_programa` (`idusuario`, `idprograma`) VALUES
 	(1, 1),
