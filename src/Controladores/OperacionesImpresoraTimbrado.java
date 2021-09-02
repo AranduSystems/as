@@ -13,4 +13,5 @@ public interface OperacionesImpresoraTimbrado {
     public int nuevoID();
     public ArrayList<Object[]> consultar(int idimpresora);
     public boolean consultarDatos(Object obj);
+    public boolean consultarDatosTimbrado(Object obj);
 }

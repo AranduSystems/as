@@ -7,11 +7,13 @@ import Dao.DAOImpresora;
 import Dao.DAOImpresoraTimbrado;
 import Dao.DAOTipoMovimiento;
 import Dao.DAOUsuarioImpresora;
+import Dao.DAOVenta;
 import Modelos.Configuracion;
 import Modelos.Impresora;
 import Modelos.ImpresoraTimbrado;
 import Modelos.TipoMovimiento;
 import Modelos.UsuarioImpresora;
+import Modelos.Venta;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
@@ -27,6 +29,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     ImpresoraTimbrado it = new ImpresoraTimbrado();
     TipoMovimiento tm = new TipoMovimiento();
     Impresora i = new Impresora();
+    Venta v = new Venta();
 
     DAOCotizacion daoCotizacion = new DAOCotizacion();
     DAOConfiguracion daoConfiguracion = new DAOConfiguracion();
@@ -34,6 +37,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     DAOImpresoraTimbrado daoImpresoraTimbrado = new DAOImpresoraTimbrado();
     DAOTipoMovimiento daoTipoMovimiento = new DAOTipoMovimiento();
     DAOImpresora daoImpresora = new DAOImpresora();
+    DAOVenta dao = new DAOVenta();
 
     Date SYSDATE = new Date();
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -47,6 +51,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     int idtipomovimientocontado;
     int idtipomovimientocredito;
     String ultimo_numero_factura = "";
+    int idimpresora;
 
     /**
      * Creates new form JFrmVenta
@@ -83,21 +88,62 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         ui.setIdusuario(idusuario);
         resultadoImpresora = daoUsuarioImpresora.consultarDatosImpresora(ui);
         if (resultadoImpresora) {
-            int idimpresora = ui.getIdimpresora();
+            idimpresora = ui.getIdimpresora();
             boolean resultadoUltimoNumeroFactura;
             i.setIdimpresora(idimpresora);
             resultadoUltimoNumeroFactura = daoImpresora.consultarDatos(i);
             if (resultadoUltimoNumeroFactura) {
                 ultimo_numero_factura = i.getUltimo_numero_factura();
+                obtenerTimbrado();
             }
         } else {
             JOptionPane.showMessageDialog(null, "EL USUARIO NO TIENE HABILITADO NINGUNA IMPRESORA.\nINGRESE EN SISTEMA Y ASIGNE UNA IMPRESORA PRIMERO", "ERROR", JOptionPane.ERROR_MESSAGE);
             dispose();
         }
     }
-    
-    public void obtenerTimbrado(){
-        
+
+    public void obtenerTimbrado() {
+        int idtipomovimiento;
+        if (rbContado.isSelected()) {
+            idtipomovimiento = idtipomovimientocontado;
+        } else {
+            idtipomovimiento = idtipomovimientocredito;
+        }
+        tm.setIdtipomovimiento(idtipomovimiento);
+        boolean resultado = daoTipoMovimiento.consultarDatos(tm);
+        int idtipo;
+        if (resultado) {
+            idtipo = tm.getIdtipo();
+            it.setIdimpresora(idimpresora);
+            it.setIdtipocomprobante(idtipo);
+            boolean resultadoTimbrado = daoImpresoraTimbrado.consultarDatosTimbrado(it);
+            if (resultadoTimbrado) {
+                int timbrado = it.getNumerotimbrado();
+                int numeroInicial = it.getNumeroinicial();
+                int numeroFinal = it.getNumerofinal();
+                txtTimbrado.setText("" + timbrado);
+                int establecimiento = Integer.parseInt(ultimo_numero_factura.substring(0, 3));
+                int puntoemision = Integer.parseInt(ultimo_numero_factura.substring(4, 7));
+                int numero = Integer.parseInt(ultimo_numero_factura.substring(8, 15));
+                txtEstablecimiento.setText(String.format(tres_ceros, establecimiento));
+                txtPuntoEmision.setText(String.format(tres_ceros, puntoemision));
+                txtNumero.setText(String.format(siete_ceros, (numero + 1)));
+                String nuevo_numero_factura = (String.format(tres_ceros, establecimiento) + "-" + String.format(tres_ceros, puntoemision) + "-" + String.format(siete_ceros, (numero + 1)));
+                txtComprobante.setText(nuevo_numero_factura);
+                if ((numero+1)<numeroFinal && (numero+1)>numeroInicial) {
+                    //VALIDAR DUPLICACION DE DOCUMENTO
+                    boolean existe = dao.verificarExistenciaVenta(txtComprobante.getText(), Integer.parseInt(txtTimbrado.getText()));
+                    if (existe) {
+                        
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "EL TIMBRADO YA NO POSEE NUMEROS DISPONIBLES...", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "NO SE HAN ENCONTRADO LOS DATOS PARA VERIFICAR EL TIMBRADO...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+
     }
 
     /**

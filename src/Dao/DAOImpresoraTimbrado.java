@@ -257,4 +257,44 @@ public class DAOImpresoraTimbrado implements OperacionesImpresoraTimbrado {
         }
     }
 
+    @Override
+    public boolean consultarDatosTimbrado(Object obj) {
+        it = (ImpresoraTimbrado) obj;
+        String sql = "SELECT * \n"
+                + "FROM impresora_timbrado\n"
+                + "WHERE idimpresora=? AND idtipocomprobante=?;";
+        Connection con;
+        PreparedStatement ps;
+        ResultSet rs;
+        try {
+            Class.forName(db.getDriver());
+            con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, it.getIdimpresora());
+            ps.setInt(2, it.getIdtipocomprobante());
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                it.setIdimpresora(rs.getInt(1));
+                it.setIdtimbrado(rs.getInt(2));
+                it.setIdtipocomprobante(rs.getInt(3));
+                it.setEstablecimiento(rs.getInt(4));
+                it.setPuntoemision(rs.getInt(5));
+                it.setNumerotimbrado(rs.getInt(6));
+                it.setNumeroinicial(rs.getInt(7));
+                it.setNumerofinal(rs.getInt(8));
+                it.setFechainicial(rs.getDate(9));
+                it.setFechafinal(rs.getDate(10));
+                con.close();
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "NO EXISTE TIMBRADO DE IMPRESORA CON LOS CÓDIGO INGRESADO...", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                con.close();
+                return false;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR AL OBTENER EL REGISTRO SELECCIONADO \n" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+
 }
