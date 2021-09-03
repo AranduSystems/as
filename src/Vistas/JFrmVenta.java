@@ -1,6 +1,7 @@
 package Vistas;
 
 import App.appLogin;
+import Dao.DAOCliente;
 import Dao.DAOConfiguracion;
 import Dao.DAOCotizacion;
 import Dao.DAOCuenta;
@@ -10,8 +11,11 @@ import Dao.DAOMoneda;
 import Dao.DAOTipoMovimiento;
 import Dao.DAOUsuarioImpresora;
 import Dao.DAOVenta;
+import Dao.DAODeposito;
+import Modelos.Cliente;
 import Modelos.Configuracion;
 import Modelos.Cuenta;
+import Modelos.Deposito;
 import Modelos.Impresora;
 import Modelos.ImpresoraTimbrado;
 import Modelos.Moneda;
@@ -38,6 +42,8 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     Venta v = new Venta();
     Cuenta cu = new Cuenta();
     Moneda m = new Moneda();
+    Deposito d = new Deposito();
+    Cliente cli = new Cliente();
 
     DAOCotizacion daoCotizacion = new DAOCotizacion();
     DAOConfiguracion daoConfiguracion = new DAOConfiguracion();
@@ -48,9 +54,12 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     DAOVenta dao = new DAOVenta();
     DAOCuenta daoCuenta = new DAOCuenta();
     DAOMoneda daoMoneda = new DAOMoneda();
+    DAODeposito daoDeposito = new DAODeposito();
+    DAOCliente daoCliente = new DAOCliente();
 
     ArrayList<Object[]> datosMoneda = new ArrayList<>();
     ArrayList<Object[]> datosCuenta = new ArrayList<>();
+    ArrayList<Object[]> datosDeposito = new ArrayList<>();
 
     Date SYSDATE = new Date();
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -214,6 +223,32 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         }
     }
 
+    public void cargarDeposito() {
+        DefaultTableModel modelo = (DefaultTableModel) tablaDatosDepositos.getModel();
+        modelo.setRowCount(0);
+        datosDeposito = daoDeposito.consultar(txtCriterioDeposito.getText());
+        for (Object[] obj : datosDeposito) {
+            modelo.addRow(obj);
+        }
+        this.tablaDatosDepositos.setModel(modelo);
+    }
+    
+    private void buscarDeposito() {
+        cargarDeposito();
+        BuscadorDeposito.setModal(true);
+        BuscadorDeposito.setSize(540, 285);
+        BuscadorDeposito.setLocationRelativeTo(this);
+        BuscadorDeposito.setVisible(true);
+        int fila = tablaDatosDepositos.getSelectedRow();
+        if (fila >= 0) {
+            txtCodigoDeposito.setText(tablaDatosDepositos.getValueAt(fila, 0).toString());
+            txtDescripcionDeposito.setText(tablaDatosDepositos.getValueAt(fila, 1).toString());
+        } else {
+            txtCodigoDeposito.setText(null);
+            txtDescripcionDeposito.setText(null);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -236,6 +271,12 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         txtCriterioCuenta = new org.jdesktop.swingx.JXTextField();
         jScrollPane7 = new javax.swing.JScrollPane();
         tablaDatosCuenta = new javax.swing.JTable();
+        BuscadorDeposito = new javax.swing.JDialog();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        txtCriterioDeposito = new org.jdesktop.swingx.JXTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tablaDatosDepositos = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -258,6 +299,12 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         txtCodigoMoneda = new org.jdesktop.swingx.JXTextField();
         txtDescripcionMoneda = new org.jdesktop.swingx.JXTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtCodigoDeposito = new org.jdesktop.swingx.JXTextField();
+        txtDescripcionDeposito = new org.jdesktop.swingx.JXTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txtCodigoProveedor = new org.jdesktop.swingx.JXTextField();
+        txtDescripcionProveedor = new org.jdesktop.swingx.JXTextField();
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -449,6 +496,101 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
             .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel11.setBackground(new java.awt.Color(50, 104, 151));
+        jLabel11.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("BUSCADOR DE DEPÓSITOS");
+        jLabel11.setOpaque(true);
+
+        txtCriterioDeposito.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtCriterioDeposito.setPrompt("Aqui puede ingresar los filtros para la busqueda..");
+        txtCriterioDeposito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCriterioDepositoActionPerformed(evt);
+            }
+        });
+        txtCriterioDeposito.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCriterioDepositoKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCriterioDepositoKeyTyped(evt);
+            }
+        });
+
+        tablaDatosDepositos.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        tablaDatosDepositos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "<html><p style=\"text-align:center\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Código</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Descripción</span></span></span></p></html> "
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaDatosDepositos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaDatosDepositosMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tablaDatosDepositos);
+        if (tablaDatosDepositos.getColumnModel().getColumnCount() > 0) {
+            tablaDatosDepositos.getColumnModel().getColumn(0).setMinWidth(60);
+            tablaDatosDepositos.getColumnModel().getColumn(0).setPreferredWidth(60);
+            tablaDatosDepositos.getColumnModel().getColumn(0).setMaxWidth(60);
+        }
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCriterioDeposito, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtCriterioDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout BuscadorDepositoLayout = new javax.swing.GroupLayout(BuscadorDeposito.getContentPane());
+        BuscadorDeposito.getContentPane().setLayout(BuscadorDepositoLayout);
+        BuscadorDepositoLayout.setHorizontalGroup(
+            BuscadorDepositoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        BuscadorDepositoLayout.setVerticalGroup(
+            BuscadorDepositoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         setClosable(true);
         setIconifiable(true);
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -596,6 +738,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         jLabel5.setText("Timbrado:");
 
         txtTimbrado.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtTimbrado.setEnabled(false);
         txtTimbrado.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtTimbrado.setPrompt("00000000");
         txtTimbrado.addActionListener(new java.awt.event.ActionListener() {
@@ -659,6 +802,57 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         txtDescripcionMoneda.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtDescripcionMoneda.setPrompt("Descripción o nombre de la moneda...");
 
+        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel6.setText("Depósito:");
+
+        txtCodigoDeposito.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtCodigoDeposito.setPrompt("Cód. Dep.");
+        txtCodigoDeposito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoDepositoActionPerformed(evt);
+            }
+        });
+        txtCodigoDeposito.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodigoDepositoKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoDepositoKeyTyped(evt);
+            }
+        });
+
+        txtDescripcionDeposito.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtDescripcionDeposito.setEnabled(false);
+        txtDescripcionDeposito.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        txtDescripcionDeposito.setPrompt("Descripción o nombre del depósito...");
+
+        jLabel9.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel9.setText("Cliente:");
+
+        txtCodigoProveedor.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtCodigoProveedor.setPrompt("Cód. Prov.");
+        txtCodigoProveedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoProveedorActionPerformed(evt);
+            }
+        });
+        txtCodigoProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodigoProveedorKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoProveedorKeyTyped(evt);
+            }
+        });
+
+        txtDescripcionProveedor.setToolTipText("Razón Social del proveedor...");
+        txtDescripcionProveedor.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        txtDescripcionProveedor.setEnabled(false);
+        txtDescripcionProveedor.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        txtDescripcionProveedor.setPrompt("Razón Social del proveedor...");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -694,11 +888,24 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDescripcionCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCodigoMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtDescripcionMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(txtCodigoMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDescripcionMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(txtCodigoDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDescripcionDeposito, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(txtCodigoProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDescripcionProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(490, 490, 490))
         );
         jPanel3Layout.setVerticalGroup(
@@ -722,11 +929,19 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
                     .addComponent(txtEstablecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPuntoEmision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtComprobante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCodigoDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDescripcionDeposito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(3, 3, 3)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTimbrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtCodigoProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtDescripcionProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTimbrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(3, 3, 3)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -749,7 +964,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(359, Short.MAX_VALUE))
+                .addContainerGap(310, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -854,7 +1069,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         } else {
             txtNumero.setText(String.format(siete_ceros, Integer.parseInt(txtNumero.getText())));
             txtComprobante.setText(txtEstablecimiento.getText() + "-" + txtPuntoEmision.getText() + "-" + txtNumero.getText());
-            txtTimbrado.grabFocus();
+            txtCodigoMoneda.grabFocus();
         }
     }//GEN-LAST:event_txtNumeroActionPerformed
 
@@ -965,11 +1180,11 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
                         dispose();
                     } else {
                         txtDescripcionMoneda.setText(m.getDescripcion());
-                        //txtCodigoDeposito.grabFocus();
+                        txtCodigoDeposito.grabFocus();
                     }
                 } else {
                     txtDescripcionMoneda.setText(m.getDescripcion());
-                    //txtCodigoDeposito.grabFocus();
+                    txtCodigoDeposito.grabFocus();
                 }
             } else {
                 txtCodigoMoneda.setText(null);
@@ -1064,38 +1279,158 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tablaDatosCuentaMouseClicked
 
+    private void txtCodigoDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoDepositoActionPerformed
+        if (txtCodigoDeposito.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "NO PUEDE DEJAR EL CAMPO DE DEPÓSITO VACIO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int iddeposito = Integer.parseInt(txtCodigoDeposito.getText());
+            d.setIddeposito(iddeposito);
+            boolean resultado = daoDeposito.consultarDatos(d);
+            if (resultado == true) {
+                txtDescripcionDeposito.setText(d.getDescripcion());
+                txtCodigoProveedor.grabFocus();
+            } else {
+                txtCodigoDeposito.setText(null);
+                txtDescripcionDeposito.setText(null);
+                txtCodigoDeposito.grabFocus();
+            }
+        }
+    }//GEN-LAST:event_txtCodigoDepositoActionPerformed
+
+    private void txtCodigoDepositoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoDepositoKeyPressed
+        if (evt.VK_F1 == evt.getKeyCode()) {
+            buscarDeposito();
+        }
+    }//GEN-LAST:event_txtCodigoDepositoKeyPressed
+
+    private void txtCodigoDepositoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoDepositoKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+        if (txtCodigoDeposito.getText().length() == 10) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodigoDepositoKeyTyped
+
+    private void txtCriterioDepositoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCriterioDepositoActionPerformed
+        cargarDeposito();
+    }//GEN-LAST:event_txtCriterioDepositoActionPerformed
+
+    private void txtCriterioDepositoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCriterioDepositoKeyPressed
+        if (evt.VK_ESCAPE == evt.getKeyCode()) {
+            txtCodigoDeposito.setText(null);
+            txtDescripcionDeposito.setText(null);
+            txtCodigoDeposito.grabFocus();
+            BuscadorDeposito.dispose();
+        }
+    }//GEN-LAST:event_txtCriterioDepositoKeyPressed
+
+    private void txtCriterioDepositoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCriterioDepositoKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            evt.setKeyChar(Character.toUpperCase(c));
+        }
+        if (txtCriterioDeposito.getText().length() == 100) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCriterioDepositoKeyTyped
+
+    private void tablaDatosDepositosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaDatosDepositosMouseClicked
+        if (evt.getClickCount() == 2) {
+            if (tablaDatosDepositos.getSelectedRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA");
+            } else {
+                txtCriterioDeposito.setText(null);
+                BuscadorDeposito.dispose();
+            }
+        }
+    }//GEN-LAST:event_tablaDatosDepositosMouseClicked
+
+    private void txtCodigoProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoProveedorActionPerformed
+        if (txtCodigoProveedor.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "NO PUEDE DEJAR EL CAMPO DE CLIENTE VACIO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int idcliente = Integer.parseInt(txtCodigoProveedor.getText());
+            cli.setIdcliente(idcliente);
+            boolean resultado = daoCliente.consultarDatos(cli);
+            if (resultado == true) {
+                txtDescripcionProveedor.setText(cli.getNombre()+" "+cli.getApellido());
+                if (rbContado.isSelected()) {
+                    txtCodigoCuenta.grabFocus();
+                } else {
+                    //txtObservacion.grabFocus();
+                }
+            } else {
+                txtCodigoProveedor.setText(null);
+                txtDescripcionProveedor.setText(null);
+                txtCodigoProveedor.grabFocus();
+            }
+        }
+    }//GEN-LAST:event_txtCodigoProveedorActionPerformed
+
+    private void txtCodigoProveedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoProveedorKeyPressed
+        if (evt.VK_F1 == evt.getKeyCode()) {
+            //buscarProveedor();
+        }
+    }//GEN-LAST:event_txtCodigoProveedorKeyPressed
+
+    private void txtCodigoProveedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoProveedorKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+        if (txtCodigoProveedor.getText().length() == 10) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodigoProveedorKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog BuscadorCuenta;
+    private javax.swing.JDialog BuscadorDeposito;
     private javax.swing.JDialog BuscadorMoneda;
     private javax.swing.ButtonGroup grupoContadoCredito;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JRadioButton rbContado;
     private javax.swing.JRadioButton rbCredito;
     private javax.swing.JTable tablaDatosCuenta;
+    private javax.swing.JTable tablaDatosDepositos;
     private javax.swing.JTable tablaDatosMonedas;
     private org.jdesktop.swingx.JXTextField txtCodigoCuenta;
+    private org.jdesktop.swingx.JXTextField txtCodigoDeposito;
     private org.jdesktop.swingx.JXTextField txtCodigoMoneda;
+    private org.jdesktop.swingx.JXTextField txtCodigoProveedor;
     private org.jdesktop.swingx.JXTextField txtComprobante;
     private org.jdesktop.swingx.JXTextField txtCriterioCuenta;
+    private org.jdesktop.swingx.JXTextField txtCriterioDeposito;
     private org.jdesktop.swingx.JXTextField txtCriterioMoneda;
     private org.jdesktop.swingx.JXTextField txtDescripcionCuenta;
+    private org.jdesktop.swingx.JXTextField txtDescripcionDeposito;
     private org.jdesktop.swingx.JXTextField txtDescripcionMoneda;
+    private org.jdesktop.swingx.JXTextField txtDescripcionProveedor;
     private org.jdesktop.swingx.JXTextField txtEstablecimiento;
     private org.jdesktop.swingx.JXDatePicker txtFecha;
     private org.jdesktop.swingx.JXTextField txtNumero;
