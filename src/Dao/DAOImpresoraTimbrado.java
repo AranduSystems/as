@@ -258,11 +258,13 @@ public class DAOImpresoraTimbrado implements OperacionesImpresoraTimbrado {
     }
 
     @Override
-    public boolean consultarDatosTimbrado(Object obj) {
+    public boolean consultarDatosTimbrado(Object obj, Date fecha) {
         it = (ImpresoraTimbrado) obj;
         String sql = "SELECT * \n"
                 + "FROM impresora_timbrado\n"
-                + "WHERE idimpresora=? AND idtipocomprobante=?;";
+                + "WHERE idimpresora=? AND idtipocomprobante=?\n"
+                + "AND ? BETWEEN fechainicial AND fechafinal\n"
+                + "ORDER BY fechafinal ASC LIMIT 1;";
         Connection con;
         PreparedStatement ps;
         ResultSet rs;
@@ -272,6 +274,7 @@ public class DAOImpresoraTimbrado implements OperacionesImpresoraTimbrado {
             ps = con.prepareStatement(sql);
             ps.setInt(1, it.getIdimpresora());
             ps.setInt(2, it.getIdtipocomprobante());
+            ps.setDate(3, fecha);
             rs = ps.executeQuery();
             if (rs.next()) {
                 it.setIdimpresora(rs.getInt(1));

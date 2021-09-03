@@ -8,32 +8,39 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import Controladores.OperacionesListaPrecio;
-import Modelos.ListaPrecio;
+import Controladores.OperacionesVendedor;
+import Modelos.Caja;
+import Modelos.Vendedor;
 
 /**
  *
  * @author armando
  */
-public class DAOListaPrecio implements OperacionesListaPrecio {
+public class DAOVendedor implements OperacionesVendedor {
 
     //CONEXION A LAS CLASE DE MODELOS Y CONTROLADORES
     Database db = new Database();
-    ListaPrecio lp = new ListaPrecio();
+    Vendedor v = new Vendedor();
 
     @Override
     public boolean agregar(Object obj) {
-        lp = (ListaPrecio) obj;
-        String sql = "INSERT INTO lista_precio VALUES(?, ?, ?);";
+        v = (Vendedor) obj;
+        String sql = "INSERT INTO vendedor\n"
+                + "(idvendedor, nombre, apellido, estado, porcentajecomision, idempresa, idsucursal)\n"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?);";
         Connection con;
         PreparedStatement ps;
         try {
             Class.forName(db.getDriver());
             con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
             ps = con.prepareStatement(sql);
-            ps.setInt(1, lp.getIdlista());
-            ps.setString(2, lp.getDescripcion());
-            ps.setInt(3, lp.getIdmoneda());
+            ps.setInt(1, v.getIdvendedor());
+            ps.setString(2, v.getNombre());
+            ps.setString(3, v.getApellido());
+            ps.setString(4, v.getEstado());
+            ps.setDouble(5, v.getPorcentajecomision());
+            ps.setInt(6, v.getIdempresa());
+            ps.setInt(7, v.getIdsucursal());
             int filas = ps.executeUpdate();
             if (filas > 0) {
                 con.close();
@@ -51,17 +58,29 @@ public class DAOListaPrecio implements OperacionesListaPrecio {
 
     @Override
     public boolean modificar(Object obj) {
-        lp = (ListaPrecio) obj;
-        String sql = "UPDATE lista_precio SET descripcion = ?, idmoneda = ? WHERE idlista = ?;";
+        v = (Vendedor) obj;
+        String sql = "UPDATE vendedor\n"
+                + "	SET\n"
+                + "		nombre=?,\n"
+                + "		apellido=?,\n"
+                + "		estado=?,\n"
+                + "		porcentajecomision=?,\n"
+                + "		idempresa=?,\n"
+                + "		idsucursal=?\n"
+                + "	WHERE idvendedor=?;";
         Connection con;
         PreparedStatement ps;
         try {
             Class.forName(db.getDriver());
             con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
             ps = con.prepareStatement(sql);
-            ps.setString(1, lp.getDescripcion());
-            ps.setInt(2, lp.getIdmoneda());
-            ps.setInt(3, lp.getIdlista());
+            ps.setString(1, v.getNombre());
+            ps.setString(2, v.getApellido());
+            ps.setString(3, v.getEstado());
+            ps.setDouble(4, v.getPorcentajecomision());
+            ps.setInt(5, v.getIdempresa());
+            ps.setInt(6, v.getIdsucursal());
+            ps.setInt(7, v.getIdvendedor());
             int filas = ps.executeUpdate();
             if (filas > 0) {
                 con.close();
@@ -79,15 +98,15 @@ public class DAOListaPrecio implements OperacionesListaPrecio {
 
     @Override
     public boolean eliminar(Object obj) {
-        lp = (ListaPrecio) obj;
-        String sql = "DELETE FROM lista_precio WHERE idlista = ?;";
+        v = (Vendedor) obj;
+        String sql = "DELETE FROM vendedor WHERE idvendedor=?;";
         Connection con;
         PreparedStatement ps;
         try {
             Class.forName(db.getDriver());
             con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
             ps = con.prepareStatement(sql);
-            ps.setInt(1, lp.getIdlista());
+            ps.setInt(1, v.getIdvendedor());
             int filas = ps.executeUpdate();
             if (filas > 0) {
                 con.close();
@@ -105,15 +124,15 @@ public class DAOListaPrecio implements OperacionesListaPrecio {
 
     @Override
     public int nuevoID() {
-        String sql = "select idlista + 1 as proximo_cod_libre\n"
-                + "  from (select 0 as idlista\n"
+        String sql = "select idvendedor + 1 as proximo_cod_libre\n"
+                + "  from (select 0 as idvendedor\n"
                 + "         union all\n"
-                + "        select idlista\n"
-                + "          from lista_precio) t1\n"
+                + "        select idvendedor\n"
+                + "          from vendedor) t1\n"
                 + " where not exists (select null\n"
-                + "                     from lista_precio t2\n"
-                + "                    where t2.idlista = t1.idlista + 1)\n"
-                + " order by idlista\n"
+                + "                     from vendedir t2\n"
+                + "                    where t2.idvendedor = t1.idvendedor + 1)\n"
+                + " order by idvendedor\n"
                 + " LIMIT 1;";
         Connection con;
         PreparedStatement ps;
@@ -137,14 +156,18 @@ public class DAOListaPrecio implements OperacionesListaPrecio {
     @Override
     public ArrayList<Object[]> consultar(String criterio) {
         String sql = "SELECT \n"
-                + "LP.idlista, \n"
-                + "LP.descripcion, \n"
-                + "LP.idmoneda, \n"
-                + "M.descripcion\n"
-                + "FROM lista_precio AS LP\n"
-                + "INNER JOIN moneda AS M ON M.idmoneda = LP.idmoneda\n"
-                + "WHERE CONCAT(LP.descripcion, LP.idlista, M.descripcion) LIKE ?\n"
-                + "ORDER BY LP.descripcion;";
+                + "V.idvendedor, \n"
+                + "V.nombre, \n"
+                + "V.apellido, \n"
+                + "IF(estado = 'A', 'ACTIVO', 'INACTIVO') AS estado\n"
+                + "V.porcentajecomision, \n"
+                + "V.idempresa, \n"
+                + "V.idsucursal\n"
+                + "FROM vendedor AS V\n"
+                + "INNER JOIN empresa AS E ON E.idempresa = V.idempresa\n"
+                + "INNER JOIN sucursal AS S ON S.idsucursal = V.idsucursal\n"
+                + "WHERE CONCAT(V.nombre, V.apellido, E.razonsocial, S.descripcion) LIKE ?\n"
+                + "ORDER BY V.nombre;";
         Connection con;
         PreparedStatement ps;
         ResultSet rs;
@@ -156,11 +179,14 @@ public class DAOListaPrecio implements OperacionesListaPrecio {
             ps.setString(1, "%" + criterio + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
-                Object[] fila = new Object[4];
+                Object[] fila = new Object[7];
                 fila[0] = rs.getInt(1);
                 fila[1] = rs.getString(2);
-                fila[2] = rs.getInt(3);
+                fila[2] = rs.getString(3);
                 fila[3] = rs.getString(4);
+                fila[4] = rs.getDouble(5);
+                fila[5] = rs.getInt(6);
+                fila[6] = rs.getInt(7);
                 datos.add(fila);
             }
             con.close();
@@ -172,8 +198,8 @@ public class DAOListaPrecio implements OperacionesListaPrecio {
 
     @Override
     public boolean consultarDatos(Object obj) {
-        lp = (ListaPrecio) obj;
-        String sql = "SELECT * FROM lista_precio WHERE idlista = ?;";
+        v = (Vendedor) obj;
+        String sql = "SELECT * FROM vendedor WHERE idvendedor = ?;";
         Connection con;
         PreparedStatement ps;
         ResultSet rs;
@@ -181,47 +207,20 @@ public class DAOListaPrecio implements OperacionesListaPrecio {
             Class.forName(db.getDriver());
             con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
             ps = con.prepareStatement(sql);
-            ps.setInt(1, lp.getIdlista());
+            ps.setInt(1, v.getIdvendedor());
             rs = ps.executeQuery();
             if (rs.next()) {
-                lp.setIdlista(rs.getInt(1));
-                lp.setDescripcion(rs.getString(2));
-                lp.setIdmoneda(rs.getInt(3));
+                v.setIdvendedor(rs.getInt(1));
+                v.setNombre(rs.getString(2));
+                v.setApellido(rs.getString(3));
+                v.setEstado(rs.getString(4));
+                v.setPorcentajecomision(rs.getDouble(5));
+                v.setIdempresa(rs.getInt(6));
+                v.setIdsucursal(rs.getInt(7));
                 con.close();
                 return true;
             } else {
-                JOptionPane.showMessageDialog(null, "NO EXISTE LISTA DE PRECIO CON EL CÓDIGO INGRESADO...", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                con.close();
-                return false;
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR AL OBTENER EL REGISTRO SELECCIONADO \n" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-    }
-
-    @Override
-    public boolean consultarDatosListaPrecioMoneda(Object obj) {
-        lp = (ListaPrecio) obj;
-        String sql = "SELECT * FROM lista_precio WHERE idlista = ? and idmoneda = ?;";
-        Connection con;
-        PreparedStatement ps;
-        ResultSet rs;
-        try {
-            Class.forName(db.getDriver());
-            con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, lp.getIdlista());
-            ps.setInt(2, lp.getIdmoneda());
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                lp.setIdlista(rs.getInt(1));
-                lp.setDescripcion(rs.getString(2));
-                lp.setIdmoneda(rs.getInt(3));
-                con.close();
-                return true;
-            } else {
-                JOptionPane.showMessageDialog(null, "NO EXISTE LISTA DE PRECIO CON EL CÓDIGO INGRESADO...", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "NO EXISTE VENDEDOR CON EL CÓDIGO INGRESADO...", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                 con.close();
                 return false;
             }
