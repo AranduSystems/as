@@ -9,7 +9,7 @@ import java.util.Date;
 public class VentaDetalle {
     private int idventa;
     private int idarticulo;
-    private double costo;
+    private double precio;
     private double cantidad;
     private int numero_item;
     private double iva;
@@ -35,14 +35,14 @@ public class VentaDetalle {
         this.idarticulo = idarticulo;
     }
 
-    public double getCosto() {
-        return costo;
+    public double getPrecio() {
+        return precio;
     }
 
-    public void setCosto(double costo) {
-        this.costo = costo;
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
-
+    
     public double getCantidad() {
         return cantidad;
     }

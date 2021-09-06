@@ -83,7 +83,7 @@ public class DAOImpresora implements OperacionesCaja {
             int filas = ps.executeUpdate();
             if (filas > 0) {
                 con.close();
-                JOptionPane.showMessageDialog(null, "ACTUALIZACIÓN EXITOSA", "EXITO", JOptionPane.INFORMATION_MESSAGE);
+                //JOptionPane.showMessageDialog(null, "ACTUALIZACIÓN EXITOSA", "EXITO", JOptionPane.INFORMATION_MESSAGE);
                 return true;
             } else {
                 con.close();

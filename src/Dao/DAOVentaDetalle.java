@@ -21,8 +21,8 @@ public class DAOVentaDetalle implements OperacionesVentaDetalle {
     @Override
     public boolean agregar(Object obj) {
         vd = (VentaDetalle) obj;
-        String sql = "INSERT INTO compra_detalle\n"
-                + "(idcompra, idarticulo, costo, cantidad, numeroitem, iva, porcentajeiva, referencia)\n"
+        String sql = "INSERT INTO venta_detalle\n"
+                + "(idventa, idarticulo, precio, cantidad, numeroitem, iva, porcentajeiva, referencia)\n"
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
         Connection con;
         PreparedStatement ps;
@@ -32,7 +32,7 @@ public class DAOVentaDetalle implements OperacionesVentaDetalle {
             ps = con.prepareStatement(sql);
             ps.setInt(1, vd.getIdventa());
             ps.setInt(2, vd.getIdarticulo());
-            ps.setDouble(3, vd.getCosto());
+            ps.setDouble(3, vd.getPrecio());
             ps.setDouble(4, vd.getCantidad());
             ps.setInt(5, vd.getNumero_item());
             ps.setDouble(6, vd.getIva());

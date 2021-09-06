@@ -409,7 +409,8 @@ public class DAOArticulo implements OperacionesArticulo {
     }
 
     @Override
-    public boolean busquedaArticuloNuevo(String criterio) {
+    public boolean busquedaArticuloNuevo(String criterio, Object obj) {
+        a = (Articulo) obj;
         String sql = "";
         Connection con;
         PreparedStatement ps;
@@ -473,16 +474,13 @@ public class DAOArticulo implements OperacionesArticulo {
                         resultado = false;
                     }
                 }
-                if (resultado == false) {
+            }
+            if (resultado == false) {
                     sql = "SELECT * FROM articulo WHERE idarticulo = ?;";
                     Class.forName(db.getDriver());
                     con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
                     ps = con.prepareStatement(sql);
-                    if (Utilitarios.comprobarTipoDato(criterio) == true) {
-                        ps.setInt(1, Integer.parseInt(criterio));
-                    } else {
-                        ps.setInt(1, 0);
-                    }
+                    ps.setString(1, criterio);
                     rs = ps.executeQuery();
                     if (rs.next()) {
                         a.setIdarticulo(rs.getInt(1));
@@ -505,7 +503,6 @@ public class DAOArticulo implements OperacionesArticulo {
                         resultado = false;
                     }
                 }
-            }
 
         } catch (SQLException | ClassNotFoundException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR AL OBTENER EL REGISTRO SELECCIONADO \n" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);

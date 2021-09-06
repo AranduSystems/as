@@ -1706,9 +1706,6 @@
                   <Font name="SansSerif" size="18" style="1"/>
                 </Property>
                 <Property name="prompt" type="java.lang.String" value="Precio..."/>
-                <Property name="promptForeground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="0" red="0" type="rgb"/>
-                </Property>
               </Properties>
             </Component>
             <Component class="org.jdesktop.swingx.JXTextField" name="txtDescripcionArticulo">

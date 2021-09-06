@@ -681,9 +681,45 @@ public class JFrmCompra extends javax.swing.JInternalFrame {
         valorTotalDocumentoCuota = TOTAL;
         txtTotalMontoCuotas.setText(formatter.format(TOTAL));
     }
-    
-    private void obtenerArticulo(){
-        
+
+    private void obtenerArticulo() {
+        if (txtCodigoArticulo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "NO PUEDE DEJAR EL CAMPO DE CODIGO DEL ARTÍCULO VACIO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            txtCodigoArticulo.setText(null);
+            txtDescripcionArticulo.setText(null);
+        } else {
+            String criterio = txtCodigoArticulo.getText();
+            boolean resultado = false;
+            resultado = daoArticulo.busquedaArticuloNuevo(criterio, a);
+            if (resultado == true) {
+                txtDescripcionArticulo.setText(a.getDescripcion());
+                codigoarticulo = a.getIdarticulo();
+                i.setIdimpuesto(a.getIdimpuesto());
+                daoImpuesto.consultarDatos(i);
+                porcentajeIva = i.getPorcentaje();
+                a.setCodigobarra(null);
+                a.setCodigoalfanumerico(null);
+                a.setIdarticulo(0);
+                /*OBTENER EL PERIODO*/
+                int idperiodo = daoArticuloPeriodo.obtenerPeriodo(formatoUS.format(txtFecha.getDate()));
+                /*OBTENER COSTO*/
+                ap.setIdarticulo(codigoarticulo);
+                ap.setIdperiodo(idperiodo);
+                ap.setIdmoneda(Integer.parseInt(txtCodigoMoneda.getText()));
+                daoArticuloPeriodo.consultarDatos(ap);
+                txtCosto.setText("" + ap.getCosto());
+                txtCosto.grabFocus();
+                txtCosto.selectAll();
+            } else {
+                JOptionPane.showMessageDialog(null, "NO EXISTE EL CÓDIGO DEL ARTÍCULO INGRESADO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                txtCodigoArticulo.setText(null);
+                txtDescripcionArticulo.setText(null);
+                a.setCodigobarra(null);
+                a.setCodigoalfanumerico(null);
+                a.setIdarticulo(0);
+                txtCodigoArticulo.grabFocus();
+            }
+        }
     }
 
     /**
@@ -2692,51 +2728,7 @@ public class JFrmCompra extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tablaDatosProveedorMouseClicked
 
     private void txtCodigoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoArticuloActionPerformed
-        if (txtCodigoArticulo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "NO PUEDE DEJAR EL CAMPO DE CODIGO DEL ARTÍCULO VACIO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-            txtCodigoArticulo.setText(null);
-            txtDescripcionArticulo.setText(null);
-        } else {
-            String criterio = txtCodigoArticulo.getText();
-            boolean resultado = false;
-            resultado = daoArticulo.busquedaArticuloNuevo(criterio);
-            /*if (resultado == false) {
-                a.setCodigoalfanumerico(criterio);
-                resultado = daoArticulo.busquedaArticulo(a);
-            }
-            if (resultado == false) {
-                a.setIdarticulo(Integer.parseInt(criterio));
-                resultado = daoArticulo.busquedaArticulo(a);
-            }*/
-            if (resultado == true) {
-                txtDescripcionArticulo.setText(a.getDescripcion());
-                codigoarticulo = a.getIdarticulo();
-                i.setIdimpuesto(a.getIdimpuesto());
-                daoImpuesto.consultarDatos(i);
-                porcentajeIva = i.getPorcentaje();
-                a.setCodigobarra(null);
-                a.setCodigoalfanumerico(null);
-                a.setIdarticulo(0);
-                /*OBTENER EL PERIODO*/
-                int idperiodo = daoArticuloPeriodo.obtenerPeriodo(formatoUS.format(txtFecha.getDate()));
-                /*OBTENER COSTO*/
-                ap.setIdarticulo(codigoarticulo);
-                ap.setIdperiodo(idperiodo);
-                ap.setIdmoneda(Integer.parseInt(txtCodigoMoneda.getText()));
-                daoArticuloPeriodo.consultarDatos(ap);
-                txtCosto.setText("" + ap.getCosto());
-                txtCosto.grabFocus();
-                txtCosto.selectAll();
-            } else {
-                JOptionPane.showMessageDialog(null, "NO EXISTE EL CÓDIGO DEL ARTÍCULO INGRESADO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
-                txtCodigoArticulo.setText(null);
-                txtDescripcionArticulo.setText(null);
-                a.setCodigobarra(null);
-                a.setCodigoalfanumerico(null);
-                a.setIdarticulo(0);
-                txtCodigoArticulo.grabFocus();
-            }
-        }
+        obtenerArticulo();
     }//GEN-LAST:event_txtCodigoArticuloActionPerformed
 
     private void txtCodigoArticuloKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoArticuloKeyTyped

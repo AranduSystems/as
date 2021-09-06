@@ -1,7 +1,6 @@
 package Vistas;
 
 import App.appLogin;
-import Controladores.Utilitarios;
 import Dao.DAOArticulo;
 import Dao.DAOArticuloListaPrecio;
 import Dao.DAOCliente;
@@ -19,6 +18,7 @@ import Dao.DAODeposito;
 import Dao.DAOImpuesto;
 import Dao.DAOListaPrecio;
 import Dao.DAOVendedor;
+import Dao.DAOVentaDetalle;
 import Modelos.Articulo;
 import Modelos.ArticuloListaPrecio;
 import Modelos.Cliente;
@@ -35,6 +35,7 @@ import Modelos.TipoMovimiento;
 import Modelos.UsuarioImpresora;
 import Modelos.Vendedor;
 import Modelos.Venta;
+import Modelos.VentaDetalle;
 import java.text.DecimalFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -64,6 +65,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     Impuesto im = new Impuesto();
     ArticuloListaPrecio alp = new ArticuloListaPrecio();
     ClienteListaPrecio clp = new ClienteListaPrecio();
+    VentaDetalle vd = new VentaDetalle();
 
     DAOCotizacion daoCotizacion = new DAOCotizacion();
     DAOConfiguracion daoConfiguracion = new DAOConfiguracion();
@@ -82,6 +84,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     DAOImpuesto daoImpuesto = new DAOImpuesto();
     DAOClienteListaPrecio daoClienteListaPrecio = new DAOClienteListaPrecio();
     DAOArticuloListaPrecio daoArticuloListaPrecio = new DAOArticuloListaPrecio();
+    DAOVentaDetalle daoVentaDetalle = new DAOVentaDetalle();
 
     ArrayList<Object[]> datosMoneda = new ArrayList<>();
     ArrayList<Object[]> datosCuenta = new ArrayList<>();
@@ -376,19 +379,15 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
             txtCodigoArticulo.setText(null);
             txtDescripcionArticulo.setText(null);
         } else {
-            
             String criterio = txtCodigoArticulo.getText();
             boolean resultado = false;
-            resultado = daoArticulo.busquedaArticuloNuevo(criterio);
+            resultado = daoArticulo.busquedaArticuloNuevo(criterio, a);
             if (resultado == true) {
                 txtDescripcionArticulo.setText(a.getDescripcion());
                 codigoarticulo = a.getIdarticulo();
                 im.setIdimpuesto(a.getIdimpuesto());
                 daoImpuesto.consultarDatos(im);
                 porcentajeIva = im.getPorcentaje();
-                a.setCodigobarra(null);
-                a.setCodigoalfanumerico(null);
-                a.setIdarticulo(0);
                 //VERIFICACION Y MANIPULACION DE PRECIOS DE VENTAS DEL ARTICULO EN BASE A LA LISTA DE PRECIO Y LOS DESCUENTOS Y RECARGOS DEL CLIENTE
                 double porcentajedescuento = 0.0;
                 double porcentajerecargo = 0.0;
@@ -428,9 +427,6 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "NO EXISTE EL CÓDIGO DEL ARTÍCULO INGRESADO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
                 txtCodigoArticulo.setText(null);
                 txtDescripcionArticulo.setText(null);
-                a.setCodigobarra(null);
-                a.setCodigoalfanumerico(null);
-                a.setIdarticulo(0);
                 txtCodigoArticulo.grabFocus();
             }
         }
@@ -609,10 +605,11 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
                     guardarDetalle(id);
                     //guardarCuotas(id);
                     JOptionPane.showMessageDialog(null, "VENTA REGISTRADA EXITOSAMENTE...", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
-                    //cancelar();
+                    actualizarImpresora();
+                    cancelar();
                 } else {
                     JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR AL MOMENTO DE GUARDAR LOS DATOS...", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    //cancelar();
+                    cancelar();
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "EXISTEN DIFERENCIAS ENTRE LOS MONTOS DE LAS CUOTAS Y EL COMPROBANTE...", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -622,10 +619,11 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
             if (id != 0) {
                 guardarDetalle(id);
                 JOptionPane.showMessageDialog(null, "VENTA REGISTRADA EXITOSAMENTE...", "MENSAJE", JOptionPane.INFORMATION_MESSAGE);
-                //cancelar();
+                actualizarImpresora();
+                cancelar();
             } else {
                 JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR AL MOMENTO DE GUARDAR LOS DATOS...", "ERROR", JOptionPane.ERROR_MESSAGE);
-                //cancelar();
+                cancelar();
             }
         }
     }
@@ -691,7 +689,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
             msj += "NO HA SELECCIONADO NINGUN VENDEDOR.\n";
         }
         if (msj.isEmpty()) {
-            v.setIdvendedor(id);
+            v.setIdventa(id);
             v.setNumerodocumento(numerodocumento);
             v.setNumerotimbrado(numerotimbrado);
             v.setFecha(fechaSQL);
@@ -744,41 +742,81 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
 
     private void guardarDetalle(int id) {
         int idmoneda = Integer.parseInt(txtCodigoMoneda.getText());
-        for (int i = 0; i < tablaDatos.getRowCount(); i++) {
-            /*int numeroitem = Integer.parseInt(tablaDatos.getValueAt(i, 0).toString());
-            int idarticulo = Integer.parseInt(tablaDatos.getValueAt(i, 2).toString());
-            double cantidad = Double.parseDouble(tablaDatos.getValueAt(i, 5).toString());
-            double porcentaje = Double.parseDouble(tablaDatos.getValueAt(i, 7).toString());
-            double costo = Double.parseDouble(tablaDatos.getValueAt(i, 4).toString());
-            cd.setIdcompra(id);
-            cd.setNumero_item(numeroitem);
-            cd.setIdarticulo(idarticulo);
-            cd.setCantidad(cantidad);
-            double costoFinal = 0.0;
+        for (int i = 0; i < tablaDatos2.getRowCount(); i++) {
+            int numeroitem = Integer.parseInt(tablaDatos2.getValueAt(i, 0).toString());
+            String referencia = tablaDatos2.getValueAt(i, 1).toString();
+            int idarticulo = Integer.parseInt(tablaDatos2.getValueAt(i, 2).toString());
+            double cantidad = Double.parseDouble(tablaDatos2.getValueAt(i, 5).toString());
+            double porcentaje = Double.parseDouble(tablaDatos2.getValueAt(i, 7).toString());
+            double precio = Double.parseDouble(tablaDatos2.getValueAt(i, 4).toString());
+            vd.setIdventa(id);
+            vd.setNumero_item(numeroitem);
+            vd.setReferencia(referencia);
+            vd.setIdarticulo(idarticulo);
+            vd.setCantidad(cantidad);
+            double precioFinal = 0.0;
             double ivaFinal = 0.0;
             if (porcentaje == 0.0) {
                 ivaFinal = 0.0;
-                costoFinal = (costo);
+                precioFinal = (precio);
             }
             if (porcentaje == 5.0) {
-                ivaFinal = costo / 21;
-                costoFinal = (costo - (costo / 21));
+                ivaFinal = precio / 21;
+                precioFinal = (precio - (precio / 21));
             }
             if (porcentaje == 10.0) {
-                ivaFinal = costo / 11;
-                costoFinal = (costo - (costo / 11));
+                ivaFinal = precio / 11;
+                precioFinal = (precio - (precio / 11));
             }
 
             if (idmoneda == 1) {
-                cd.setIva(Math.round(ivaFinal));
-                cd.setCosto(Math.round(costoFinal));
+                vd.setIva(Math.round(ivaFinal));
+                vd.setPrecio(Math.round(precioFinal));
             } else {
-                cd.setIva(Math.round(ivaFinal * 1000.0) / 1000.0);
-                cd.setCosto(Math.round(costoFinal * 1000.0) / 1000.0);
+                vd.setIva(Math.round(ivaFinal * 1000.0) / 1000.0);
+                vd.setPrecio(Math.round(precioFinal * 1000.0) / 1000.0);
             }
-            cd.setPorcentaje_iva(porcentaje);
-            daoCompraDetalle.agregar(cd);*/
+            vd.setPorcentaje_iva(porcentaje);
+            daoVentaDetalle.agregar(vd);
         }
+    }
+    
+        private void actualizarImpresora(){
+            int impresora = idimpresora;
+            String ult_nro_fac_nuevo = txtComprobante.getText();
+            i.setIdimpresora(impresora);
+            i.setUltimo_numero_factura(ult_nro_fac_nuevo);
+            daoImpresora.modificar(i);
+        }
+    
+        private void cancelar() {
+        txtPuntoEmision.setText(null);
+        txtEstablecimiento.setText(null);
+        txtNumero.setText(null);
+        txtComprobante.setText(null);
+        txtTimbrado.setText(null);
+        txtObservacion.setText(null);
+        txtCodigoMoneda.setText(null);
+        txtDescripcionMoneda.setText(null);
+        txtCodigoDeposito.setText(null);
+        txtDescripcionDeposito.setText(null);
+        txtCodigoCliente.setText(null);
+        txtDescripcionCliente.setText(null);
+        txtCodigoCuenta.setText(null);
+        txtDescripcionCuenta.setText(null);
+        txtCodigoLista.setText(null);
+        txtDescripcionListaPrecio.setText(null);
+        txtCodigoVendedor.setText(null);
+        txtDescripcionVendedor.setText(null);
+        txtTotal2.setText(null);
+        DefaultTableModel modelo = (DefaultTableModel) tablaDatos2.getModel();
+        modelo.setRowCount(0);
+        //DefaultTableModel modeloCuotas = (DefaultTableModel) tablaCuotas.getModel();
+        //modeloCuotas.setRowCount(0);
+
+        String fechaActual = formato.format(SYSDATE);
+        txtFecha.setDate(daoCotizacion.parseFecha(fechaActual));
+        rbContado.grabFocus();
     }
     
     
@@ -2130,7 +2168,6 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         txtPrecio.setEnabled(false);
         txtPrecio.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         txtPrecio.setPrompt("Precio...");
-        txtPrecio.setPromptForeground(new java.awt.Color(0, 0, 0));
 
         txtDescripcionArticulo.setEditable(false);
         txtDescripcionArticulo.setBackground(new java.awt.Color(255, 255, 255));
@@ -3054,7 +3091,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
             //formularioCuotas();
         }
         int respuesta;
-        respuesta = JOptionPane.showConfirmDialog(null, "¿CONFIRMAR COMPRA?",
+        respuesta = JOptionPane.showConfirmDialog(null, "¿CONFIRMAR VENTA?",
                 "ADVERTENCIA", JOptionPane.YES_NO_OPTION);
         if (respuesta != 1) {
             guardar();
@@ -3067,7 +3104,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         respuesta = JOptionPane.showConfirmDialog(null, "¿ESTA SEGURO DE CANCELAR LOS CAMBIOS?",
                 "ADVERTENCIA", JOptionPane.YES_NO_OPTION);
         if (respuesta != 1) {
-            //cancelar();
+            cancelar();
         }
     }//GEN-LAST:event_btnCancelar2ActionPerformed
 
@@ -3162,20 +3199,10 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     private javax.swing.JDialog BuscadorListaPrecio;
     private javax.swing.JDialog BuscadorMarca;
     private javax.swing.JDialog BuscadorMoneda;
-    private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnAgregar1;
     private javax.swing.JButton btnAgregar2;
-    private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnCancelar1;
     private javax.swing.JButton btnCancelar2;
-    private javax.swing.JButton btnConfirmar;
-    private javax.swing.JButton btnConfirmar1;
     private javax.swing.JButton btnConfirmar2;
-    private javax.swing.JButton btnRetirar;
-    private javax.swing.JButton btnRetirar1;
     private javax.swing.JButton btnRetirar2;
-    private javax.swing.JButton btnSalir;
-    private javax.swing.JButton btnSalir1;
     private javax.swing.JButton btnSalir2;
     private javax.swing.ButtonGroup grupoContadoCredito;
     private javax.swing.ButtonGroup grupoFiltroArticulo;
@@ -3187,8 +3214,6 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -3202,8 +3227,6 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
@@ -3215,7 +3238,6 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -3223,7 +3245,6 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
-    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JRadioButton rbCodAlfanumerico;
     private javax.swing.JRadioButton rbCodBarra;
@@ -3231,8 +3252,6 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton rbCredito;
     private javax.swing.JRadioButton rbDescripcion;
     private javax.swing.JRadioButton rbReferencia;
-    private javax.swing.JTable tablaDatos;
-    private javax.swing.JTable tablaDatos1;
     private javax.swing.JTable tablaDatos2;
     private javax.swing.JTable tablaDatosArticulo;
     private javax.swing.JTable tablaDatosCliente;
@@ -3271,8 +3290,6 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     private org.jdesktop.swingx.JXTextField txtPrecio;
     private org.jdesktop.swingx.JXTextField txtPuntoEmision;
     private org.jdesktop.swingx.JXTextField txtTimbrado;
-    private org.jdesktop.swingx.JXTextField txtTotal;
-    private org.jdesktop.swingx.JXTextField txtTotal1;
     private org.jdesktop.swingx.JXTextField txtTotal2;
     // End of variables declaration//GEN-END:variables
 }

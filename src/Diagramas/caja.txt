@@ -1,4 +1,0 @@
-caja
---
-idcaja PK int(11)
-descripcion varchar(100)
