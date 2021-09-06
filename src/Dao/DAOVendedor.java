@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import Controladores.OperacionesVendedor;
-import Modelos.Caja;
 import Modelos.Vendedor;
 
 /**
@@ -130,7 +129,7 @@ public class DAOVendedor implements OperacionesVendedor {
                 + "        select idvendedor\n"
                 + "          from vendedor) t1\n"
                 + " where not exists (select null\n"
-                + "                     from vendedir t2\n"
+                + "                     from vendedor t2\n"
                 + "                    where t2.idvendedor = t1.idvendedor + 1)\n"
                 + " order by idvendedor\n"
                 + " LIMIT 1;";
@@ -157,9 +156,9 @@ public class DAOVendedor implements OperacionesVendedor {
     public ArrayList<Object[]> consultar(String criterio) {
         String sql = "SELECT \n"
                 + "V.idvendedor, \n"
-                + "V.nombre, \n"
+                + "CONCAT(V.nombre,' ',V.apellido) as vendedor, \n"
                 + "V.apellido, \n"
-                + "IF(estado = 'A', 'ACTIVO', 'INACTIVO') AS estado\n"
+                + "IF(estado = 'A', 'ACTIVO', 'INACTIVO') AS estado,\n"
                 + "V.porcentajecomision, \n"
                 + "V.idempresa, \n"
                 + "V.idsucursal\n"

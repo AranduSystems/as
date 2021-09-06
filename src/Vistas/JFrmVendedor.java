@@ -2,8 +2,10 @@ package Vistas;
 
 import Dao.DAOCaja;
 import Dao.DAOEmpresa;
+import Dao.DAOSucursal;
 import Dao.DAOVendedor;
 import Modelos.Empresa;
+import Modelos.Sucursal;
 import Modelos.Vendedor;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -18,12 +20,15 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
 
     Vendedor v = new Vendedor();
     Empresa e = new Empresa();
+    Sucursal s = new Sucursal();
 
     DAOVendedor dao = new DAOVendedor();
     DAOEmpresa daoEmpresa = new DAOEmpresa();
+    DAOSucursal daoSucursal = new DAOSucursal();
 
     ArrayList<Object[]> datos = new ArrayList<>();
     ArrayList<Object[]> datosEmpresa = new ArrayList<>();
+    ArrayList<Object[]> datosSucursal = new ArrayList<>();
 
     //VARIABLE QUE MANEJA QUE TIPOS DE OPERACIONES SE REALIZARAN: SI VA A SER ALTA, BAJA O MODIFICACION DEL REGISTRO
     String operacion = "";
@@ -54,6 +59,12 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
                 //CAMPOS
                 txtCodigo.setEnabled(false);
                 txtNombre.setEnabled(true);
+                txtApellido.setEnabled(true);
+                rbActivo.setEnabled(true);
+                rbInactivo.setEnabled(true);
+                txtComision.setEnabled(true);
+                txtCodigoEmpresa.setEnabled(true);
+                txtCodigoSucursal.setEnabled(true);
                 //BOTONES
                 btnNuevo.setEnabled(false);
                 btnConfirmar.setEnabled(true);
@@ -65,6 +76,12 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
                 //CAMPOS
                 txtCodigo.setEnabled(false);
                 txtNombre.setEnabled(true);
+                txtApellido.setEnabled(true);
+                rbActivo.setEnabled(true);
+                rbInactivo.setEnabled(true);
+                txtComision.setEnabled(true);
+                txtCodigoEmpresa.setEnabled(true);
+                txtCodigoSucursal.setEnabled(true);
                 //BOTONES
                 btnNuevo.setEnabled(false);
                 btnConfirmar.setEnabled(true);
@@ -77,6 +94,12 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
                 //CAMPOS
                 txtCodigo.setEnabled(false);
                 txtNombre.setEnabled(false);
+                txtApellido.setEnabled(false);
+                rbActivo.setEnabled(false);
+                rbInactivo.setEnabled(false);
+                txtComision.setEnabled(false);
+                txtCodigoEmpresa.setEnabled(false);
+                txtCodigoSucursal.setEnabled(false);
                 //BOTONES
                 btnNuevo.setEnabled(false);
                 btnConfirmar.setEnabled(true);
@@ -89,6 +112,12 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
                 //CAMPOS
                 txtCodigo.setEnabled(false);
                 txtNombre.setEnabled(false);
+                txtApellido.setEnabled(false);
+                rbActivo.setEnabled(false);
+                rbInactivo.setEnabled(false);
+                txtComision.setEnabled(false);
+                txtCodigoEmpresa.setEnabled(false);
+                txtCodigoSucursal.setEnabled(false);
                 //BOTONES
                 btnNuevo.setEnabled(true);
                 btnConfirmar.setEnabled(false);
@@ -101,6 +130,12 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
                 //CAMPOS
                 txtCodigo.setEnabled(false);
                 txtNombre.setEnabled(false);
+                txtApellido.setEnabled(false);
+                rbActivo.setEnabled(false);
+                rbInactivo.setEnabled(false);
+                txtComision.setEnabled(false);
+                txtCodigoEmpresa.setEnabled(false);
+                txtCodigoSucursal.setEnabled(false);
                 //BOTONES
                 btnNuevo.setEnabled(true);
                 btnConfirmar.setEnabled(false);
@@ -117,6 +152,13 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
         txtCriterio.setText(null);
         txtCodigo.setText(null);
         txtNombre.setText(null);
+        txtApellido.setText(null);
+        rbActivo.isSelected();
+        txtComision.setText(null);
+        txtCodigoEmpresa.setText(null);
+        txtDescripcionEmpresa.setText(null);
+        txtCodigoSucursal.setText(null);
+        txtDescripcionSucursal.setText(null);
         operacion = "";
     }
 
@@ -133,15 +175,39 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
                 id = Integer.parseInt(txtCodigo.getText());
             }
         }
-        String descripcion = txtNombre.getText();
+        String nombre = txtNombre.getText();
+        String apellido = txtApellido.getText();
+        String estado;
+        if (rbActivo.isSelected()) {
+            estado = "A";
+        } else {
+            estado = "I";
+        }
+        double comision = valorMonto;
+        int idempresa = Integer.parseInt(txtCodigoEmpresa.getText());
+        int idsucursal = Integer.parseInt(txtCodigoSucursal.getText());
         switch (accion) {
             case "NUEVO":
-                if (descripcion.isEmpty()) {
-                    error += "NO PUEDE DEJAR EL CAMPO DE DESCRIPCIÓN VACIO.\n";
+                if (nombre.isEmpty()) {
+                    error += "NO PUEDE DEJAR EL CAMPO DE NOMBRE VACIO.\n";
+                }
+                if (apellido.isEmpty()) {
+                    error += "NO PUEDE DEJAR EL CAMPO DE APELLIDO VACIO.\n";
+                }
+                if (idempresa == 0) {
+                    error += "NO HA SELECCIONADO UNA EMPRESA.\n";
+                }
+                if (idsucursal == 0) {
+                    error += "NO HA SELECCIONADO UNA SUCURSAL.\n";
                 }
                 if (error.isEmpty()) {
-                    v.setIdcaja(id);
-                    v.setDescripcion(descripcion);
+                    v.setIdvendedor(id);
+                    v.setNombre(nombre);
+                    v.setApellido(apellido);
+                    v.setEstado(estado);
+                    v.setPorcentajecomision(comision);
+                    v.setIdempresa(idempresa);
+                    v.setIdsucursal(idsucursal);
                     dao.agregar(v);
                     cargar();
                 } else {
@@ -149,12 +215,26 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
                 }
                 break;
             case "MODIFICAR":
-                if (descripcion.isEmpty()) {
-                    error += "NO PUEDE DEJAR EL CAMPO DE DESCRIPCIÓN VACIO.\n";
+                if (nombre.isEmpty()) {
+                    error += "NO PUEDE DEJAR EL CAMPO DE NOMBRE VACIO.\n";
+                }
+                if (apellido.isEmpty()) {
+                    error += "NO PUEDE DEJAR EL CAMPO DE APELLIDO VACIO.\n";
+                }
+                if (idempresa == 0) {
+                    error += "NO HA SELECCIONADO UNA EMPRESA.\n";
+                }
+                if (idsucursal == 0) {
+                    error += "NO HA SELECCIONADO UNA SUCURSAL.\n";
                 }
                 if (error.isEmpty()) {
-                    v.setIdcaja(id);
-                    v.setDescripcion(descripcion);
+                    v.setIdvendedor(id);
+                    v.setNombre(nombre);
+                    v.setApellido(apellido);
+                    v.setEstado(estado);
+                    v.setPorcentajecomision(comision);
+                    v.setIdempresa(idempresa);
+                    v.setIdsucursal(idsucursal);
                     dao.modificar(v);
                     cargar();
                 } else {
@@ -163,7 +243,7 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
                 break;
             case "ELIMINAR":
                 if (error.isEmpty()) {
-                    v.setIdcaja(id);
+                    v.setIdvendedor(idempresa);
                     dao.eliminar(v);
                     cargar();
                 }
@@ -174,13 +254,31 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
 
     }
 
-    public void recuperarDatos() {
+public void recuperarDatos() {
         int fila = tablaDatos.getSelectedRow();
         if (fila >= 0) {
-            String id = tablaDatos.getValueAt(fila, 0).toString();
-            String descripcion = tablaDatos.getValueAt(fila, 1).toString();
-            txtCodigo.setText(id);
-            txtNombre.setText(descripcion);
+            int id = Integer.parseInt(tablaDatos.getValueAt(fila, 0).toString());
+            v.setIdvendedor(id);
+            dao.consultarDatos(v);
+            txtCodigo.setText(""+id);
+            txtNombre.setText(v.getNombre());
+            txtApellido.setText(v.getApellido());
+            String estado = v.getEstado();
+            if (estado.equals("A")) {
+                rbActivo.setSelected(true);
+            } else {
+                rbInactivo.setSelected(true);
+            }
+            valorMonto = v.getPorcentajecomision();
+            txtComision.setText(""+valorMonto);
+            e.setIdempresa(v.getIdempresa());
+            daoEmpresa.consultarDatos(e);
+            txtCodigoEmpresa.setText(""+e.getIdempresa());
+            txtDescripcionEmpresa.setText(e.getRazonsocial());
+            s.setIdsucursal(v.getIdsucursal());
+            daoSucursal.consultarDatos(s);
+            txtCodigoSucursal.setText(""+s.getIdsucursal());
+            txtDescripcionSucursal.setText(s.getDescripcion());
             habilitarCampos(operacion);
         } else {
             JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA", "ADVERTENCIA", JOptionPane.ERROR_MESSAGE);
@@ -213,6 +311,32 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
         }
     }
 
+    public void cargarSucursal() {
+        DefaultTableModel modelo = (DefaultTableModel) tablaDatosSucursal.getModel();
+        modelo.setRowCount(0);
+        datosSucursal = daoSucursal.consultar(txtCriterioSucursal.getText());
+        for (Object[] obj : datosSucursal) {
+            modelo.addRow(obj);
+        }
+        this.tablaDatosSucursal.setModel(modelo);
+    }
+
+    private void buscarSucursal() {
+        cargarSucursal();
+        BuscadorSucursal.setModal(true);
+        BuscadorSucursal.setSize(540, 285);
+        BuscadorSucursal.setLocationRelativeTo(this);
+        BuscadorSucursal.setVisible(true);
+        int fila = tablaDatosSucursal.getSelectedRow();
+        if (fila >= 0) {
+            txtCodigoSucursal.setText(tablaDatosSucursal.getValueAt(fila, 0).toString());
+            txtDescripcionSucursal.setText(tablaDatosSucursal.getValueAt(fila, 1).toString());
+        } else {
+            txtCodigoSucursal.setText(null);
+            txtDescripcionSucursal.setText(null);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -232,6 +356,12 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
         txtCriterioEmpresa = new org.jdesktop.swingx.JXTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaDatosEmpresa = new javax.swing.JTable();
+        BuscadorSucursal = new javax.swing.JDialog();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        txtCriterioSucursal = new org.jdesktop.swingx.JXTextField();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tablaDatosSucursal = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -386,6 +516,113 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel10.setBackground(new java.awt.Color(50, 104, 151));
+        jLabel10.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("BUSCADOR DE SUCURSALES");
+        jLabel10.setOpaque(true);
+
+        txtCriterioSucursal.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtCriterioSucursal.setPrompt("Aqui puede ingresar los filtros para la busqueda..");
+        txtCriterioSucursal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCriterioSucursalActionPerformed(evt);
+            }
+        });
+        txtCriterioSucursal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCriterioSucursalKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCriterioSucursalKeyTyped(evt);
+            }
+        });
+
+        tablaDatosSucursal.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        tablaDatosSucursal.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "<html><p style=\"text-align:center\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Código</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Descripción</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Telefono</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Direccion</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Cod.Empresa</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Empresa</span></span></span></p></html> "
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaDatosSucursal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaDatosSucursalMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tablaDatosSucursal);
+        if (tablaDatosSucursal.getColumnModel().getColumnCount() > 0) {
+            tablaDatosSucursal.getColumnModel().getColumn(0).setMinWidth(60);
+            tablaDatosSucursal.getColumnModel().getColumn(0).setPreferredWidth(60);
+            tablaDatosSucursal.getColumnModel().getColumn(0).setMaxWidth(60);
+            tablaDatosSucursal.getColumnModel().getColumn(2).setMinWidth(0);
+            tablaDatosSucursal.getColumnModel().getColumn(2).setPreferredWidth(0);
+            tablaDatosSucursal.getColumnModel().getColumn(2).setMaxWidth(0);
+            tablaDatosSucursal.getColumnModel().getColumn(3).setMinWidth(0);
+            tablaDatosSucursal.getColumnModel().getColumn(3).setPreferredWidth(0);
+            tablaDatosSucursal.getColumnModel().getColumn(3).setMaxWidth(0);
+            tablaDatosSucursal.getColumnModel().getColumn(4).setMinWidth(0);
+            tablaDatosSucursal.getColumnModel().getColumn(4).setPreferredWidth(0);
+            tablaDatosSucursal.getColumnModel().getColumn(4).setMaxWidth(0);
+            tablaDatosSucursal.getColumnModel().getColumn(5).setMinWidth(0);
+            tablaDatosSucursal.getColumnModel().getColumn(5).setPreferredWidth(0);
+            tablaDatosSucursal.getColumnModel().getColumn(5).setMaxWidth(0);
+        }
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCriterioSucursal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtCriterioSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout BuscadorSucursalLayout = new javax.swing.GroupLayout(BuscadorSucursal.getContentPane());
+        BuscadorSucursal.getContentPane().setLayout(BuscadorSucursalLayout);
+        BuscadorSucursalLayout.setHorizontalGroup(
+            BuscadorSucursalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        BuscadorSucursalLayout.setVerticalGroup(
+            BuscadorSucursalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         setClosable(true);
         setIconifiable(true);
 
@@ -439,7 +676,7 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "<html><p style=\"text-align:center\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Código</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Descripción</span></span></span></p></html> "
+                "<html><p style=\"text-align:center\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Código</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Nombre</span></span></span></p></html> "
             }
         ) {
             Class[] types = new Class [] {
@@ -765,11 +1002,11 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6)
                     .addComponent(txtComision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
+                .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtCodigoEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtDescripcionEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtDescripcionEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -1069,9 +1306,44 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tablaDatosEmpresaMouseClicked
 
+    private void txtCriterioSucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCriterioSucursalActionPerformed
+        cargarSucursal();
+    }//GEN-LAST:event_txtCriterioSucursalActionPerformed
+
+    private void txtCriterioSucursalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCriterioSucursalKeyPressed
+        if (evt.VK_ESCAPE == evt.getKeyCode()) {
+            txtCodigoSucursal.setText(null);
+            txtDescripcionSucursal.setText(null);
+            txtCodigoSucursal.grabFocus();
+            BuscadorSucursal.dispose();
+        }
+    }//GEN-LAST:event_txtCriterioSucursalKeyPressed
+
+    private void txtCriterioSucursalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCriterioSucursalKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            evt.setKeyChar(Character.toUpperCase(c));
+        }
+        if (txtCriterio.getText().length() == 100) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCriterioSucursalKeyTyped
+
+    private void tablaDatosSucursalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaDatosSucursalMouseClicked
+        if (evt.getClickCount() == 2) {
+            if (tablaDatosSucursal.getSelectedRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA");
+            } else {
+                txtCriterioSucursal.setText(null);
+                BuscadorSucursal.dispose();
+            }
+        }
+    }//GEN-LAST:event_tablaDatosSucursalMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog BuscadorEmpresa;
+    private javax.swing.JDialog BuscadorSucursal;
     private javax.swing.JMenuItem Eliminar;
     private javax.swing.JMenuItem Modificar;
     private javax.swing.JButton btnCancelar;
@@ -1079,6 +1351,7 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.ButtonGroup grupoEstado;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1090,8 +1363,10 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JPopupMenu menuDesplegable;
     private javax.swing.JTabbedPane pestanha;
     private javax.swing.JPanel pestanhaABM;
@@ -1100,6 +1375,7 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton rbInactivo;
     private javax.swing.JTable tablaDatos;
     private javax.swing.JTable tablaDatosEmpresa;
+    private javax.swing.JTable tablaDatosSucursal;
     private org.jdesktop.swingx.JXTextField txtApellido;
     private org.jdesktop.swingx.JXTextField txtCodigo;
     private org.jdesktop.swingx.JXTextField txtCodigoEmpresa;
@@ -1107,6 +1383,7 @@ public class JFrmVendedor extends javax.swing.JInternalFrame {
     private org.jdesktop.swingx.JXTextField txtComision;
     private org.jdesktop.swingx.JXTextField txtCriterio;
     private org.jdesktop.swingx.JXTextField txtCriterioEmpresa;
+    private org.jdesktop.swingx.JXTextField txtCriterioSucursal;
     private org.jdesktop.swingx.JXTextField txtDescripcionEmpresa;
     private org.jdesktop.swingx.JXTextField txtDescripcionSucursal;
     private org.jdesktop.swingx.JXTextField txtNombre;

@@ -80,13 +80,13 @@ public class JFrmClienteListaPrecio extends javax.swing.JInternalFrame {
     }
 
     public void cargarPrograma() {
-        DefaultTableModel modelo = (DefaultTableModel) tablaDatosPrograma.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) tablaDatosListaPrecio.getModel();
         modelo.setRowCount(0);
-        datosListaPrecio = daoListaPrecio.consultar(txtCriterioPrograma.getText());
+        datosListaPrecio = daoListaPrecio.consultarSinMoneda(txtCriterioListaPrecio.getText());
         for (Object[] obj : datosListaPrecio) {
             modelo.addRow(obj);
         }
-        this.tablaDatosPrograma.setModel(modelo);
+        this.tablaDatosListaPrecio.setModel(modelo);
     }
 
     public void habilitarCampos(String accion) {
@@ -310,14 +310,14 @@ public class JFrmClienteListaPrecio extends javax.swing.JInternalFrame {
 
     private void buscarPrograma() {
         cargarPrograma();
-        BuscadorPrograma.setModal(true);
-        BuscadorPrograma.setSize(540, 285);
-        BuscadorPrograma.setLocationRelativeTo(this);
-        BuscadorPrograma.setVisible(true);
-        int fila = tablaDatosPrograma.getSelectedRow();
+        BuscadorListaPrecio.setModal(true);
+        BuscadorListaPrecio.setSize(540, 285);
+        BuscadorListaPrecio.setLocationRelativeTo(this);
+        BuscadorListaPrecio.setVisible(true);
+        int fila = tablaDatosListaPrecio.getSelectedRow();
         if (fila >= 0) {
-            txtCodigoListaPrecio.setText(tablaDatosPrograma.getValueAt(fila, 0).toString());
-            txtDescripcionListaPrecio.setText(tablaDatosPrograma.getValueAt(fila, 1).toString());
+            txtCodigoListaPrecio.setText(tablaDatosListaPrecio.getValueAt(fila, 0).toString());
+            txtDescripcionListaPrecio.setText(tablaDatosListaPrecio.getValueAt(fila, 1).toString());
         } else {
             txtCodigoListaPrecio.setText(null);
             txtDescripcionListaPrecio.setText(null);
@@ -348,12 +348,12 @@ public class JFrmClienteListaPrecio extends javax.swing.JInternalFrame {
         txtCriterioClienteDos = new org.jdesktop.swingx.JXTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaDatosClienteDos = new javax.swing.JTable();
-        BuscadorPrograma = new javax.swing.JDialog();
+        BuscadorListaPrecio = new javax.swing.JDialog();
         jPanel5 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        txtCriterioPrograma = new org.jdesktop.swingx.JXTextField();
+        txtCriterioListaPrecio = new org.jdesktop.swingx.JXTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tablaDatosPrograma = new javax.swing.JTable();
+        tablaDatosListaPrecio = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -595,27 +595,27 @@ public class JFrmClienteListaPrecio extends javax.swing.JInternalFrame {
         jLabel9.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("BUSCADOR DE PROGRAMAS");
+        jLabel9.setText("BUSCADOR DE LISTAS DE PRECIOS");
         jLabel9.setOpaque(true);
 
-        txtCriterioPrograma.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        txtCriterioPrograma.setPrompt("Aqui puede ingresar los filtros para la busqueda..");
-        txtCriterioPrograma.addActionListener(new java.awt.event.ActionListener() {
+        txtCriterioListaPrecio.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtCriterioListaPrecio.setPrompt("Aqui puede ingresar los filtros para la busqueda..");
+        txtCriterioListaPrecio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCriterioProgramaActionPerformed(evt);
+                txtCriterioListaPrecioActionPerformed(evt);
             }
         });
-        txtCriterioPrograma.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtCriterioListaPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtCriterioProgramaKeyPressed(evt);
+                txtCriterioListaPrecioKeyPressed(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtCriterioProgramaKeyTyped(evt);
+                txtCriterioListaPrecioKeyTyped(evt);
             }
         });
 
-        tablaDatosPrograma.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        tablaDatosPrograma.setModel(new javax.swing.table.DefaultTableModel(
+        tablaDatosListaPrecio.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        tablaDatosListaPrecio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -638,16 +638,16 @@ public class JFrmClienteListaPrecio extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        tablaDatosPrograma.addMouseListener(new java.awt.event.MouseAdapter() {
+        tablaDatosListaPrecio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaDatosProgramaMouseClicked(evt);
+                tablaDatosListaPrecioMouseClicked(evt);
             }
         });
-        jScrollPane4.setViewportView(tablaDatosPrograma);
-        if (tablaDatosPrograma.getColumnModel().getColumnCount() > 0) {
-            tablaDatosPrograma.getColumnModel().getColumn(0).setMinWidth(60);
-            tablaDatosPrograma.getColumnModel().getColumn(0).setPreferredWidth(60);
-            tablaDatosPrograma.getColumnModel().getColumn(0).setMaxWidth(60);
+        jScrollPane4.setViewportView(tablaDatosListaPrecio);
+        if (tablaDatosListaPrecio.getColumnModel().getColumnCount() > 0) {
+            tablaDatosListaPrecio.getColumnModel().getColumn(0).setMinWidth(60);
+            tablaDatosListaPrecio.getColumnModel().getColumn(0).setPreferredWidth(60);
+            tablaDatosListaPrecio.getColumnModel().getColumn(0).setMaxWidth(60);
         }
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -658,7 +658,7 @@ public class JFrmClienteListaPrecio extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCriterioPrograma, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+                    .addComponent(txtCriterioListaPrecio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -667,20 +667,20 @@ public class JFrmClienteListaPrecio extends javax.swing.JInternalFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtCriterioPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCriterioListaPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout BuscadorProgramaLayout = new javax.swing.GroupLayout(BuscadorPrograma.getContentPane());
-        BuscadorPrograma.getContentPane().setLayout(BuscadorProgramaLayout);
-        BuscadorProgramaLayout.setHorizontalGroup(
-            BuscadorProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout BuscadorListaPrecioLayout = new javax.swing.GroupLayout(BuscadorListaPrecio.getContentPane());
+        BuscadorListaPrecio.getContentPane().setLayout(BuscadorListaPrecioLayout);
+        BuscadorListaPrecioLayout.setHorizontalGroup(
+            BuscadorListaPrecioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        BuscadorProgramaLayout.setVerticalGroup(
-            BuscadorProgramaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        BuscadorListaPrecioLayout.setVerticalGroup(
+            BuscadorListaPrecioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -1246,39 +1246,39 @@ public class JFrmClienteListaPrecio extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_tablaDatosClienteDosMouseClicked
 
-    private void txtCriterioProgramaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCriterioProgramaActionPerformed
+    private void txtCriterioListaPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCriterioListaPrecioActionPerformed
         cargarPrograma();
-    }//GEN-LAST:event_txtCriterioProgramaActionPerformed
+    }//GEN-LAST:event_txtCriterioListaPrecioActionPerformed
 
-    private void txtCriterioProgramaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCriterioProgramaKeyPressed
+    private void txtCriterioListaPrecioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCriterioListaPrecioKeyPressed
         if (evt.VK_ESCAPE == evt.getKeyCode()) {
             txtCodigoListaPrecio.setText(null);
             txtDescripcionListaPrecio.setText(null);
             txtCodigoListaPrecio.grabFocus();
-            BuscadorPrograma.dispose();
+            BuscadorListaPrecio.dispose();
         }
-    }//GEN-LAST:event_txtCriterioProgramaKeyPressed
+    }//GEN-LAST:event_txtCriterioListaPrecioKeyPressed
 
-    private void txtCriterioProgramaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCriterioProgramaKeyTyped
+    private void txtCriterioListaPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCriterioListaPrecioKeyTyped
         char c = evt.getKeyChar();
         if (Character.isLowerCase(c)) {
             evt.setKeyChar(Character.toUpperCase(c));
         }
-        if (txtCriterioPrograma.getText().length() == 100) {
+        if (txtCriterioListaPrecio.getText().length() == 100) {
             evt.consume();
         }
-    }//GEN-LAST:event_txtCriterioProgramaKeyTyped
+    }//GEN-LAST:event_txtCriterioListaPrecioKeyTyped
 
-    private void tablaDatosProgramaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaDatosProgramaMouseClicked
+    private void tablaDatosListaPrecioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaDatosListaPrecioMouseClicked
         if (evt.getClickCount() == 2) {
-            if (tablaDatosPrograma.getSelectedRowCount() == 0) {
+            if (tablaDatosListaPrecio.getSelectedRowCount() == 0) {
                 JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA");
             } else {
-                txtCriterioPrograma.setText(null);
-                BuscadorPrograma.dispose();
+                txtCriterioListaPrecio.setText(null);
+                BuscadorListaPrecio.dispose();
             }
         }
-    }//GEN-LAST:event_tablaDatosProgramaMouseClicked
+    }//GEN-LAST:event_tablaDatosListaPrecioMouseClicked
 
     private void txtPorcentajeDescuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPorcentajeDescuentoActionPerformed
         if (txtPorcentajeDescuento.getText().isEmpty()) {
@@ -1341,7 +1341,7 @@ public class JFrmClienteListaPrecio extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog BuscadorCliente;
     private javax.swing.JDialog BuscadorClienteCriterio;
-    private javax.swing.JDialog BuscadorPrograma;
+    private javax.swing.JDialog BuscadorListaPrecio;
     private javax.swing.JMenuItem Eliminar;
     private javax.swing.JMenuItem Modificar;
     private javax.swing.JButton btnCancelar;
@@ -1371,13 +1371,13 @@ public class JFrmClienteListaPrecio extends javax.swing.JInternalFrame {
     private javax.swing.JPanel pestanhaLista;
     private javax.swing.JTable tablaDatos;
     private javax.swing.JTable tablaDatosClienteDos;
-    private javax.swing.JTable tablaDatosPrograma;
+    private javax.swing.JTable tablaDatosListaPrecio;
     private javax.swing.JTable tablaDatosUsuario;
     private org.jdesktop.swingx.JXTextField txtCodigoCliente;
     private org.jdesktop.swingx.JXTextField txtCodigoClienteCriterio;
     private org.jdesktop.swingx.JXTextField txtCodigoListaPrecio;
     private org.jdesktop.swingx.JXTextField txtCriterioClienteDos;
-    private org.jdesktop.swingx.JXTextField txtCriterioPrograma;
+    private org.jdesktop.swingx.JXTextField txtCriterioListaPrecio;
     private org.jdesktop.swingx.JXTextField txtCriterioUsuario;
     private org.jdesktop.swingx.JXTextField txtDescripcionCliente;
     private org.jdesktop.swingx.JXTextField txtDescripcionClienteCriterio;

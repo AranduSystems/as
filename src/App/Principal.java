@@ -55,6 +55,7 @@ import Vistas.JFrmUnidadMedida;
 import Vistas.JFrmUsuario;
 import Vistas.JFrmUsuarioImpresora;
 import Vistas.JFrmUsuarioPrograma;
+import Vistas.JFrmVendedor;
 import Vistas.JFrmVenta;
 import com.formdev.flatlaf.*;
 import java.awt.Dimension;
@@ -138,6 +139,7 @@ public class Principal extends javax.swing.JFrame {
         itemListaPrecio = new javax.swing.JMenuItem();
         itemArticuloListaPrecio = new javax.swing.JMenuItem();
         itemClienteListaPrecio = new javax.swing.JMenuItem();
+        itemVendedor = new javax.swing.JMenuItem();
         menuMovimientoVentas = new javax.swing.JMenu();
         itemVenta = new javax.swing.JMenuItem();
         menuConsultaVentas = new javax.swing.JMenu();
@@ -404,6 +406,15 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         menuMantenimientoVentas.add(itemClienteListaPrecio);
+
+        itemVendedor.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        itemVendedor.setText("Vendedores");
+        itemVendedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemVendedorActionPerformed(evt);
+            }
+        });
+        menuMantenimientoVentas.add(itemVendedor);
 
         jMenu3.add(menuMantenimientoVentas);
 
@@ -1632,6 +1643,24 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_itemClienteListaPrecioActionPerformed
 
+    private void itemVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemVendedorActionPerformed
+        JFrmVendedor fm = new JFrmVendedor();
+        panelInterno.add(fm);
+        Dimension desktopSize = panelInterno.getSize();
+        Dimension frameSize = fm.getSize();
+        fm.setLocation((desktopSize.width - frameSize.width) / 2, (desktopSize.height - frameSize.height) / 2);
+        try {
+            fm.setSelected(true);
+        } catch (PropertyVetoException e) {
+            JOptionPane.showMessageDialog(null, "ERROR AL ABRIR EL FORMULARIO: " + fm.getTitle(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        if (verificarPermisos(App.appLogin.IDUSUARIO, fm.getTitle()) == true) {
+            fm.show();
+        } else {
+            JOptionPane.showMessageDialog(null, "EL PROGRAMA NO ESTA HABILITADO PARA EL USUARIO\nPROGRAMA: " + fm.getTitle() + " USUARIO: " + App.appLogin.LOGIN, "ACCESO RESTRINGIDO", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_itemVendedorActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1714,6 +1743,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemUnidadMedida;
     private javax.swing.JMenuItem itemUsuarioImpresora;
     private javax.swing.JMenuItem itemUsuarios;
+    private javax.swing.JMenuItem itemVendedor;
     private javax.swing.JMenuItem itemVenta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

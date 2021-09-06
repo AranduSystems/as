@@ -100,7 +100,7 @@ public class JFrmArticuloListaPrecio extends javax.swing.JInternalFrame {
     public void cargarListaPrecio() {
         DefaultTableModel modelo = (DefaultTableModel) tablaDatosListaPrecio.getModel();
         modelo.setRowCount(0);
-        datosListasPrecios = daoListaPrecio.consultar(txtCriterioListaPrecio.getText());
+        datosListasPrecios = daoListaPrecio.consultarSinMoneda(txtCriterioListaPrecio.getText());
         for (Object[] obj : datosListasPrecios) {
             modelo.addRow(obj);
         }

@@ -29,8 +29,8 @@ public class DAOVenta implements OperacionesVenta {
                 + "(idventa, numerodocumento, numerotimbrado, fecha, \n"
                 + "observacion, idmoneda, iddeposito, idtipomovimiento, \n"
                 + "idcliente, idusuario, totalneto, totaliva, \n"
-                + "idcuenta, idempresa, idsucursal)\n"
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                + "idcuenta, idempresa, idsucursal, idvendedor)\n"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         Connection con;
         PreparedStatement ps;
         try {
@@ -45,13 +45,14 @@ public class DAOVenta implements OperacionesVenta {
             ps.setInt(6, v.getIdmoneda());
             ps.setInt(7, v.getIddeposito());
             ps.setInt(8, v.getIdtipomovimiento());
-            ps.setInt(9, v.getIdproveedor());
+            ps.setInt(9, v.getIdcliente());
             ps.setInt(10, v.getIdusuario());
             ps.setDouble(11, v.getTotalneto());
             ps.setDouble(12, v.getTotaliva());
             ps.setInt(13, v.getIdcuenta());
             ps.setInt(14, v.getIdempresa());
             ps.setInt(15, v.getIdsucursal());
+            ps.setInt(16, v.getIdvendedor());
             int filas = ps.executeUpdate();
             if (filas > 0) {
                 con.close();
@@ -84,7 +85,8 @@ public class DAOVenta implements OperacionesVenta {
                 + "		totaliva=?,\n"
                 + "		idcuenta=?,\n"
                 + "		idempresa=?,\n"
-                + "		idsucursal=?\n"
+                + "		idsucursal=?,\n"
+                + "		idvendedor=?\n"
                 + "	WHERE idventa=?;";
         Connection con;
         PreparedStatement ps;
@@ -92,21 +94,22 @@ public class DAOVenta implements OperacionesVenta {
             Class.forName(db.getDriver());
             con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
             ps = con.prepareStatement(sql);
-            ps.setInt(1, v.getIdventa());
-            ps.setString(2, v.getNumerodocumento());
-            ps.setInt(3, v.getNumerotimbrado());
-            ps.setDate(4, (Date) v.getFecha());
-            ps.setString(5, v.getObservacion());
-            ps.setInt(6, v.getIdmoneda());
-            ps.setInt(7, v.getIddeposito());
-            ps.setInt(8, v.getIdtipomovimiento());
-            ps.setInt(9, v.getIdproveedor());
-            ps.setInt(10, v.getIdusuario());
-            ps.setDouble(11, v.getTotalneto());
-            ps.setDouble(12, v.getTotaliva());
-            ps.setInt(13, v.getIdcuenta());
-            ps.setInt(14, v.getIdempresa());
-            ps.setInt(15, v.getIdsucursal());
+            ps.setString(1, v.getNumerodocumento());
+            ps.setInt(2, v.getNumerotimbrado());
+            ps.setDate(3, (Date) v.getFecha());
+            ps.setString(4, v.getObservacion());
+            ps.setInt(5, v.getIdmoneda());
+            ps.setInt(6, v.getIddeposito());
+            ps.setInt(7, v.getIdtipomovimiento());
+            ps.setInt(8, v.getIdcliente());
+            ps.setInt(9, v.getIdusuario());
+            ps.setDouble(10, v.getTotalneto());
+            ps.setDouble(11, v.getTotaliva());
+            ps.setInt(12, v.getIdcuenta());
+            ps.setInt(13, v.getIdempresa());
+            ps.setInt(14, v.getIdsucursal());
+            ps.setInt(15, v.getIdvendedor());
+            ps.setInt(16, v.getIdventa());
             int filas = ps.executeUpdate();
             if (filas > 0) {
                 con.close();

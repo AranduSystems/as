@@ -135,7 +135,7 @@ public class DAOListaPrecio implements OperacionesListaPrecio {
     }
 
     @Override
-    public ArrayList<Object[]> consultar(String criterio) {
+    public ArrayList<Object[]> consultar(String criterio, int idmoneda) {
         String sql = "SELECT \n"
                 + "LP.idlista, \n"
                 + "LP.descripcion, \n"
@@ -144,6 +144,7 @@ public class DAOListaPrecio implements OperacionesListaPrecio {
                 + "FROM lista_precio AS LP\n"
                 + "INNER JOIN moneda AS M ON M.idmoneda = LP.idmoneda\n"
                 + "WHERE CONCAT(LP.descripcion, LP.idlista, M.descripcion) LIKE ?\n"
+                + "AND LP.idmoneda = ?\n"
                 + "ORDER BY LP.descripcion;";
         Connection con;
         PreparedStatement ps;
@@ -154,6 +155,7 @@ public class DAOListaPrecio implements OperacionesListaPrecio {
             con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
             ps = con.prepareStatement(sql);
             ps.setString(1, "%" + criterio + "%");
+            ps.setInt(2, idmoneda);
             rs = ps.executeQuery();
             while (rs.next()) {
                 Object[] fila = new Object[4];
@@ -229,6 +231,42 @@ public class DAOListaPrecio implements OperacionesListaPrecio {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR AL OBTENER EL REGISTRO SELECCIONADO \n" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             return false;
         }
+    }
+
+    @Override
+    public ArrayList<Object[]> consultarSinMoneda(String criterio) {
+        String sql = "SELECT \n"
+                + "LP.idlista, \n"
+                + "LP.descripcion, \n"
+                + "LP.idmoneda, \n"
+                + "M.descripcion\n"
+                + "FROM lista_precio AS LP\n"
+                + "INNER JOIN moneda AS M ON M.idmoneda = LP.idmoneda\n"
+                + "WHERE CONCAT(LP.descripcion, LP.idlista, M.descripcion) LIKE ?\n"
+                + "ORDER BY LP.descripcion;";
+        Connection con;
+        PreparedStatement ps;
+        ResultSet rs;
+        ArrayList<Object[]> datos = new ArrayList<>();
+        try {
+            Class.forName(db.getDriver());
+            con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + criterio + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Object[] fila = new Object[4];
+                fila[0] = rs.getInt(1);
+                fila[1] = rs.getString(2);
+                fila[2] = rs.getInt(3);
+                fila[3] = rs.getString(4);
+                datos.add(fila);
+            }
+            con.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR AL OBTENER LA LISTA DE LOS DATOS \n" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return datos;
     }
 
 }

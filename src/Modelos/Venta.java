@@ -15,13 +15,14 @@ public class Venta {
     private int idmoneda;
     private int iddeposito;
     private int idtipomovimiento;
-    private int idproveedor;
+    private int idcliente;
     private int idusuario;
     private double totalneto;
     private double totaliva;
     private int idcuenta;
     private int idempresa;
     private int idsucursal;
+    private int idvendedor;
 
     public Venta() {
     }
@@ -90,14 +91,14 @@ public class Venta {
         this.idtipomovimiento = idtipomovimiento;
     }
 
-    public int getIdproveedor() {
-        return idproveedor;
+    public int getIdcliente() {
+        return idcliente;
     }
 
-    public void setIdproveedor(int idproveedor) {
-        this.idproveedor = idproveedor;
+    public void setIdcliente(int idcliente) {
+        this.idcliente = idcliente;
     }
-
+    
     public int getIdusuario() {
         return idusuario;
     }
@@ -144,6 +145,14 @@ public class Venta {
 
     public void setIdsucursal(int idsucursal) {
         this.idsucursal = idsucursal;
+    }
+
+    public int getIdvendedor() {
+        return idvendedor;
+    }
+
+    public void setIdvendedor(int idvendedor) {
+        this.idvendedor = idvendedor;
     }
     
 }
