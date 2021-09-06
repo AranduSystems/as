@@ -249,7 +249,7 @@ public class JFrmCompra extends javax.swing.JInternalFrame {
             i.setIdimpuesto(a.getIdimpuesto());
             daoImpuesto.consultarDatos(i);
             porcentajeIva = i.getPorcentaje();
-            txtCosto.grabFocus();
+            //txtCosto.grabFocus();
         } else {
             txtCodigoArticulo.setText(null);
             txtDescripcionArticulo.setText(null);
@@ -680,6 +680,10 @@ public class JFrmCompra extends javax.swing.JInternalFrame {
         }
         valorTotalDocumentoCuota = TOTAL;
         txtTotalMontoCuotas.setText(formatter.format(TOTAL));
+    }
+    
+    private void obtenerArticulo(){
+        
     }
 
     /**
@@ -1585,6 +1589,7 @@ public class JFrmCompra extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8_open_box_16px.png"))); // NOI18N
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
@@ -2694,16 +2699,15 @@ public class JFrmCompra extends javax.swing.JInternalFrame {
         } else {
             String criterio = txtCodigoArticulo.getText();
             boolean resultado = false;
-            a.setCodigobarra(criterio);
-            resultado = daoArticulo.busquedaArticulo(a);
-            if (resultado == false) {
+            resultado = daoArticulo.busquedaArticuloNuevo(criterio);
+            /*if (resultado == false) {
                 a.setCodigoalfanumerico(criterio);
                 resultado = daoArticulo.busquedaArticulo(a);
             }
             if (resultado == false) {
                 a.setIdarticulo(Integer.parseInt(criterio));
                 resultado = daoArticulo.busquedaArticulo(a);
-            }
+            }*/
             if (resultado == true) {
                 txtDescripcionArticulo.setText(a.getDescripcion());
                 codigoarticulo = a.getIdarticulo();

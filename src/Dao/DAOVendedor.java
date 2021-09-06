@@ -229,4 +229,87 @@ public class DAOVendedor implements OperacionesVendedor {
         }
     }
 
+    @Override
+    public boolean consultarDatosVendedorEmpresaSucursal(Object obj) {
+        v = (Vendedor) obj;
+        String sql = "SELECT * FROM vendedor WHERE idvendedor = ? AND idempresa = ? AND idsucursal = ?;";
+        Connection con;
+        PreparedStatement ps;
+        ResultSet rs;
+        try {
+            Class.forName(db.getDriver());
+            con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, v.getIdvendedor());
+            ps.setInt(2, v.getIdempresa());
+            ps.setInt(3, v.getIdsucursal());
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                v.setIdvendedor(rs.getInt(1));
+                v.setNombre(rs.getString(2));
+                v.setApellido(rs.getString(3));
+                v.setEstado(rs.getString(4));
+                v.setPorcentajecomision(rs.getDouble(5));
+                v.setIdempresa(rs.getInt(6));
+                v.setIdsucursal(rs.getInt(7));
+                con.close();
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "NO EXISTE VENDEDOR CON EL CÓDIGO INGRESADO...", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                con.close();
+                return false;
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR AL OBTENER EL REGISTRO SELECCIONADO \n" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+    }
+
+    @Override
+    public ArrayList<Object[]> consultarVendedorEmpresaSucursal(String criterio, int idempresa, int idsucursal) {
+        String sql = "SELECT \n"
+                + "V.idvendedor, \n"
+                + "CONCAT(V.nombre,' ',V.apellido) as vendedor, \n"
+                + "V.apellido, \n"
+                + "IF(estado = 'A', 'ACTIVO', 'INACTIVO') AS estado,\n"
+                + "V.porcentajecomision, \n"
+                + "V.idempresa, \n"
+                + "V.idsucursal\n"
+                + "FROM vendedor AS V\n"
+                + "INNER JOIN empresa AS E ON E.idempresa = V.idempresa\n"
+                + "INNER JOIN sucursal AS S ON S.idsucursal = V.idsucursal\n"
+                + "WHERE CONCAT(V.nombre, V.apellido, E.razonsocial, S.descripcion) LIKE ?\n"
+                + "AND V.idempresa = ?\n"
+                + "AND V.idsucursal = ?\n"
+                + "ORDER BY V.nombre;";
+        Connection con;
+        PreparedStatement ps;
+        ResultSet rs;
+        ArrayList<Object[]> datos = new ArrayList<>();
+        try {
+            Class.forName(db.getDriver());
+            con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + criterio + "%");
+            ps.setInt(2, idempresa);
+            ps.setInt(3, idsucursal);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Object[] fila = new Object[7];
+                fila[0] = rs.getInt(1);
+                fila[1] = rs.getString(2);
+                fila[2] = rs.getString(3);
+                fila[3] = rs.getString(4);
+                fila[4] = rs.getDouble(5);
+                fila[5] = rs.getInt(6);
+                fila[6] = rs.getInt(7);
+                datos.add(fila);
+            }
+            con.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR AL OBTENER LA LISTA DE LOS DATOS \n" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+        return datos;
+    }
+
 }

@@ -16,4 +16,5 @@ public interface OperacionesArticulo {
     public boolean verificarCodigoAlfanumerico(String codigo, String id);
     public boolean verificarCodigoBarra(String codigo, String id);
     public boolean busquedaArticulo(Object obj);
+    public boolean busquedaArticuloNuevo(String criterio);
 }

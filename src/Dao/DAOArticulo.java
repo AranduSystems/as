@@ -2,6 +2,7 @@ package Dao;
 
 import Controladores.Database;
 import Controladores.OperacionesArticulo;
+import Controladores.Utilitarios;
 import Modelos.Articulo;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -343,7 +344,8 @@ public class DAOArticulo implements OperacionesArticulo {
                 resultado = false;
             }
             if (resultado == false) {
-                sql = "SELECT * FROM articulo WHERE codigoalfanumerico = ?;";
+
+                sql = "SELECT * FROM articulo WHERE codigoalfanumerico LIKE ?;";
                 Class.forName(db.getDriver());
                 con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
                 ps = con.prepareStatement(sql);
@@ -369,6 +371,7 @@ public class DAOArticulo implements OperacionesArticulo {
                     con.close();
                     resultado = false;
                 }
+
             }
             if (resultado == false) {
                 sql = "SELECT * FROM articulo WHERE idarticulo = ?;";
@@ -398,6 +401,112 @@ public class DAOArticulo implements OperacionesArticulo {
                     resultado = false;
                 }
             }
+        } catch (SQLException | ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR AL OBTENER EL REGISTRO SELECCIONADO \n" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return resultado;
+    }
+
+    @Override
+    public boolean busquedaArticuloNuevo(String criterio) {
+        String sql = "";
+        Connection con;
+        PreparedStatement ps;
+        ResultSet rs;
+        boolean resultado = false;
+        try {
+            if (resultado == false) {
+                sql = "SELECT * FROM articulo WHERE codigobarra = ?;";
+                Class.forName(db.getDriver());
+                con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
+                ps = con.prepareStatement(sql);
+                ps.setString(1, criterio);
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    a.setIdarticulo(rs.getInt(1));
+                    a.setDescripcion(rs.getString(2));
+                    a.setReferencia(rs.getString(3));
+                    a.setCodigoalfanumerico(rs.getString(4));
+                    a.setCodigobarra(rs.getString(5));
+                    a.setEstado(rs.getString(6));
+                    a.setObservacion(rs.getString(7));
+                    a.setIdmarca(rs.getInt(8));
+                    a.setIdlinea(rs.getInt(9));
+                    a.setIdseccion(rs.getInt(10));
+                    a.setIdtipo(rs.getInt(11));
+                    a.setIdunidad(rs.getInt(12));
+                    a.setIdimpuesto(rs.getInt(13));
+                    con.close();
+                    resultado = true;
+                } else {
+                    con.close();
+                    resultado = false;
+                }
+            }
+            if (resultado == false) {
+                if (!criterio.isEmpty()) {
+                    sql = "SELECT * FROM articulo WHERE codigoalfanumerico LIKE ?;";
+                    Class.forName(db.getDriver());
+                    con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
+                    ps = con.prepareStatement(sql);
+                    ps.setString(1, criterio);
+                    rs = ps.executeQuery();
+                    if (rs.next()) {
+                        a.setIdarticulo(rs.getInt(1));
+                        a.setDescripcion(rs.getString(2));
+                        a.setReferencia(rs.getString(3));
+                        a.setCodigoalfanumerico(rs.getString(4));
+                        a.setCodigobarra(rs.getString(5));
+                        a.setEstado(rs.getString(6));
+                        a.setObservacion(rs.getString(7));
+                        a.setIdmarca(rs.getInt(8));
+                        a.setIdlinea(rs.getInt(9));
+                        a.setIdseccion(rs.getInt(10));
+                        a.setIdtipo(rs.getInt(11));
+                        a.setIdunidad(rs.getInt(12));
+                        a.setIdimpuesto(rs.getInt(13));
+                        con.close();
+                        resultado = true;
+                    } else {
+                        con.close();
+                        resultado = false;
+                    }
+                }
+                if (resultado == false) {
+                    sql = "SELECT * FROM articulo WHERE idarticulo = ?;";
+                    Class.forName(db.getDriver());
+                    con = DriverManager.getConnection(db.getUrl(), db.getUser(), db.getPass());
+                    ps = con.prepareStatement(sql);
+                    if (Utilitarios.comprobarTipoDato(criterio) == true) {
+                        ps.setInt(1, Integer.parseInt(criterio));
+                    } else {
+                        ps.setInt(1, 0);
+                    }
+                    rs = ps.executeQuery();
+                    if (rs.next()) {
+                        a.setIdarticulo(rs.getInt(1));
+                        a.setDescripcion(rs.getString(2));
+                        a.setReferencia(rs.getString(3));
+                        a.setCodigoalfanumerico(rs.getString(4));
+                        a.setCodigobarra(rs.getString(5));
+                        a.setEstado(rs.getString(6));
+                        a.setObservacion(rs.getString(7));
+                        a.setIdmarca(rs.getInt(8));
+                        a.setIdlinea(rs.getInt(9));
+                        a.setIdseccion(rs.getInt(10));
+                        a.setIdtipo(rs.getInt(11));
+                        a.setIdunidad(rs.getInt(12));
+                        a.setIdimpuesto(rs.getInt(13));
+                        con.close();
+                        resultado = true;
+                    } else {
+                        con.close();
+                        resultado = false;
+                    }
+                }
+            }
+
         } catch (SQLException | ClassNotFoundException e) {
             JOptionPane.showMessageDialog(null, "HA OCURRIDO UN ERROR AL OBTENER EL REGISTRO SELECCIONADO \n" + e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             return false;

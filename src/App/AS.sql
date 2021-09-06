@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Versión del servidor:         10.4.14-MariaDB - mariadb.org binary distribution
+-- Versión del servidor:         10.4.20-MariaDB - mariadb.org binary distribution
 -- SO del servidor:              Win64
--- HeidiSQL Versión:             11.1.0.6116
+-- HeidiSQL Versión:             11.3.0.6295
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -50,8 +50,8 @@ CREATE TABLE IF NOT EXISTS `articulo` (
 -- Volcando datos para la tabla as.articulo: ~521 rows (aproximadamente)
 /*!40000 ALTER TABLE `articulo` DISABLE KEYS */;
 REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfanumerico`, `codigobarra`, `estado`, `observacion`, `idmarca`, `idlinea`, `idseccion`, `idtipo`, `idunidad`, `idimpuesto`) VALUES
-	(1, 'CABLE USB SAMSUNG V8 30 cm', '', '', '', 'A', '', 1, 1, 1, 1, 1, 3),
-	(2, 'CABLE USB SAMSUNG V8 1m', '', '', '', 'A', '', 1, 1, 1, 1, 1, 3),
+	(1, 'CABLE USB SAMSUNG V8 30 cm', '', 'V8 30CM', '', 'A', '', 1, 1, 1, 1, 1, 3),
+	(2, 'CABLE USB SAMSUNG V8 1m ART', '', '', '', 'A', '', 1, 1, 1, 1, 1, 3),
 	(3, 'CABLE USB SAMSUNG V8 1,30m', '', '', '', 'A', '', 1, 1, 1, 1, 1, 3),
 	(4, 'CABLE USB SAMSUNG V8 2m', '', '', '', 'A', '', 1, 1, 1, 1, 1, 3),
 	(5, 'CABLE USB 3.0 P.MEMORIA EXTERNA 1m', '', '', '', 'A', '', 1, 1, 1, 1, 1, 3),
@@ -3073,6 +3073,7 @@ CREATE TABLE IF NOT EXISTS `cliente_lista_precio` (
 -- Volcando datos para la tabla as.cliente_lista_precio: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `cliente_lista_precio` DISABLE KEYS */;
 REPLACE INTO `cliente_lista_precio` (`idcliente`, `idlista`, `descuento`, `recargo`) VALUES
+	(1, 1, 0, 0),
 	(2, 1, 5, 0),
 	(2, 2, 0, 10);
 /*!40000 ALTER TABLE `cliente_lista_precio` ENABLE KEYS */;
@@ -3580,7 +3581,7 @@ CREATE TABLE IF NOT EXISTS `programa` (
   PRIMARY KEY (`idprograma`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.programa: ~47 rows (aproximadamente)
+-- Volcando datos para la tabla as.programa: ~48 rows (aproximadamente)
 /*!40000 ALTER TABLE `programa` DISABLE KEYS */;
 REPLACE INTO `programa` (`idprograma`, `descripcion`) VALUES
 	(1, 'JFrmPrograma'),
@@ -7525,7 +7526,7 @@ CREATE TABLE IF NOT EXISTS `tipo_tarjeta` (
   PRIMARY KEY (`idtipo`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla as.tipo_tarjeta: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla as.tipo_tarjeta: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `tipo_tarjeta` DISABLE KEYS */;
 REPLACE INTO `tipo_tarjeta` (`idtipo`, `descripcion`) VALUES
 	(1, 'TARJETA DE DÉBITO'),
@@ -7540,7 +7541,7 @@ CREATE TABLE IF NOT EXISTS `unidad_medida` (
   PRIMARY KEY (`idunidad`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla as.unidad_medida: ~5 rows (aproximadamente)
+-- Volcando datos para la tabla as.unidad_medida: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `unidad_medida` DISABLE KEYS */;
 REPLACE INTO `unidad_medida` (`idunidad`, `descripcion`, `simbolo`) VALUES
 	(1, 'UNIDADES', 'UN'),
@@ -7671,7 +7672,7 @@ CREATE TABLE IF NOT EXISTS `vendedor` (
 -- Volcando datos para la tabla as.vendedor: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `vendedor` DISABLE KEYS */;
 REPLACE INTO `vendedor` (`idvendedor`, `nombre`, `apellido`, `estado`, `porcentajecomision`, `idempresa`, `idsucursal`) VALUES
-	(1, 'ARMANDO', 'PERALTA', 'A', 5, 1, 2);
+	(1, 'VENDEDOR', 'PRUEBA', 'A', 5, 1, 2);
 /*!40000 ALTER TABLE `vendedor` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.venta
@@ -8611,6 +8612,6 @@ INNER JOIN tipo_proveedor AS TP ON TP.idtipo = P.idtipo
 ORDER BY P.idproveedor ASC ;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
