@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Versión del servidor:         10.4.14-MariaDB - mariadb.org binary distribution
+-- Versión del servidor:         10.4.20-MariaDB - mariadb.org binary distribution
 -- SO del servidor:              Win64
--- HeidiSQL Versión:             11.1.0.6116
+-- HeidiSQL Versión:             11.3.0.6295
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `articulo` (
   CONSTRAINT `FK_ARTICULO_UNIDAD_MEDIDA` FOREIGN KEY (`idunidad`) REFERENCES `unidad_medida` (`idunidad`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla as.articulo: ~521 rows (aproximadamente)
+-- Volcando datos para la tabla as.articulo: ~15.191 rows (aproximadamente)
 /*!40000 ALTER TABLE `articulo` DISABLE KEYS */;
 REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfanumerico`, `codigobarra`, `estado`, `observacion`, `idmarca`, `idlinea`, `idseccion`, `idtipo`, `idunidad`, `idimpuesto`) VALUES
 	(1, 'KIT CAMA PORTUGAL 160X190', '', '233-2', '', 'A', '', 1, 11, 1, 1, 1, 3),
@@ -714,7 +714,7 @@ REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfan
 	(662, 'TALADRO MAKITA DP3730 10MM', '', 'DP3730', '', 'A', '', 1, 4, 1, 1, 1, 3),
 	(663, 'TALADRO MAKITA 16MM 8422B', '', '8422B', '', 'A', '', 1, 4, 1, 1, 1, 3),
 	(664, 'TALADRO MAKITA 8419B', '', '8419B', '', 'A', '', 1, 4, 1, 1, 1, 3),
-	(665, 'HOJA SIERRA CIRC.POWERTEL 7\', '', 'HSC7X60D', '', 'A', '', 1, 4, 1, 1, 1, 3),
+	(665, 'HOJA SIERRA CIRC.POWERTEL 7', '', 'HSC7X60D', '', 'A', '', 1, 4, 1, 1, 1, 3),
 	(666, 'BASE FIJA P/SILLA OFIC.', '', 'BF', '', 'A', '', 1, 11, 1, 1, 1, 3),
 	(667, 'SIERRA CALAD.BANCO NEO 16 SK630', '', 'SK630', '', 'A', '', 1, 4, 1, 1, 1, 3),
 	(668, 'SIERRA CIRCULAR MAKITA 5806NH', '', '5806NH', '', 'A', '', 1, 4, 1, 1, 1, 3),
@@ -1251,7 +1251,7 @@ REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfan
 	(1199, 'LLAVE MEDIA LUNA 14-16 GEDORE', '', 'LML14-16', '', 'A', '', 1, 4, 1, 1, 1, 3),
 	(1200, 'LLAVE MEDIA LUNA 15-17 GEDORE', '', 'LML15-17', '', 'A', '', 1, 4, 1, 1, 1, 1),
 	(1201, 'JUEGO DE LLAVE GEDORE 1B-17M', '', '1B-17M', '', 'A', '', 1, 4, 1, 1, 1, 1),
-	(1202, 'LLAVE PARA CAÑO 4\ STANVICK', '', 'LPC4S', '', 'A', '', 1, 4, 1, 1, 1, 3),
+	(1202, 'LLAVE PARA CAÑO 4 STANVICK', '', 'LPC4S', '', 'A', '', 1, 4, 1, 1, 1, 3),
 	(1203, 'LLAVE COMB 6MM TRAM', '', 'LCT6MM', '', 'A', '', 1, 4, 1, 1, 1, 3),
 	(1204, 'LLAVE COMB 7MM TRAM', '', 'LCT7MM', '', 'A', '', 1, 4, 1, 1, 1, 3),
 	(1205, 'LLAVE COMB 8MM TRAM', '', 'LCT8MM', '', 'A', '', 1, 4, 1, 1, 1, 3),
@@ -1606,7 +1606,7 @@ REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfan
 	(1554, 'LAVARROPA TOKYO 11KG TOK6100', '', 'TOK6100', '', 'A', '', 1, 11, 1, 1, 1, 3),
 	(1555, 'PAJUELAS ÑATITO 61', '', '155561', '', 'A', '', 4, 2, 1, 1, 1, 1),
 	(1556, 'POSTE EUCALIPTO 12MTS', '', 'PE12', '', 'A', '', 2, 6, 1, 1, 1, 3),
-	(1557, 'PAJUELAS TO\OLO 47', '', '155747', '', 'A', '', 4, 2, 1, 1, 1, 1),
+	(1557, 'PAJUELAS TOOLO 47', '', '155747', '', 'A', '', 4, 2, 1, 1, 1, 1),
 	(1558, 'PAJUELAS ÑATITO 8', '', '15588', '', 'A', '', 4, 2, 1, 1, 1, 1),
 	(1559, 'PAJUELAS 105', '', '1559105', '', 'A', '', 4, 2, 1, 1, 1, 1),
 	(1560, 'POSTE EUCALIPTO 9MTS', '', 'PE9', '', 'A', '', 2, 6, 1, 1, 1, 3),
@@ -7736,7 +7736,7 @@ REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfan
 	(7684, 'MAXI CLEAN DE 1LT', '', 'MC1L', '', 'A', '', 1, 14, 1, 1, 1, 3),
 	(7685, 'ACIDO MURIATICO RIBEIRO 1LT', '', 'AMR1', '', 'A', '', 1, 14, 1, 1, 1, 3),
 	(7686, 'KEROSEN DE 1LT', '', 'KD1L', '', 'A', '', 1, 14, 1, 1, 1, 3),
-	(7687, 'LLAVE DE PASO ITALY 3\', '', 'LP3', '', 'A', '', 1, 1, 1, 1, 1, 3),
+	(7687, 'LLAVE DE PASO ITALY 3', '', 'LP3', '', 'A', '', 1, 1, 1, 1, 1, 3),
 	(7688, 'CATALIZADOR DE 1LT', '', 'FC5200', '', 'A', '', 1, 14, 1, 1, 1, 3),
 	(7689, 'ANTI OXIDO VERDE 0.250LT', '', 'AOV0.250LT', '', 'A', '', 1, 14, 1, 1, 1, 3),
 	(7690, 'ROPERO YGUAZU 3P 10714', '', '10714', '', 'A', '', 1, 11, 1, 1, 1, 3),
@@ -8062,7 +8062,7 @@ REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfan
 	(8010, 'TAPA WATER INCEPA POLIPROPILENO VDE.', '', 'TWPV', '', 'A', '', 1, 1, 1, 1, 1, 3),
 	(8011, 'PIÑON P/HORMIGON.CON EJE', '', 'PPHCE', '', 'A', '', 1, 4, 1, 1, 1, 3),
 	(8012, 'ENGRANAJE CORONA 9609', '', '96098012', '', 'A', '', 1, 4, 1, 1, 1, 3),
-	(8013, 'AMOLADORA BOSCH 9\ GWS24-230', '', 'GWS24-230', '', 'A', '', 1, 4, 1, 1, 1, 3),
+	(8013, 'AMOLADORA BOSCH 9 GWS24-230', '', 'GWS24-230', '', 'A', '', 1, 4, 1, 1, 1, 3),
 	(8014, 'CARCASA BOCH 9618089630', '', '9618089630', '', 'A', '', 1, 4, 1, 1, 1, 3),
 	(8015, 'CONJ.MUEBLE P/BAÑO MEZZAROBA 1.00MT', '', 'CMBM1', '', 'A', '', 1, 1, 1, 1, 1, 3),
 	(8016, 'REACTANCIA VCP 1X36W', '', 'RVCP40', '', 'A', '', 1, 1, 1, 1, 1, 3),
@@ -9099,7 +9099,7 @@ REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfan
 	(9047, 'CORREA DAYCO 9.5X1300', '', '9.5X13009047', '', 'A', '', 1, 13, 1, 1, 1, 1),
 	(9048, 'SOPAPA P/PILETA METAL 40MM', '', 'SPPM40', '', 'A', '', 1, 4, 1, 1, 1, 3),
 	(9049, 'BACHA EMB.CREM.OVALADA L-37', '', 'BECOL37', '', 'A', '', 1, 1, 1, 1, 1, 3),
-	(9050, 'ESCUADRA FAMASTIL 12\ 459.012', '', '459012', '', 'A', '', 1, 4, 1, 1, 1, 3),
+	(9050, 'ESCUADRA FAMASTIL 12 459.012', '', '459012', '', 'A', '', 1, 4, 1, 1, 1, 3),
 	(9051, 'FICHERO METALICO LUNASA', '', 'FMP9051', '', 'A', '', 1, 4, 1, 1, 1, 3),
 	(9052, 'ADAPT.C/BRIDA C/ANIILOS', '', '521', '', 'A', '', 1, 1, 1, 1, 1, 3),
 	(9053, 'FOCO PYGMY MICRO FREEZER 25W E/14', '', '8658', '', 'A', '', 1, 1, 1, 1, 1, 3),
@@ -10049,7 +10049,8 @@ REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfan
 	(9997, 'POSTE IMPREGNADO 9.00 MTS', '', 'PI9', '', 'A', '', 2, 6, 1, 1, 1, 3),
 	(9998, 'SIFON DUPLO DUDA 25700', '', '25700', '', 'A', '', 1, 1, 1, 1, 1, 3),
 	(9999, 'CABECERA SPLENDORE 1.40', '', '3045-8', '', 'A', '', 1, 11, 1, 1, 1, 3),
-	(10000, 'PUNTO C/PLACA PANAM', '', 'PCPP', '', 'A', '', 1, 1, 1, 1, 1, 1),
+	(10000, 'PUNTO C/PLACA PANAM', '', 'PCPP', '', 'A', '', 1, 1, 1, 1, 1, 1);
+REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfanumerico`, `codigobarra`, `estado`, `observacion`, `idmarca`, `idlinea`, `idseccion`, `idtipo`, `idunidad`, `idimpuesto`) VALUES
 	(10001, 'LATEX PINTOR 3.600LT', '', 'LP3.6', '', 'A', '', 1, 14, 1, 1, 1, 3),
 	(10002, 'SOFA X 3 85404-88', '', '85404-88', '', 'A', '', 1, 11, 1, 1, 1, 3),
 	(10003, 'PISTOLA CALOR BLACK&DEC. HG2000', '', 'HG2000', '', 'A', '', 1, 4, 1, 1, 1, 3),
@@ -11011,7 +11012,7 @@ REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfan
 	(10959, 'BUJE DE VEDACION', '', '40023281', '', 'A', '', 1, 4, 1, 1, 1, 3),
 	(10960, 'CUP DEL PISTON 47 D', '', '40025022', '', 'A', '', 1, 4, 1, 1, 1, 3),
 	(10961, 'ANILLO MANGELS 57,1MM VW', '', 'M72571', '', 'A', '', 1, 4, 1, 1, 1, 3),
-	(10962, 'FILTRO DERECHO 2\', '', '20065033', '', 'A', '', 1, 4, 1, 1, 1, 3),
+	(10962, 'FILTRO DERECHO 2', '', '20065033', '', 'A', '', 1, 4, 1, 1, 1, 3),
 	(10963, 'COLCHON SUEÑOLAR 1.90MT', '', 'CS1.90', '', 'A', '', 1, 11, 1, 1, 1, 3),
 	(10964, 'GUARDA CABO DE 1/4', '', 'GC1/4', '', 'A', '', 1, 4, 1, 1, 1, 3),
 	(10965, 'GUARDA CABO DE 5/16', '', 'GC5/16', '', 'A', '', 1, 4, 1, 1, 1, 3),
@@ -11279,8 +11280,7 @@ REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfan
 	(11227, 'LUMINARIA CIRCULAR TLC01', '', 'TLC01', '', 'A', '', 1, 1, 1, 1, 1, 3),
 	(11228, 'LUMINARIA DE TECHO CIRC. TLR10', '', 'TLR10', '', 'A', '', 1, 1, 1, 1, 1, 3),
 	(11229, 'ESPEJO E56 REFORZADO', '', 'E56', '', 'A', '', 1, 1, 1, 1, 1, 3),
-	(11230, 'ESPEJO N56 C/REPISA', '', 'N56', '', 'A', '', 1, 1, 1, 1, 1, 3);
-REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfanumerico`, `codigobarra`, `estado`, `observacion`, `idmarca`, `idlinea`, `idseccion`, `idtipo`, `idunidad`, `idimpuesto`) VALUES
+	(11230, 'ESPEJO N56 C/REPISA', '', 'N56', '', 'A', '', 1, 1, 1, 1, 1, 3),
 	(11231, 'ARAÑA 3 LUCES 7403/3', '', '7403/3', '', 'A', '', 1, 11, 1, 1, 1, 3),
 	(11232, 'ARAÑA 3 LUCES 7717/3', '', '7717/3', '', 'A', '', 1, 11, 1, 1, 1, 3),
 	(11233, 'KG PASTINA FORTALEZA NEGRO', '', 'RFN', '', 'A', '', 1, 1, 1, 1, 1, 3),
@@ -15065,8 +15065,15 @@ CREATE TABLE IF NOT EXISTS `articulo_deposito` (
   CONSTRAINT `FK_ARTICULO_DEPOSITO_DEPOSITO` FOREIGN KEY (`iddeposito`) REFERENCES `deposito` (`iddeposito`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.articulo_deposito: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.articulo_deposito: ~5 rows (aproximadamente)
 /*!40000 ALTER TABLE `articulo_deposito` DISABLE KEYS */;
+REPLACE INTO `articulo_deposito` (`idarticulo`, `iddeposito`, `cantidad`) VALUES
+	(1, 1, 0),
+	(2493, 1, 0),
+	(2608, 1, 0),
+	(5132, 1, 0),
+	(9459, 1, 0),
+	(11251, 1, 0);
 /*!40000 ALTER TABLE `articulo_deposito` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.articulo_lista_precio
@@ -15081,8 +15088,23 @@ CREATE TABLE IF NOT EXISTS `articulo_lista_precio` (
   CONSTRAINT `FK_ARTICULO_LISTA_PRECIO_LISTA_PRECIO` FOREIGN KEY (`idlista`) REFERENCES `lista_precio` (`idlista`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.articulo_lista_precio: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.articulo_lista_precio: ~14 rows (aproximadamente)
 /*!40000 ALTER TABLE `articulo_lista_precio` DISABLE KEYS */;
+REPLACE INTO `articulo_lista_precio` (`idarticulo`, `idlista`, `precio`) VALUES
+	(1, 1, 1175000),
+	(511, 1, 2300000),
+	(714, 1, 12500),
+	(939, 1, 500),
+	(2493, 1, 3000),
+	(2608, 1, 13000),
+	(3152, 1, 27500),
+	(4199, 1, 13000),
+	(5132, 1, 100),
+	(5354, 1, 6500),
+	(9459, 1, 24000),
+	(10395, 1, 15000),
+	(11251, 1, 50000),
+	(11445, 1, 1500);
 /*!40000 ALTER TABLE `articulo_lista_precio` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.articulo_periodo
@@ -15100,7 +15122,7 @@ CREATE TABLE IF NOT EXISTS `articulo_periodo` (
   CONSTRAINT `FK_ARTICULO_PERIODO_PERIODO` FOREIGN KEY (`idperiodo`) REFERENCES `periodo` (`idperiodo`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.articulo_periodo: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.articulo_periodo: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `articulo_periodo` DISABLE KEYS */;
 /*!40000 ALTER TABLE `articulo_periodo` ENABLE KEYS */;
 
@@ -15151,7 +15173,7 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   CONSTRAINT `FK_CLIENTE_TIPO_CLIENTE` FOREIGN KEY (`idtipo`) REFERENCES `tipo_cliente` (`idtipo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla as.cliente: ~2.352 rows (aproximadamente)
+-- Volcando datos para la tabla as.cliente: ~6.190 rows (aproximadamente)
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
 REPLACE INTO `cliente` (`idcliente`, `nombre`, `apellido`, `ruc`, `telefono`, `direccion`, `estado`, `idtipo`) VALUES
 	(1, 'DUARTE FERREIRA JUAN CARLOS', '.', '5084218', '975344364', '', 'A', 1),
@@ -20316,7 +20338,7 @@ REPLACE INTO `cliente` (`idcliente`, `nombre`, `apellido`, `ruc`, `telefono`, `d
 	(5160, 'TOEWS JOHAN', '.', '879592-4', '.', '', 'A', 1),
 	(5161, 'DUCK FRANK', '.', '3348092-3', '981496001', '', 'A', 1),
 	(5162, 'OLD HENRY S.A.', '.', '80085230-3', '982160012', '', 'A', 1),
-	(5163, 'PO\', '.', '80033203-2', '.', '', 'A', 1),
+	(5163, 'PO', '.', '80033203-2', '.', '', 'A', 1),
 	(5164, 'SALAS DE BENITEZ PELAGIA', '.', '1323681', '971450907', '', 'A', 1),
 	(5165, 'MORINIGO MARIN NARCISO', '.', '2537372', '976410561', '', 'A', 1),
 	(5166, 'CACERES VAZQUEZ ANTONIO', '.', '3759496', '982962252', '', 'A', 1),
@@ -21404,7 +21426,7 @@ CREATE TABLE IF NOT EXISTS `compra_anulado` (
   CONSTRAINT `FK_COMPRA_ANULADO_USUARIO` FOREIGN KEY (`idusuarioanulado`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.compra_anulado: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.compra_anulado: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `compra_anulado` DISABLE KEYS */;
 /*!40000 ALTER TABLE `compra_anulado` ENABLE KEYS */;
 
@@ -21566,16 +21588,15 @@ CREATE TABLE IF NOT EXISTS `cuenta_saldo` (
   `fecha` date NOT NULL,
   `entrada` double NOT NULL,
   `salida` double NOT NULL,
-  `anulado` double NOT NULL,
+  `entrada_anulado` double NOT NULL,
+  `salida_anulado` double NOT NULL,
   PRIMARY KEY (`idcuenta`,`fecha`),
   KEY `FK_CUENTA_SALDO_CUENTA` (`idcuenta`),
   CONSTRAINT `FK_CUENTA_SALDO_CUENTA` FOREIGN KEY (`idcuenta`) REFERENCES `cuenta` (`idcuenta`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.cuenta_saldo: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.cuenta_saldo: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `cuenta_saldo` DISABLE KEYS */;
-REPLACE INTO `cuenta_saldo` (`idcuenta`, `fecha`, `entrada`, `salida`, `anulado`) VALUES
-	(1, '2021-09-06', 5070000, 4025000, 9095000);
 /*!40000 ALTER TABLE `cuenta_saldo` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.deposito
@@ -21632,12 +21653,10 @@ CREATE TABLE IF NOT EXISTS `impresora` (
   PRIMARY KEY (`idimpresora`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.impresora: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla as.impresora: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `impresora` DISABLE KEYS */;
 REPLACE INTO `impresora` (`idimpresora`, `descripcion`, `ultimo_numero_factura`, `ultimo_numero_recibo`, `ultimo_numero_nota_credito`, `ultimo_numero_nota_debito`) VALUES
-	(1, 'IMPRESORA N°1', '001-001-0000000', '001-001-0000000', '001-001-0000000', '001-001-0000000'),
-	(2, 'IMPRESORA N°2', '002-002-0000000', '002-002-0000000', '002-002-0000000', '002-002-0000000'),
-	(3, 'IMPRESORA N°3', '003-003-0000000', '003-003-0000000', '003-003-0000000', '003-003-0000000');
+	(1, 'IMPRESORA N°1', '001-001-0000001', '001-001-0000000', '001-001-0000000', '001-001-0000000');
 /*!40000 ALTER TABLE `impresora` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.impresora_timbrado
@@ -21659,11 +21678,10 @@ CREATE TABLE IF NOT EXISTS `impresora_timbrado` (
   CONSTRAINT `FK_IMPRESORA_TIMBRADO_TIPO_COMPROBANTE` FOREIGN KEY (`idtipocomprobante`) REFERENCES `tipo_comprobante` (`idtipo`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.impresora_timbrado: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla as.impresora_timbrado: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `impresora_timbrado` DISABLE KEYS */;
 REPLACE INTO `impresora_timbrado` (`idimpresora`, `idtimbrado`, `idtipocomprobante`, `establecimiento`, `puntoemision`, `numerotimbrado`, `numeroinicial`, `numerofinal`, `fechainicial`, `fechafinal`) VALUES
-	(1, 1, 1, 1, 1, 14646780, 1, 100, '2021-02-09', '2021-09-06'),
-	(1, 2, 1, 1, 1, 11112222, 1, 1000, '2021-09-01', '2021-09-03');
+	(1, 1, 1, 1, 1, 82563333, 1, 5000, '2021-01-01', '2021-12-31');
 /*!40000 ALTER TABLE `impresora_timbrado` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.impuesto
@@ -21689,7 +21707,7 @@ CREATE TABLE IF NOT EXISTS `linea` (
   PRIMARY KEY (`idlinea`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla as.linea: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.linea: ~13 rows (aproximadamente)
 /*!40000 ALTER TABLE `linea` DISABLE KEYS */;
 REPLACE INTO `linea` (`idlinea`, `descripcion`) VALUES
 	(1, 'CONSTRUCCION'),
@@ -21733,10 +21751,10 @@ CREATE TABLE IF NOT EXISTS `marca` (
   PRIMARY KEY (`idmarca`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla as.marca: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.marca: ~17 rows (aproximadamente)
 /*!40000 ALTER TABLE `marca` DISABLE KEYS */;
 REPLACE INTO `marca` (`idmarca`, `descripcion`) VALUES
-	(1, 'MERCANTIL'),
+	(1, 'GENERAL'),
 	(2, 'ALTONA WOOD'),
 	(3, 'AGRICOLA LOMA PIROY'),
 	(4, 'CABAÑA LOMA PIROY'),
@@ -21913,7 +21931,7 @@ CREATE TABLE IF NOT EXISTS `proveedor` (
   CONSTRAINT `FK_PROVEEDOR_TIPO_PROVEEDOR` FOREIGN KEY (`idtipo`) REFERENCES `tipo_proveedor` (`idtipo`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- Volcando datos para la tabla as.proveedor: ~3.763 rows (aproximadamente)
+-- Volcando datos para la tabla as.proveedor: ~2.154 rows (aproximadamente)
 /*!40000 ALTER TABLE `proveedor` DISABLE KEYS */;
 REPLACE INTO `proveedor` (`idproveedor`, `razonsocial`, `propietario`, `ruc`, `telefono`, `direccion`, `estado`, `idtipo`) VALUES
 	(1, 'AUTOREPUESTOS Y ELASTIQUERIA MEES', '', '3618402-0', '528222670', '.', 'A', 1),
@@ -22000,7 +22018,7 @@ REPLACE INTO `proveedor` (`idproveedor`, `razonsocial`, `propietario`, `ruc`, `t
 	(82, 'CONSTRUCCIONES GARAY', '', 'GACB600330K', '971422173', 'J.E.ESTIGARRIBIA', 'A', 1),
 	(83, 'FRANCISCO ORTIGOZA PERALTA', '', 'CI: 1481559', '976453550', 'CAMPO 9 COERORY', 'A', 1),
 	(84, 'TODO GUAMPAS', '', 'BAMM641220N', '21280669', 'ASUNCION', 'A', 1),
-	(85, 'ÑE\A S.A.', '', '80000675-5', '021 611 168', 'PEDRO J.CABALLERO - PARAGUAY', 'A', 1),
+	(85, 'ÑEA S.A.', '', '80000675-5', '021 611 168', 'PEDRO J.CABALLERO - PARAGUAY', 'A', 1),
 	(86, 'EMPRENDIMIENTOS FORESTALES', '', '80018245-6', '06121390/21392', 'HERNANDARIAS PARAGUAY', 'A', 1),
 	(87, 'CHURRASQUERIA ALFF', '', '2120634-1', '528222336', 'J.E.ESTIGARRIBIA', 'A', 1),
 	(88, 'COOPERATIVA SOMMERFELD LTDA.', '', '80003626-3', '0528-250288', 'COLONIA SOMMERFELD - CAMPO 5 - PY', 'A', 1),
@@ -22086,7 +22104,7 @@ REPLACE INTO `proveedor` (`idproveedor`, `razonsocial`, `propietario`, `ruc`, `t
 	(168, 'MARIA FLORENTIN', '', '2942192', '971431710', 'VAQUERIA', 'A', 1),
 	(169, 'AUTORREPUESTOS CAMPO 9 S.R.L.', '', '80048476-2', '0528-222635', 'J.E. EULOGIO ESTIGARRIBIA-PY', 'A', 1),
 	(170, 'GRAFICA Y EDITORIAL INTERSUDAMEI S.A.', '', '80010177-4', '21512520', 'ASUNCION', 'A', 1),
-	(171, 'MARTI & ASOCIADOS', '', '80052100-5', '21294835', 'ABA\I 370 C/CABALLERO ASUNCION', 'A', 1),
+	(171, 'MARTI & ASOCIADOS', '', '80052100-5', '21294835', 'ABAI 370 C/CABALLERO ASUNCION', 'A', 1),
 	(172, 'CADIEM CASA DE BOLSA S.A.', '', '80026712-5', '21621777', 'TTE. VERA N 1340 C/SENADOR LONG', 'A', 1),
 	(173, 'FELICIANO SOTO', '', 'CI:2349747', '792.596.344', 'PIRIBEBUY', 'A', 1),
 	(174, 'JUAN CARLOS BAEZ ALCARAZ', '', 'CI:6309651', '0972,802,185', 'DR.J.E.ESTIGARRIBIA', 'A', 1),
@@ -22231,7 +22249,7 @@ REPLACE INTO `proveedor` (`idproveedor`, `razonsocial`, `propietario`, `ruc`, `t
 	(313, 'PILOTS SHOP AVIATION PARTS CENTER S.R.L.', '', '80019425-0', '.', 'AUTOPISTA AEROPUERTO - LUQUE', 'A', 1),
 	(314, 'CUBIERTAS SANTA RITA S.A.C.I.', '', '80022826-0', '0673-20612', 'VECINO DE AUTOMAQ', 'A', 1),
 	(315, 'ARNOLD SCOOBY GIMENEZ FERNANDEZ', '', '3413291-0', '.', '.', 'A', 1),
-	(316, 'RECTIFICACIONES TITO DE TITO CESPEDES', '', '4044508-9', '0971 626 158', 'BO.KO\E RORY - J.E.ESTIGARRIBIA', 'A', 1),
+	(316, 'RECTIFICACIONES TITO DE TITO CESPEDES', '', '4044508-9', '0971 626 158', 'BO.KOE RORY - J.E.ESTIGARRIBIA', 'A', 1),
 	(317, 'VICENTE MEZA MEDINA', '', '833950-3', '021 7212 503', 'MONS.BOGARIN ESQ.LUCIANO CACERES MISIONE', 'A', 1),
 	(318, 'PINTUPAR S.R.L.', '', 'PINB 006930', '606158-606160-6', 'ASUNCION -PY', 'A', 1),
 	(319, 'PEREZ RAMIREZ Y CIA SACI', '', 'PRAA 437510', '021-446335-4417', 'PALMA 561', 'A', 1),
@@ -22347,7 +22365,7 @@ REPLACE INTO `proveedor` (`idproveedor`, `razonsocial`, `propietario`, `ruc`, `t
 	(429, 'PESSOLANI Y ASOCIADOS S.A.', '', '80095231-6', '021-612172', 'AUSTRIA N.2363 - ASUNCION-PY', 'A', 1),
 	(430, 'C.L.S. REMATES S.A.', '', '80102637-7', '54143371', 'RAMAL MBOCAYATY 1203 - MBOCAYATY', 'A', 1),
 	(431, 'STOP CAR DE VALDENIR VALDIR SILVA', '', '6192817-8', '971971169', 'RUTA 7 KM206 - CALLE 7 - J.M.FRUTOS', 'A', 1),
-	(432, 'AGROPECUARIA KARUMBE\I S.A.', '', '80084499-8', '.', 'MCAL.LOPEZ - CNEL.OVIEDO', 'A', 1),
+	(432, 'AGROPECUARIA KARUMBEI S.A.', '', '80084499-8', '.', 'MCAL.LOPEZ - CNEL.OVIEDO', 'A', 1),
 	(433, 'UNIJET', '', '80027807-0', '0673-220414', 'B° ALEJANDRINO.SANTA RITA', 'A', 1),
 	(434, 'TRI STATE AIRMOTIVE LLC', '', '.', '870 423-4911', 'BERRY VILLE, AR 72616 EEUU', 'A', 1),
 	(435, 'JOSE MARIA MENDEZ VAZQUEZ', '', '1245293-9', '0986-102465', 'BAR.SAN AGUSTIN-SANTA ROSA-CAAGUAZU-PY', 'A', 1),
@@ -22459,7 +22477,7 @@ REPLACE INTO `proveedor` (`idproveedor`, `razonsocial`, `propietario`, `ruc`, `t
 	(541, 'MADERAS TERCIADAS NARAJAL', '', '3761434-7', '676320272', 'AVDA. PRINCIPAL', 'A', 1),
 	(542, 'GRUPO MBARETE S.A.', '', '80092104-6', '971458017', 'RUTA 7 KM 219 J.E.ESTIGARRIBIA', 'A', 1),
 	(543, 'CINTHIA CAROLINA CAMPUZANO AGUILERA', '', '3255896-1', '976460567', 'J.G.R.DE FRANCIA E/A.GARCÍA Y YACÚ- CZU', 'A', 1),
-	(544, 'AGROVETERINARIA CENTRAL DE DIOSNEL DAVAL', '', '748108-0', '021 214 914', 'RODRIGUEZ DE FRANCIA 1423 C/PA\I PEREZ A', 'A', 1),
+	(544, 'AGROVETERINARIA CENTRAL DE DIOSNEL DAVAL', '', '748108-0', '021 214 914', 'RODRIGUEZ DE FRANCIA 1423 C/PAI PEREZ A', 'A', 1),
 	(545, 'HFC DESIGN S.R.L', '', '80020602-9', '976563670', 'TRIFON BENITEZ VERA 464 CASI BERTONI ASU', 'A', 1),
 	(546, 'INFORMCONF S.A.', '', '80019467-5', '21449177', 'CIUDAD DEL ESTE', 'A', 1),
 	(547, 'CPA S.A.E.', '', '80064728-9', '0528-222566', 'AV. SAN BLAS - VAQUERIA-PY', 'A', 1),
@@ -22488,7 +22506,7 @@ REPLACE INTO `proveedor` (`idproveedor`, `razonsocial`, `propietario`, `ruc`, `t
 	(570, 'CHURRASQUERIA Y CAFETERIA SUL AMERICA', '', '2966134-0', '0524-225203', 'DR.J.MANUEL FRUTOS', 'A', 1),
 	(571, 'SERVICIOS FORESTALES S.R.L.', '', '80031659-2', '021-511009', 'FERNANDO DE LA MORA-ASUNCION', 'A', 1),
 	(572, 'GENI PIAN GONCALVEZ', '', '5879419-0', '971411017', 'CASILLA II - R.A.OVIEDO', 'A', 1),
-	(573, 'DISTRISOL S.A.', '', '80026442-8', '061-579527', 'JUAN E. O\LEARY, CD. DEL ESTE', 'A', 1),
+	(573, 'DISTRISOL S.A.', '', '80026442-8', '061-579527', 'JUAN E. OLEARY, CD. DEL ESTE', 'A', 1),
 	(574, 'COMERCIAL RF DE RONALD FAST JANZ', '', '1781307-7', '0971 427 484', 'SAN JOSE Y E.R.FERNANDEZ - JEE', 'A', 1),
 	(575, 'VIDALINA VARGAS GONZALEZ', '', '882754-0', '0631-20 979', 'HERNANDARIAS-ALTO PARANA-PY', 'A', 1),
 	(576, 'ISAAC ADORNO RODRÍGUEZ', '', '1345126-0', '975481583', 'CALLE 3 NRO 1304 - J.E.ESTIGARR.', 'A', 1),
@@ -22671,7 +22689,7 @@ REPLACE INTO `proveedor` (`idproveedor`, `razonsocial`, `propietario`, `ruc`, `t
 	(753, 'PRANTTE TRANSPORTE DE MATHIAS PRANTTE', '', '5304857-1', '0981 609 303', 'RAFAEL MATERI ESQ.MADRES PYAS. SAN LOREN', 'A', 1),
 	(754, 'TALLER Y RECTIFICADORA CAMPO 9', '', '1131734-5', '.', 'RUTA 7 KM. 213 DR. J.E.ESTIGARRIBIA', 'A', 1),
 	(755, 'OLERYA CERRO GUY', '', '4994623-4', '0981-919294', 'MCAL. JOSE FELIX ESTIGARRIBIA', 'A', 1),
-	(756, 'GUSTAVO ADOLFO CABRAL MARECO', '', '3698910', '0972 899 955', 'KO\E RORY - J.E.ESTIGARRIBIA', 'A', 1),
+	(756, 'GUSTAVO ADOLFO CABRAL MARECO', '', '3698910', '0972 899 955', 'KOE RORY - J.E.ESTIGARRIBIA', 'A', 1),
 	(757, 'N.P.ARSENIO OCAMPOS VELÁZQUEZ', '', '513595-8', '021 491 474', 'GRAL.DÍAZ 488 C/14 DE MAYO - ASUNCIÓN', 'A', 1),
 	(758, 'PARAGUAY REFRESCOS S.A.', '', '80003400-7', '0521 202971', 'RUTA Nº 2 MCAL ESTIGARRIBIA  KM 132', 'A', 1),
 	(759, 'CENTRO DE LAS OFERTAS DE WILMA ESPINOLA', '', '3255427-3', '0971 434 765', '15 DE AGOSTO C/GRAL.DIAZ - CAAGUAZU', 'A', 1),
@@ -22722,7 +22740,7 @@ REPLACE INTO `proveedor` (`idproveedor`, `razonsocial`, `propietario`, `ruc`, `t
 	(804, 'FUNDACION SERVICIOS DE SALUD ANIMAL', '', '80099478-7', '0521-203548', 'RUTA 8 KM 135', 'A', 1),
 	(805, 'DISTRIAÇO', '', '6328223-2', '0521-205000', 'AQUINO GRAL. ELIZARDO 1410 KM 258.300', 'A', 1),
 	(806, 'MATERIALES DE CONSTRUC. NUÑEZ HNOS.', '', '1803736-4', '0528 222 695', 'AL COSTADO DEL SALON MUNICIPAL', 'A', 1),
-	(807, 'ARNALDO DOMINGUEZ SANABRIA', '', '2260076-0', '67420034', 'RUTA 7 KM248 Nº9083 JUAN E.O\LEARY', 'A', 1),
+	(807, 'ARNALDO DOMINGUEZ SANABRIA', '', '2260076-0', '67420034', 'RUTA 7 KM248 Nº9083 JUAN E.OLEARY', 'A', 1),
 	(808, 'NELSON ALCIDES TORALES PAEZ', '', '2382856-0', '981532316', 'BARRIO SAN MIGUEL - YHU - DPTO.CAAGUAZU', 'A', 1),
 	(809, 'F.H.U.T KARST-TRANS', '', '.', '.', 'UL W. JAGIELLY 68', 'A', 1),
 	(810, 'RAFAEL HUMBERTO GOMEZ', '', '898848-0', '971427472', 'TAJY C/13 DE NOV Nº11 - J.E.ESTIGARRIBIA', 'A', 1),
@@ -22890,7 +22908,7 @@ REPLACE INTO `proveedor` (`idproveedor`, `razonsocial`, `propietario`, `ruc`, `t
 	(972, 'COOP. DE TRABAJO CERRO GUY LTDA.', '', '80026132-1', '0513-432-286', 'RUTA 2KM 341/2 CERRO GUY FRACCION TUPA R', 'A', 1),
 	(973, 'ASOCIACIÓN AGROYGUAZÚ', '', '80057657-8', '0971-415208', 'NUEVA TOLEDO DISTRITO NUEVA TOLEDO', 'A', 1),
 	(974, 'JUAN MANUEL CAÑETE', '', '2042934', '.', 'JOSE D. OCAMPOS', 'A', 1),
-	(975, 'REINALDO ACOSTA SILVA', '', '4288351-2', '0674 20126', 'R. N.7 - J.E.O\LEARY - ALTO PARANA-PY', 'A', 1),
+	(975, 'REINALDO ACOSTA SILVA', '', '4288351-2', '0674 20126', 'R. N.7 - J.E.OLEARY - ALTO PARANA-PY', 'A', 1),
 	(976, 'EVENTOS Y PRODUCCIONES C9', '', '6221513-2', '0971 481207', 'CAMPO 9', 'A', 1),
 	(977, 'EPV PUBLICIDADES', '', '2012075-3', '0', 'CASILLA II - RAO', 'A', 1),
 	(978, 'OLERIA SAN ROQUE', '', '5392364-2', '-', 'JUAN E. O.ELEARY  ALTO PARANA', 'A', 1),
@@ -23012,7 +23030,7 @@ REPLACE INTO `proveedor` (`idproveedor`, `razonsocial`, `propietario`, `ruc`, `t
 	(1094, 'FABIOLA S.A.', '', '80022158-3', '.', 'ACCESO SUR ESQ. 9 DE AGOSTO', 'A', 1),
 	(1095, 'ECOBAR S.R.L. ESTACIONES DE SERVICIO', '', '80051180-8', '021 991 102', 'AVDA. VON POLEWSKI C/ LORENZO MEDINA', 'A', 1),
 	(1096, 'MOTOMECANICA ALTO PARANA', '', '2417511-0', '0971 538 495', 'INDEP.NACIONAL - CAMPO 9', 'A', 1),
-	(1097, 'RECICLAJE CAMPO 9 DE JUSTINO ORREGO LOPE', '', '1756751-3', '0971 455 662', 'KO\E RORY - 200MTS DE CALLE 2 CASA 257', 'A', 1),
+	(1097, 'RECICLAJE CAMPO 9 DE JUSTINO ORREGO LOPE', '', '1756751-3', '0971 455 662', 'KOE RORY - 200MTS DE CALLE 2 CASA 257', 'A', 1),
 	(1098, 'LIDER RAMON CACERES BAEZ', '', '3975740-4', '-', 'PANCHITO LOPEZ Y PROCERES DE MAYO', 'A', 1),
 	(1099, 'VALCIR SILVA', '', '6142396-3', '0973 183140', 'LAS RESIDENTAS E/PANCHITO LOPEZ Y SAN JO', 'A', 1),
 	(1100, 'ELECTRO AMPER', '', '2701421-5', '0971 862 284', 'SAN ROQUE Y RUTA 7 Nº1745', 'A', 1),
@@ -23026,7 +23044,7 @@ REPLACE INTO `proveedor` (`idproveedor`, `razonsocial`, `propietario`, `ruc`, `t
 	(1108, 'HOTEL BAVARIA', '', '1674730-5', '600966', 'ASUNCION', 'A', 1),
 	(1109, 'DANIEL LEZCANO', '', '5767367', '-', 'VAQUERIA', 'A', 1),
 	(1110, 'CARLOS FELTES MERCADO', '', '2979960-0', '0981-710919', 'CALLE 8 - SAN BLAS Y TUJUTI- VAQUERIA-PY', 'A', 1),
-	(1111, 'COMERCIAL CABURE\I', '', '1197738-8', '981308890', 'VAQUERIA', 'A', 1),
+	(1111, 'COMERCIAL CABUREI', '', '1197738-8', '981308890', 'VAQUERIA', 'A', 1),
 	(1112, 'ANIMEX S.A.', '', '0', '0', '0', 'A', 1),
 	(1113, 'JIMMY EFRAIN AYALA JAROLIN', '', '3906104', '-', 'CALLE JACINTO ESCOBAR - CAMPO 9', 'A', 1),
 	(1114, 'COLMAN HNOS. CONSTRUCCIONES', '', '2246933-8', '-', 'J. EULOGIO ESTIGARRIBIA', 'A', 1),
@@ -23540,7 +23558,7 @@ REPLACE INTO `proveedor` (`idproveedor`, `razonsocial`, `propietario`, `ruc`, `t
 	(1622, 'MAGUEY PUBLICITARIA DE JUAN VALDEZ', '', '7760437-7', '0981-211716', 'ASENT.UNIV.M1 L.26 - CNEL.OVIEDO-PY', 'A', 1),
 	(1623, 'KUROSU y CIA.S.A.', '', '80002592-0', '061-572034/5709', 'sin dato', 'A', 1),
 	(1624, 'ESTANCIA EL LAGO S.A. AGRICOLA GANADERA', '', '80083682-0', '972548153', 'COL.MARGARITA-NVA.TOLEDO- DPTO.CZU.', 'A', 1),
-	(1625, 'TRANSUNIVERSO S.R.L.', '', '80015206-9', '021 558 822', 'CURUPA\Y 1155 ASUNCIÓN', 'A', 1),
+	(1625, 'TRANSUNIVERSO S.R.L.', '', '80015206-9', '021 558 822', 'CURUPAY 1155 ASUNCIÓN', 'A', 1),
 	(1626, 'HERRERÍA SANTA ROSA DE MARCOS ZARATE', '', '773382-8', '52243103', 'P.J.CABALLERO 947 C/D.CHAMORRO - CZU', 'A', 1),
 	(1627, 'SIEMENS CONSULTING S.A.', '', '80040942-6', '021608364/5', 'O.V. ANDRADE 2321 - ASUNCIÓN', 'A', 1),
 	(1628, 'ESCRIBANA SANDRA BETTINA VERA TORALES', '', '1229545-0', '021 558 474', 'PASO DE PATRIA 3359 C/DE LA VICTORIA ASU', 'A', 1),
@@ -23988,7 +24006,7 @@ REPLACE INTO `proveedor` (`idproveedor`, `razonsocial`, `propietario`, `ruc`, `t
 	(2070, 'LA JOYA SOCIEDAD ANÓNIMA', '', '80098115-4', '984109477', 'CALLE,17 KM DE CZU, CAMINO A YHU 500M DE', 'A', 1),
 	(2071, 'HERME FIDEL CESPEDES ALFONZO', '', '4232045-3', '528222890', 'JOSE ZARATE CAMPO 9 KM 212', 'A', 1),
 	(2072, 'CHRISTIAN CANDIA AGUILAR', '', '3220891-0', '982443366', 'DEF.DEL CHACO E/INDEP.NAC.SAN BLAS VAQ.', 'A', 1),
-	(2073, 'LAVADERO LA ESQUINA DE ADEL BRITOS', '', '3887544-6', '975420529', 'B.KO\E RORY - J.E.ESTIGARRIBIA', 'A', 1),
+	(2073, 'LAVADERO LA ESQUINA DE ADEL BRITOS', '', '3887544-6', '975420529', 'B.KOE RORY - J.E.ESTIGARRIBIA', 'A', 1),
 	(2074, 'LAVADERO AGUA VIVA DE AMADO BOGADO', '', '2423403-6', '984361143', 'PROC.DE MAYO - SAN JORGE - J.E.ESTIGARRI', 'A', 1),
 	(2075, 'CRISTIAN ORTIZ MACHUCA', '', '4614924-4', '982486907', 'CALLE EMILIANO R. FERNANDEZ E/SANTA LUCI', 'A', 1),
 	(2076, 'ROBERT BOSCH S.A.', '', '80097300-3', '213183000', 'AUSTRIA 1585 ED. SKY CENTER PISO 8803', 'A', 1),
@@ -24024,7 +24042,7 @@ REPLACE INTO `proveedor` (`idproveedor`, `razonsocial`, `propietario`, `ruc`, `t
 	(2106, 'CEMENTOS CONCEPCION S.A.E.', '', '80022117-6', '(021) 262 160', 'AVDA PRIMER PRES. 3299 ESQ.CALLE3 - ASUN', 'A', 1),
 	(2107, 'PUERTO SEGURO FLUVIAL S.A.', '', '80067871-0', '212381627', 'KM347,7 - MARGEN IZQ.R.PY - VILLETA', 'A', 1),
 	(2108, 'RICARDO IGNACIO ORTIGOZA GIMENEZ', '', '6927851-2', '0973 542 349', 'DR. JUAN EULOGIO ESTIGARRIBIA', 'A', 1),
-	(2109, 'KAREN DIANA ENGELWART GONZALEZ', '', '4706354-8', '67420153', 'CACIQUE CHE\IRO Y BOQUERON - J.E.OLEARY', 'A', 1),
+	(2109, 'KAREN DIANA ENGELWART GONZALEZ', '', '4706354-8', '67420153', 'CACIQUE CHEIRO Y BOQUERON - J.E.OLEARY', 'A', 1),
 	(2110, 'CARTONES YAGUARETE S.A.', '', '80001883-4', '21229776', 'ESPAÑA 303 E/SACRAM.Y BESTARD-ASUNCION', 'A', 1),
 	(2111, 'CASA DE LOS TALADROS S.R.L.', '', '80049235-8', '021 615 628', 'SANTA CRUZ DE LA SIERRA 2013 C/ JOSE ASU', 'A', 1),
 	(2112, 'ALEJANDRO MIGAEL BRÍTEZ ALVARENGA', '', '4490115-1', '0528 222 794', 'INDEP.NAC. C/P.LOPEZ - J.E.ESTIGARR.', 'A', 1),
@@ -24264,7 +24282,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 -- Volcando datos para la tabla as.usuario: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 REPLACE INTO `usuario` (`idusuario`, `nombre`, `apellido`, `cedula`, `telefono`, `direccion`, `alias`, `clave`, `idempresa`, `idsucursal`) VALUES
-	(1, 'ARMANDO ARIEL', 'PERALTA MARTINEZ', '5955455', '0975489075', 'BARRIO SAN JORGE - EX CAMPO 9', 'APERALTA', 'e3e7c47572ad938642bbc9cdcdce7e3f', 1, 2);
+	(1, 'ARMANDO ARIEL', 'PERALTA MARTINEZ', '5955455', '0975489075', 'BARRIO SAN JORGE - EX CAMPO 9', 'APERALTA', 'e3e7c47572ad938642bbc9cdcdce7e3f', 1, 1);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.usuario_impresora
@@ -24278,7 +24296,7 @@ CREATE TABLE IF NOT EXISTS `usuario_impresora` (
   CONSTRAINT `FK_USUARIO_IMPRESORA_USUARIO` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.usuario_impresora: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.usuario_impresora: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuario_impresora` DISABLE KEYS */;
 REPLACE INTO `usuario_impresora` (`idusuario`, `idimpresora`) VALUES
 	(1, 1);
@@ -24365,7 +24383,7 @@ CREATE TABLE IF NOT EXISTS `vendedor` (
 -- Volcando datos para la tabla as.vendedor: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `vendedor` DISABLE KEYS */;
 REPLACE INTO `vendedor` (`idvendedor`, `nombre`, `apellido`, `estado`, `porcentajecomision`, `idempresa`, `idsucursal`) VALUES
-	(1, 'VENDEDOR', 'PRUEBA', 'A', 5, 1, 2);
+	(1, 'VENDEDOR', 'PRUEBA', 'A', 5, 1, 1);
 /*!40000 ALTER TABLE `vendedor` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.venta
@@ -24621,24 +24639,34 @@ CREATE PROCEDURE `P_ACT_CUENTA_SALDO`(
 BEGIN
 	DECLARE V_MONTO_ENTRADA DOUBLE;
 	DECLARE V_MONTO_SALIDA DOUBLE;
-	DECLARE V_MONTO_ANULADO DOUBLE;
+	DECLARE V_MONTO_ENTRADA_ANULADO DOUBLE;
+	DECLARE V_MONTO_SALIDA_ANULADO DOUBLE;
 		
 		IF xOPERACION = 'E' THEN
 			SET V_MONTO_ENTRADA 	= xMONTO;
 			SET V_MONTO_SALIDA	= 0;
-			SET V_MONTO_ANULADO	= 0;
+			SET V_MONTO_ENTRADA_ANULADO	= 0;
+			SET V_MONTO_SALIDA_ANULADO	= 0;
 		END IF;
 		IF xOPERACION = 'S' THEN
 			SET V_MONTO_ENTRADA 	= 0;
 			SET V_MONTO_SALIDA	= xMONTO;
-			SET V_MONTO_ANULADO	= 0;
+			SET V_MONTO_ENTRADA_ANULADO	= 0;
+			SET V_MONTO_SALIDA_ANULADO	= 0;
 		END IF;
-		IF xOPERACION = 'A' THEN
+		IF xOPERACION = 'EA' THEN
 			SET V_MONTO_ENTRADA 	= 0;
 			SET V_MONTO_SALIDA	= 0;
-			SET V_MONTO_ANULADO	= xMONTO;
+			SET V_MONTO_ENTRADA_ANULADO	= xMONTO;
+			SET V_MONTO_SALIDA_ANULADO	= 0;
 		END IF;
-		CALL P_ACT_CUENTA_SALDO_INS_UPD(V_MONTO_ENTRADA, V_MONTO_SALIDA, xIDCOMPRA_VENTA, xTABLA, V_MONTO_ANULADO);
+		IF xOPERACION = 'SA' THEN
+			SET V_MONTO_ENTRADA 	= 0;
+			SET V_MONTO_SALIDA	= 0;
+			SET V_MONTO_ENTRADA_ANULADO	= 0;
+			SET V_MONTO_SALIDA_ANULADO	= xMONTO;
+		END IF;
+		CALL P_ACT_CUENTA_SALDO_INS_UPD(V_MONTO_ENTRADA, V_MONTO_SALIDA, xIDCOMPRA_VENTA, xTABLA, V_MONTO_ENTRADA_ANULADO, V_MONTO_SALIDA_ANULADO);
 END//
 DELIMITER ;
 
@@ -24649,7 +24677,8 @@ CREATE PROCEDURE `P_ACT_CUENTA_SALDO_INS_UPD`(
 	IN `xMONTO_SALIDA` DOUBLE,
 	IN `xIDCOMPRA_VENTA` INT,
 	IN `xTABLA` VARCHAR(50),
-	IN `xMONTO_ANULADO` DOUBLE
+	IN `xMONTO_ENTRADA_ANULADO` DOUBLE,
+	IN `xMONTO_SALIDA_ANULADO` DOUBLE
 )
 BEGIN
 		DECLARE V_REGISTROS INT;
@@ -24658,7 +24687,8 @@ BEGIN
 		DECLARE V_FECHA DATE;
 		DECLARE V_MONTO_ENTRADA DOUBLE;
 		DECLARE V_MONTO_SALIDA DOUBLE;
-		DECLARE V_MONTO_ANULADO DOUBLE;
+		DECLARE V_MONTO_ENTRADA_ANULADO DOUBLE;
+		DECLARE V_MONTO_SALIDA_ANULADO DOUBLE;
 		
 		-- INSERT INTO excepciones (datos) VALUES (CONCAT("xIDCOMPRA_VENTA: ",xIDCOMPRA_VENTA)); 
 		
@@ -24686,11 +24716,13 @@ BEGIN
 		IF V_MONEDA != 1 THEN
 			SET V_MONTO_ENTRADA = ROUND(xMONTO_ENTRADA, 3);
 			SET V_MONTO_SALIDA = ROUND(xMONTO_SALIDA, 3);
-			SET V_MONTO_ANULADO = ROUND(xMONTO_ANULADO, 3);
+			SET V_MONTO_ENTRADA_ANULADO = ROUND(xMONTO_ENTRADA_ANULADO, 3);
+			SET V_MONTO_SALIDA_ANULADO = ROUND(xMONTO_SALIDA_ANULADO, 3);
 		ELSE
 			SET V_MONTO_ENTRADA = xMONTO_ENTRADA;
 			SET V_MONTO_SALIDA = xMONTO_SALIDA;
-			SET V_MONTO_ANULADO = xMONTO_ANULADO;
+			SET V_MONTO_ENTRADA_ANULADO = xMONTO_ENTRADA_ANULADO;
+			SET V_MONTO_SALIDA_ANULADO = xMONTO_SALIDA_ANULADO;
 		END IF;
 
 		-- INSERT INTO excepciones (datos) VALUES (CONCAT("V_CUENTA: ",V_CUENTA)); 
@@ -24705,16 +24737,17 @@ BEGIN
 			
 			IF V_REGISTROS = 0 THEN
 				-- INSERT INTO excepciones (datos) VALUES (CONCAT("PASO 1: ")); 
-				INSERT INTO cuenta_saldo
-				(idcuenta, fecha, entrada, salida, anulado)
-				VALUES (V_CUENTA, V_FECHA, V_MONTO_ENTRADA, V_MONTO_SALIDA, V_MONTO_ANULADO);
+				INSERT INTO cuenta_saldo 
+				(idcuenta, fecha, entrada, salida, entrada_anulado, salida_anulado)
+				VALUES (V_CUENTA, V_FECHA, V_MONTO_ENTRADA, V_MONTO_SALIDA, V_MONTO_ENTRADA_ANULADO, V_MONTO_SALIDA_ANULADO);
 			ELSE
 				-- INSERT INTO excepciones (datos) VALUES (CONCAT("PASO 2: ")); 
 				UPDATE cuenta_saldo
 				SET
 					entrada= entrada + V_MONTO_ENTRADA,
 					salida= salida + V_MONTO_SALIDA,
-					anulado= anulado + V_MONTO_ANULADO
+					entrada_anulado = entrada_anulado + V_MONTO_ENTRADA_ANULADO,
+					salida_anulado = salida_anulado + V_MONTO_SALIDA_ANULADO
 				WHERE idcuenta=V_CUENTA AND fecha=V_FECHA;
 			END IF;
 		END IF;
@@ -25037,10 +25070,10 @@ DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
 
 -- Volcando estructura para disparador as.TR_CUENTA_SALDO_COMPRA_DEL
-SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO';
 DELIMITER //
 CREATE TRIGGER `TR_CUENTA_SALDO_COMPRA_DEL` BEFORE DELETE ON `compra` FOR EACH ROW BEGIN
-		CALL P_ACT_CUENTA_SALDO('A', (OLD.totalneto + OLD.totaliva), OLD.idcompra, 'compra');
+		CALL P_ACT_CUENTA_SALDO('SA', (OLD.totalneto + OLD.totaliva), OLD.idcompra, 'compra');
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -25055,10 +25088,10 @@ DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
 
 -- Volcando estructura para disparador as.TR_CUENTA_SALDO_COMPRA_PAGO_CUOTA_DEL
-SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO';
 DELIMITER //
 CREATE TRIGGER `TR_CUENTA_SALDO_COMPRA_PAGO_CUOTA_DEL` BEFORE DELETE ON `compra_pago_cuota` FOR EACH ROW BEGIN
-		CALL P_ACT_CUENTA_SALDO('A', OLD.monto, OLD.idpago, 'compra_pago_cuota');
+		CALL P_ACT_CUENTA_SALDO('SA', OLD.monto, OLD.idpago, 'compra_pago_cuota');
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -25073,10 +25106,10 @@ DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
 
 -- Volcando estructura para disparador as.TR_CUENTA_SALDO_VENTA_DEL
-SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO';
 DELIMITER //
 CREATE TRIGGER `TR_CUENTA_SALDO_VENTA_DEL` BEFORE DELETE ON `venta` FOR EACH ROW BEGIN
-		CALL P_ACT_CUENTA_SALDO('A', (OLD.totalneto + OLD.totaliva), OLD.idventa, 'venta');
+		CALL P_ACT_CUENTA_SALDO('EA', (OLD.totalneto + OLD.totaliva), OLD.idventa, 'venta');
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
@@ -25305,6 +25338,6 @@ INNER JOIN tipo_proveedor AS TP ON TP.idtipo = P.idtipo
 ORDER BY P.idproveedor ASC ;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

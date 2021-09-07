@@ -3087,7 +3087,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
 
     private void btnConfirmar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmar2ActionPerformed
         if (rbCredito.isSelected()) {
-            //formularioCuotas();
+            formularioCuotas();
         }
         int respuesta;
         respuesta = JOptionPane.showConfirmDialog(null, "¿CONFIRMAR VENTA?",
