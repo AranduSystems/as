@@ -444,7 +444,6 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
 
         int i;
         boolean existe = false;
-        System.out.println(tablaDatos2.getRowCount());
         for (i = 0; i < tablaDatos2.getRowCount(); i++) {
             int iditemtabla = Integer.parseInt(tablaDatos2.getValueAt(i, 2).toString());
             if (iditemtabla == idarticulo) {
