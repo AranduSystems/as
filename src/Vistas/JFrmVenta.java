@@ -113,6 +113,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     Double valorCantidad = 0.0;
     Double valorTotalDocumento = 0.0;
     Double valorTotalDocumentoCuota = 0.0;
+    Double valorMontoCuota = 0.0;
 
     /**
      * Creates new form JFrmVenta
@@ -877,6 +878,24 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         rbCodAlfanumerico = new javax.swing.JRadioButton();
         rbCodBarra = new javax.swing.JRadioButton();
         grupoFiltroArticulo = new javax.swing.ButtonGroup();
+        PanelCuotas = new javax.swing.JDialog();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        tablaCuotas = new javax.swing.JTable();
+        txtTotalMontoCuotas = new org.jdesktop.swingx.JXTextField();
+        jLabel23 = new javax.swing.JLabel();
+        jPanel15 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        txtNumeroCuota = new org.jdesktop.swingx.JXTextField();
+        jLabel24 = new javax.swing.JLabel();
+        txtVencimientoCuota = new org.jdesktop.swingx.JXDatePicker();
+        jLabel25 = new javax.swing.JLabel();
+        txtMontoCuota = new org.jdesktop.swingx.JXTextField();
+        btnAgregarCuota = new javax.swing.JButton();
+        btnCancelarCuota = new javax.swing.JButton();
+        btnConfirmarCuota = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -1667,6 +1686,243 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         BuscadorArticuloLayout.setVerticalGroup(
             BuscadorArticuloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel10.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel17.setBackground(new java.awt.Color(50, 104, 151));
+        jLabel17.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("CUOTAS RELACIONADAS A LA VENTA");
+        jLabel17.setOpaque(true);
+
+        jPanel11.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel11.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        tablaCuotas.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        tablaCuotas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "<html><p style=\"text-align:center\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Nº</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Fecha de Vencimiento</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Monto</span></span></span></p></html> "
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane8.setViewportView(tablaCuotas);
+        if (tablaCuotas.getColumnModel().getColumnCount() > 0) {
+            tablaCuotas.getColumnModel().getColumn(0).setMinWidth(50);
+            tablaCuotas.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tablaCuotas.getColumnModel().getColumn(0).setMaxWidth(50);
+            tablaCuotas.getColumnModel().getColumn(2).setMinWidth(100);
+            tablaCuotas.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tablaCuotas.getColumnModel().getColumn(2).setMaxWidth(100);
+        }
+
+        txtTotalMontoCuotas.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtTotalMontoCuotas.setEnabled(false);
+        txtTotalMontoCuotas.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtTotalMontoCuotas.setPrompt("0");
+
+        jLabel23.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel23.setText("Total de la cuota:");
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel11Layout.createSequentialGroup()
+                        .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTotalMontoCuotas, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTotalMontoCuotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jPanel15.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel15.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel18.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setText("Nº de la cuota");
+
+        txtNumeroCuota.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtNumeroCuota.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtNumeroCuota.setPrompt("000");
+        txtNumeroCuota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumeroCuotaActionPerformed(evt);
+            }
+        });
+        txtNumeroCuota.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNumeroCuotaKeyTyped(evt);
+            }
+        });
+
+        jLabel24.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel24.setText("Vencimiento");
+
+        txtVencimientoCuota.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtVencimientoCuota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtVencimientoCuotaActionPerformed(evt);
+            }
+        });
+
+        jLabel25.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel25.setText("Monto");
+
+        txtMontoCuota.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtMontoCuota.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtMontoCuota.setPrompt("0");
+        txtMontoCuota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMontoCuotaActionPerformed(evt);
+            }
+        });
+        txtMontoCuota.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMontoCuotaKeyTyped(evt);
+            }
+        });
+
+        btnAgregarCuota.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
+        btnAgregarCuota.setText("Agregar");
+        btnAgregarCuota.setOpaque(false);
+        btnAgregarCuota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarCuotaActionPerformed(evt);
+            }
+        });
+
+        btnCancelarCuota.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
+        btnCancelarCuota.setText("Cancelar");
+        btnCancelarCuota.setOpaque(false);
+        btnCancelarCuota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarCuotaActionPerformed(evt);
+            }
+        });
+
+        btnConfirmarCuota.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
+        btnConfirmarCuota.setText("Confirmar");
+        btnConfirmarCuota.setOpaque(false);
+        btnConfirmarCuota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmarCuotaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel15Layout.createSequentialGroup()
+                        .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnCancelarCuota, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnAgregarCuota, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtMontoCuota, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtVencimientoCuota, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtNumeroCuota, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnConfirmarCuota, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNumeroCuota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtVencimientoCuota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtMontoCuota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnAgregarCuota)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCancelarCuota)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnConfirmarCuota)
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 10, Short.MAX_VALUE))
+            .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout PanelCuotasLayout = new javax.swing.GroupLayout(PanelCuotas.getContentPane());
+        PanelCuotas.getContentPane().setLayout(PanelCuotasLayout);
+        PanelCuotasLayout.setHorizontalGroup(
+            PanelCuotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        PanelCuotasLayout.setVerticalGroup(
+            PanelCuotasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         setClosable(true);
@@ -3087,7 +3343,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
 
     private void btnConfirmar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmar2ActionPerformed
         if (rbCredito.isSelected()) {
-            formularioCuotas();
+            //formularioCuotas();
         }
         int respuesta;
         respuesta = JOptionPane.showConfirmDialog(null, "¿CONFIRMAR VENTA?",
@@ -3189,6 +3445,119 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_rbCodBarraKeyPressed
 
+    private void txtNumeroCuotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroCuotaActionPerformed
+        if (txtNumeroCuota.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "NO PUEDE DEJAR EL CAMPO DE NÚMERO DE CUOTA VACIO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int numeroCuota = Integer.parseInt(txtNumeroCuota.getText());
+            int i;
+            boolean existe = false;
+            /* Calendar calendar = Calendar.getInstance();
+            calendar.setTime(txtFecha.getDate());
+            calendar.add(Calendar.MONTH, 1);*/
+            if (numeroCuota > 0) {
+                for (i = 0; i < tablaCuotas.getRowCount(); i++) {
+                    int numeroCuotaTabla = Integer.parseInt(tablaCuotas.getValueAt(i, 0).toString());
+                    if (numeroCuotaTabla == numeroCuota) {
+                        existe = true;
+                        break;
+                    }
+                }
+                if (existe == true) {
+                    JOptionPane.showMessageDialog(null, "YA EXISTE UNA CUOTA CON EL NUMERO INGRESADO EN LA TABLA DE CUOTAS.", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    /*txtVencimientoCuota.setDate(calendar.getTime());*/
+                    txtVencimientoCuota.grabFocus();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "NÚMERO DE CUOTA DEBE DE SER MAYOR A 0", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_txtNumeroCuotaActionPerformed
+
+    private void txtNumeroCuotaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroCuotaKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+        if (txtNumeroCuota.getText().length() == 3) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNumeroCuotaKeyTyped
+
+    private void txtVencimientoCuotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVencimientoCuotaActionPerformed
+        if (txtVencimientoCuota.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "NO PUEDE DEJAR EL CAMPO DE LA FECHA DE VENCIMIENTO VACIA", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            txtMontoCuota.grabFocus();
+        }
+    }//GEN-LAST:event_txtVencimientoCuotaActionPerformed
+
+    private void txtMontoCuotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMontoCuotaActionPerformed
+        if (txtMontoCuota.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "NO PUEDE DEJAR EL CAMPO DE MONTO DE LA CUOTA VACIO", "ATENCIÓN", JOptionPane.WARNING_MESSAGE);
+        } else {
+            String number = txtMontoCuota.getText();
+            double monto = Double.parseDouble(number);
+            int idmoneda = Integer.parseInt(txtCodigoMoneda.getText());
+            if (monto <= 0) {
+                JOptionPane.showMessageDialog(null, "EL MONTO DE LA CUOTA NO PUEDE SER MENOR O IGUAL 0", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            } else {
+                valorMontoCuota = monto;
+                DecimalFormat formatter;
+                if (idmoneda == 1) {
+                    formatter = new DecimalFormat("#,###");
+                } else {
+                    formatter = new DecimalFormat("#,###.000");
+                }
+                txtMontoCuota.setText(formatter.format(valorMontoCuota));
+                btnAgregarCuota.grabFocus();
+            }
+        }
+    }//GEN-LAST:event_txtMontoCuotaActionPerformed
+
+    private void txtMontoCuotaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoCuotaKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+        if (c == ',') {
+            getToolkit().beep();
+            evt.consume();
+        }
+        if (txtMontoCuota.getText().length() == 24) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtMontoCuotaKeyTyped
+
+    private void btnAgregarCuotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCuotaActionPerformed
+        //agregarCuota();
+    }//GEN-LAST:event_btnAgregarCuotaActionPerformed
+
+    private void btnCancelarCuotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarCuotaActionPerformed
+        int respuesta;
+        respuesta = JOptionPane.showConfirmDialog(null, "¿ESTA SEGURO DE CANCELAR LAS CUOTAS?",
+            "ADVERTENCIA", JOptionPane.YES_NO_OPTION);
+        if (respuesta != 1) {
+            txtNumeroCuota.setText(null);
+            txtVencimientoCuota.setDate(null);
+            txtMontoCuota.setText(null);
+            DefaultTableModel modelo = (DefaultTableModel) tablaCuotas.getModel();
+            modelo.setRowCount(0);
+        }
+    }//GEN-LAST:event_btnCancelarCuotaActionPerformed
+
+    private void btnConfirmarCuotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarCuotaActionPerformed
+        int respuesta;
+        respuesta = JOptionPane.showConfirmDialog(null, "¿ESTA SEGURO DE CONFIRMAR LOS DATOS DE LAS CUOTAS?",
+            "ADVERTENCIA", JOptionPane.YES_NO_OPTION);
+        if (respuesta != 1) {
+            PanelCuotas.dispose();
+        }
+    }//GEN-LAST:event_btnConfirmarCuotaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog BuscadorArticulo;
@@ -3198,9 +3567,13 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     private javax.swing.JDialog BuscadorListaPrecio;
     private javax.swing.JDialog BuscadorMarca;
     private javax.swing.JDialog BuscadorMoneda;
+    private javax.swing.JDialog PanelCuotas;
     private javax.swing.JButton btnAgregar2;
+    private javax.swing.JButton btnAgregarCuota;
     private javax.swing.JButton btnCancelar2;
+    private javax.swing.JButton btnCancelarCuota;
     private javax.swing.JButton btnConfirmar2;
+    private javax.swing.JButton btnConfirmarCuota;
     private javax.swing.JButton btnRetirar2;
     private javax.swing.JButton btnSalir2;
     private javax.swing.ButtonGroup grupoContadoCredito;
@@ -3213,11 +3586,16 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -3226,9 +3604,12 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -3244,6 +3625,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JRadioButton rbCodAlfanumerico;
     private javax.swing.JRadioButton rbCodBarra;
@@ -3251,6 +3633,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton rbCredito;
     private javax.swing.JRadioButton rbDescripcion;
     private javax.swing.JRadioButton rbReferencia;
+    private javax.swing.JTable tablaCuotas;
     private javax.swing.JTable tablaDatos2;
     private javax.swing.JTable tablaDatosArticulo;
     private javax.swing.JTable tablaDatosCliente;
@@ -3284,11 +3667,15 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     private org.jdesktop.swingx.JXTextField txtDescripcionVendedor;
     private org.jdesktop.swingx.JXTextField txtEstablecimiento;
     private org.jdesktop.swingx.JXDatePicker txtFecha;
+    private org.jdesktop.swingx.JXTextField txtMontoCuota;
     private org.jdesktop.swingx.JXTextField txtNumero;
+    private org.jdesktop.swingx.JXTextField txtNumeroCuota;
     private org.jdesktop.swingx.JXTextField txtObservacion;
     private org.jdesktop.swingx.JXTextField txtPrecio;
     private org.jdesktop.swingx.JXTextField txtPuntoEmision;
     private org.jdesktop.swingx.JXTextField txtTimbrado;
     private org.jdesktop.swingx.JXTextField txtTotal2;
+    private org.jdesktop.swingx.JXTextField txtTotalMontoCuotas;
+    private org.jdesktop.swingx.JXDatePicker txtVencimientoCuota;
     // End of variables declaration//GEN-END:variables
 }
