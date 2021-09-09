@@ -15065,15 +15065,12 @@ CREATE TABLE IF NOT EXISTS `articulo_deposito` (
   CONSTRAINT `FK_ARTICULO_DEPOSITO_DEPOSITO` FOREIGN KEY (`iddeposito`) REFERENCES `deposito` (`iddeposito`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.articulo_deposito: ~5 rows (aproximadamente)
+-- Volcando datos para la tabla as.articulo_deposito: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `articulo_deposito` DISABLE KEYS */;
 REPLACE INTO `articulo_deposito` (`idarticulo`, `iddeposito`, `cantidad`) VALUES
-	(1, 1, 0),
-	(2493, 1, 0),
-	(2608, 1, 0),
-	(5132, 1, 0),
-	(9459, 1, 0),
-	(11251, 1, 0);
+	(511, 1, -1),
+	(9459, 1, -10),
+	(11251, 1, -10);
 /*!40000 ALTER TABLE `articulo_deposito` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.articulo_lista_precio
@@ -15122,7 +15119,7 @@ CREATE TABLE IF NOT EXISTS `articulo_periodo` (
   CONSTRAINT `FK_ARTICULO_PERIODO_PERIODO` FOREIGN KEY (`idperiodo`) REFERENCES `periodo` (`idperiodo`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.articulo_periodo: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla as.articulo_periodo: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `articulo_periodo` DISABLE KEYS */;
 /*!40000 ALTER TABLE `articulo_periodo` ENABLE KEYS */;
 
@@ -15155,7 +15152,7 @@ CREATE TABLE IF NOT EXISTS `caja` (
 /*!40000 ALTER TABLE `caja` DISABLE KEYS */;
 REPLACE INTO `caja` (`idcaja`, `descripcion`) VALUES
 	(1, 'CAJA GUARANIES'),
-	(2, 'CAJA DOLARES');
+	(2, 'HOLA MUNDO...');
 /*!40000 ALTER TABLE `caja` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.cliente
@@ -21426,7 +21423,7 @@ CREATE TABLE IF NOT EXISTS `compra_anulado` (
   CONSTRAINT `FK_COMPRA_ANULADO_USUARIO` FOREIGN KEY (`idusuarioanulado`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.compra_anulado: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla as.compra_anulado: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `compra_anulado` DISABLE KEYS */;
 /*!40000 ALTER TABLE `compra_anulado` ENABLE KEYS */;
 
@@ -21595,8 +21592,10 @@ CREATE TABLE IF NOT EXISTS `cuenta_saldo` (
   CONSTRAINT `FK_CUENTA_SALDO_CUENTA` FOREIGN KEY (`idcuenta`) REFERENCES `cuenta` (`idcuenta`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.cuenta_saldo: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla as.cuenta_saldo: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `cuenta_saldo` DISABLE KEYS */;
+REPLACE INTO `cuenta_saldo` (`idcuenta`, `fecha`, `entrada`, `salida`, `entrada_anulado`, `salida_anulado`) VALUES
+	(1, '2021-09-09', 2300000, 0, 0, 0);
 /*!40000 ALTER TABLE `cuenta_saldo` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.deposito
@@ -21653,10 +21652,10 @@ CREATE TABLE IF NOT EXISTS `impresora` (
   PRIMARY KEY (`idimpresora`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.impresora: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla as.impresora: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `impresora` DISABLE KEYS */;
 REPLACE INTO `impresora` (`idimpresora`, `descripcion`, `ultimo_numero_factura`, `ultimo_numero_recibo`, `ultimo_numero_nota_credito`, `ultimo_numero_nota_debito`) VALUES
-	(1, 'IMPRESORA N°1', '001-001-0000001', '001-001-0000000', '001-001-0000000', '001-001-0000000');
+	(1, 'IMPRESORA N°1', '001-001-0000002', '001-001-0000000', '001-001-0000000', '001-001-0000000');
 /*!40000 ALTER TABLE `impresora` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.impresora_timbrado
@@ -21678,7 +21677,7 @@ CREATE TABLE IF NOT EXISTS `impresora_timbrado` (
   CONSTRAINT `FK_IMPRESORA_TIMBRADO_TIPO_COMPROBANTE` FOREIGN KEY (`idtipocomprobante`) REFERENCES `tipo_comprobante` (`idtipo`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.impresora_timbrado: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla as.impresora_timbrado: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `impresora_timbrado` DISABLE KEYS */;
 REPLACE INTO `impresora_timbrado` (`idimpresora`, `idtimbrado`, `idtipocomprobante`, `establecimiento`, `puntoemision`, `numerotimbrado`, `numeroinicial`, `numerofinal`, `fechainicial`, `fechafinal`) VALUES
 	(1, 1, 1, 1, 1, 82563333, 1, 5000, '2021-01-01', '2021-12-31');
@@ -24425,6 +24424,9 @@ CREATE TABLE IF NOT EXISTS `venta` (
 
 -- Volcando datos para la tabla as.venta: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `venta` DISABLE KEYS */;
+REPLACE INTO `venta` (`idventa`, `numerodocumento`, `numerotimbrado`, `fecha`, `observacion`, `idmoneda`, `iddeposito`, `idtipomovimiento`, `idcliente`, `idusuario`, `totalneto`, `totaliva`, `idcuenta`, `idempresa`, `idsucursal`, `idvendedor`) VALUES
+	(1, '001-001-0000001', 82563333, '2021-09-09', 'PRUEBA DE VENTA A CREDITO CON GENERACION DE CUOTAS', 1, 1, 4, 1, 1, 672727, 67273, 0, 1, 1, 1),
+	(2, '001-001-0000002', 82563333, '2021-09-09', '', 1, 1, 3, 1, 1, 2090909, 209091, 1, 1, 1, 1);
 /*!40000 ALTER TABLE `venta` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.venta_cobro_cuota
@@ -24466,6 +24468,15 @@ CREATE TABLE IF NOT EXISTS `venta_cuota` (
 
 -- Volcando datos para la tabla as.venta_cuota: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `venta_cuota` DISABLE KEYS */;
+REPLACE INTO `venta_cuota` (`idventa`, `numero`, `monto`, `fechavencimiento`) VALUES
+	(1, 0, 40000, '2021-09-09'),
+	(1, 1, 100000, '2021-10-09'),
+	(1, 2, 100000, '2021-11-09'),
+	(1, 3, 100000, '2021-12-09'),
+	(1, 4, 100000, '2022-01-09'),
+	(1, 5, 100000, '2022-02-09'),
+	(1, 6, 100000, '2022-03-09'),
+	(1, 7, 100000, '2022-04-09');
 /*!40000 ALTER TABLE `venta_cuota` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.venta_detalle
@@ -24487,6 +24498,10 @@ CREATE TABLE IF NOT EXISTS `venta_detalle` (
 
 -- Volcando datos para la tabla as.venta_detalle: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `venta_detalle` DISABLE KEYS */;
+REPLACE INTO `venta_detalle` (`idventa`, `idarticulo`, `precio`, `cantidad`, `numeroitem`, `iva`, `porcentajeiva`, `referencia`) VALUES
+	(1, 9459, 21818, 10, 2, 2182, 10, '9459'),
+	(1, 11251, 45455, 10, 1, 4545, 10, '11251'),
+	(2, 511, 2090909, 1, 1, 209091, 10, '511');
 /*!40000 ALTER TABLE `venta_detalle` ENABLE KEYS */;
 
 -- Volcando estructura para vista as.v_compra_anulado
