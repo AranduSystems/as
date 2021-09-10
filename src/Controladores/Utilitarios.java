@@ -13,11 +13,11 @@ public class Utilitarios {
 
     public Utilitarios() {
     }
-    
+
     /*
     Este metodo, verificara si el valor ingresado es de tipo Numerico o es de tipo caracter para evitar
     errores al momento de ejecucion donde se realize el parseo de numeros.
-    */
+     */
     public static boolean comprobarTipoDato(String valor) {
         boolean resultado = false;
         try {
