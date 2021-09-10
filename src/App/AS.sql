@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Versión del servidor:         10.4.20-MariaDB - mariadb.org binary distribution
+-- Versión del servidor:         10.4.14-MariaDB - mariadb.org binary distribution
 -- SO del servidor:              Win64
--- HeidiSQL Versión:             11.3.0.6295
+-- HeidiSQL Versión:             11.1.0.6116
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `articulo` (
   CONSTRAINT `FK_ARTICULO_UNIDAD_MEDIDA` FOREIGN KEY (`idunidad`) REFERENCES `unidad_medida` (`idunidad`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla as.articulo: ~15.191 rows (aproximadamente)
+-- Volcando datos para la tabla as.articulo: ~15.234 rows (aproximadamente)
 /*!40000 ALTER TABLE `articulo` DISABLE KEYS */;
 REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfanumerico`, `codigobarra`, `estado`, `observacion`, `idmarca`, `idlinea`, `idseccion`, `idtipo`, `idunidad`, `idimpuesto`) VALUES
 	(1, 'KIT CAMA PORTUGAL 160X190', '', '233-2', '', 'A', '', 1, 11, 1, 1, 1, 3),
@@ -10049,8 +10049,7 @@ REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfan
 	(9997, 'POSTE IMPREGNADO 9.00 MTS', '', 'PI9', '', 'A', '', 2, 6, 1, 1, 1, 3),
 	(9998, 'SIFON DUPLO DUDA 25700', '', '25700', '', 'A', '', 1, 1, 1, 1, 1, 3),
 	(9999, 'CABECERA SPLENDORE 1.40', '', '3045-8', '', 'A', '', 1, 11, 1, 1, 1, 3),
-	(10000, 'PUNTO C/PLACA PANAM', '', 'PCPP', '', 'A', '', 1, 1, 1, 1, 1, 1);
-REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfanumerico`, `codigobarra`, `estado`, `observacion`, `idmarca`, `idlinea`, `idseccion`, `idtipo`, `idunidad`, `idimpuesto`) VALUES
+	(10000, 'PUNTO C/PLACA PANAM', '', 'PCPP', '', 'A', '', 1, 1, 1, 1, 1, 1),
 	(10001, 'LATEX PINTOR 3.600LT', '', 'LP3.6', '', 'A', '', 1, 14, 1, 1, 1, 3),
 	(10002, 'SOFA X 3 85404-88', '', '85404-88', '', 'A', '', 1, 11, 1, 1, 1, 3),
 	(10003, 'PISTOLA CALOR BLACK&DEC. HG2000', '', 'HG2000', '', 'A', '', 1, 4, 1, 1, 1, 3),
@@ -11280,7 +11279,8 @@ REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfan
 	(11227, 'LUMINARIA CIRCULAR TLC01', '', 'TLC01', '', 'A', '', 1, 1, 1, 1, 1, 3),
 	(11228, 'LUMINARIA DE TECHO CIRC. TLR10', '', 'TLR10', '', 'A', '', 1, 1, 1, 1, 1, 3),
 	(11229, 'ESPEJO E56 REFORZADO', '', 'E56', '', 'A', '', 1, 1, 1, 1, 1, 3),
-	(11230, 'ESPEJO N56 C/REPISA', '', 'N56', '', 'A', '', 1, 1, 1, 1, 1, 3),
+	(11230, 'ESPEJO N56 C/REPISA', '', 'N56', '', 'A', '', 1, 1, 1, 1, 1, 3);
+REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfanumerico`, `codigobarra`, `estado`, `observacion`, `idmarca`, `idlinea`, `idseccion`, `idtipo`, `idunidad`, `idimpuesto`) VALUES
 	(11231, 'ARAÑA 3 LUCES 7403/3', '', '7403/3', '', 'A', '', 1, 11, 1, 1, 1, 3),
 	(11232, 'ARAÑA 3 LUCES 7717/3', '', '7717/3', '', 'A', '', 1, 11, 1, 1, 1, 3),
 	(11233, 'KG PASTINA FORTALEZA NEGRO', '', 'RFN', '', 'A', '', 1, 1, 1, 1, 1, 3),
@@ -21663,7 +21663,7 @@ CREATE TABLE IF NOT EXISTS `impresora` (
   PRIMARY KEY (`idimpresora`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.impresora: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla as.impresora: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `impresora` DISABLE KEYS */;
 REPLACE INTO `impresora` (`idimpresora`, `descripcion`, `ultimo_numero_factura`, `ultimo_numero_recibo`, `ultimo_numero_nota_credito`, `ultimo_numero_nota_debito`) VALUES
 	(1, 'IMPRESORA N°1', '001-001-0000003', '001-001-0000000', '001-001-0000000', '001-001-0000000');
@@ -21688,7 +21688,7 @@ CREATE TABLE IF NOT EXISTS `impresora_timbrado` (
   CONSTRAINT `FK_IMPRESORA_TIMBRADO_TIPO_COMPROBANTE` FOREIGN KEY (`idtipocomprobante`) REFERENCES `tipo_comprobante` (`idtipo`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.impresora_timbrado: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla as.impresora_timbrado: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `impresora_timbrado` DISABLE KEYS */;
 REPLACE INTO `impresora_timbrado` (`idimpresora`, `idtimbrado`, `idtipocomprobante`, `establecimiento`, `puntoemision`, `numerotimbrado`, `numeroinicial`, `numerofinal`, `fechainicial`, `fechafinal`) VALUES
 	(1, 1, 1, 1, 1, 82563333, 1, 5000, '2021-01-01', '2021-12-31');
@@ -24306,7 +24306,7 @@ CREATE TABLE IF NOT EXISTS `usuario_impresora` (
   CONSTRAINT `FK_USUARIO_IMPRESORA_USUARIO` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.usuario_impresora: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla as.usuario_impresora: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuario_impresora` DISABLE KEYS */;
 REPLACE INTO `usuario_impresora` (`idusuario`, `idimpresora`) VALUES
 	(1, 1);
@@ -24433,7 +24433,7 @@ CREATE TABLE IF NOT EXISTS `venta` (
   CONSTRAINT `FK_VENTA_VENDEDOR` FOREIGN KEY (`idvendedor`) REFERENCES `vendedor` (`idvendedor`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.venta: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla as.venta: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `venta` DISABLE KEYS */;
 REPLACE INTO `venta` (`idventa`, `numerodocumento`, `numerotimbrado`, `fecha`, `observacion`, `idmoneda`, `iddeposito`, `idtipomovimiento`, `idcliente`, `idusuario`, `totalneto`, `totaliva`, `idcuenta`, `idempresa`, `idsucursal`, `idvendedor`) VALUES
 	(1, '001-001-0000001', 82563333, '2021-09-09', 'PRUEBA DE VENTA A CREDITO CON GENERACION DE CUOTAS', 1, 1, 4, 1, 1, 672727, 67273, 0, 1, 1, 1),
@@ -25233,14 +25233,80 @@ CREATE FUNCTION `MILLONES_LETRAS`(`xVALOR` INT
 BEGIN	
 	DECLARE V_CADENA VARCHAR(100);
 	DECLARE V_CADENA_DOS VARCHAR(100);
+	DECLARE V_CADENA_TRES VARCHAR(100);
 	SET V_CADENA = '';
 	SET V_CADENA_DOS = '';
+	SET V_CADENA_TRES = '';
 	
 	IF xVALOR < 1000 THEN
-		SET V_CADENA = CENTENAS_LETRAS(SUBSTR(xVALOR,LENGTH(xVALOR),1));
+		SET V_CADENA = CENTENAS_LETRAS(SUBSTR(xVALOR,1,3));
 	ELSEIF xVALOR = 1000 THEN
-		SET V_CADENA = 'CIEN';
+		IF V_CADENA = '' THEN
+			SET V_CADENA = 'UN MIL';
+		ELSE
+			SET V_CADENA = 'MIL';
+		END IF;
+	ELSEIF xVALOR < 2000 THEN
+		SET V_CADENA = CONCAT(V_CADENA, 'MIL ');
+		SET V_CADENA_DOS = CENTENAS_LETRAS(SUBSTR(xVALOR,2,3));
+		SET V_CADENA = CONCAT(V_CADENA, V_CADENA_DOS);
+	ELSEIF xVALOR >= 2000 THEN
+		SET V_CADENA_TRES = UNIDADES_LETRAS(SUBSTR(xVALOR,LENGTH(xVALOR),1));
+		SET V_CADENA_DOS = CENTENAS_LETRAS(SUBSTR(xVALOR,2,3));
+		SET V_CADENA = CONCAT(V_CADENA_TRES, V_CADENA_DOS, V_CADENA);
+	/*ELSEIF xVALOR = 2000 THEN
+		SET V_CADENA = CONCAT(V_CADENA, 'DOS MIL');
+	ELSEIF xVALOR < 3000 THEN
+		SET V_CADENA = CONCAT(V_CADENA, 'DOS MIL ');
+		SET V_CADENA_DOS = CENTENAS_LETRAS(SUBSTR(xVALOR,2,3));
+		SET V_CADENA = CONCAT(V_CADENA, V_CADENA_DOS);
+	ELSEIF xVALOR = 3000 THEN
+		SET V_CADENA = CONCAT(V_CADENA, 'TRES MIL');
+	ELSEIF xVALOR < 4000 THEN
+		SET V_CADENA = CONCAT(V_CADENA, 'TRES MIL ');
+		SET V_CADENA_DOS = CENTENAS_LETRAS(SUBSTR(xVALOR,2,3));
+		SET V_CADENA = CONCAT(V_CADENA, V_CADENA_DOS);
+	ELSEIF xVALOR = 4000 THEN
+		SET V_CADENA = CONCAT(V_CADENA, 'CUATRO MIL');	
+	ELSEIF xVALOR < 5000 THEN
+		SET V_CADENA = CONCAT(V_CADENA, 'CUATRO MIL ');
+		SET V_CADENA_DOS = CENTENAS_LETRAS(SUBSTR(xVALOR,2,3));
+		SET V_CADENA = CONCAT(V_CADENA, V_CADENA_DOS);
+	ELSEIF xVALOR = 5000 THEN
+		SET V_CADENA = CONCAT(V_CADENA, 'CINCO MIL');	
+	ELSEIF xVALOR < 6000 THEN
+		SET V_CADENA = CONCAT(V_CADENA, 'CINCO MIL ');
+		SET V_CADENA_DOS = CENTENAS_LETRAS(SUBSTR(xVALOR,2,3));
+		SET V_CADENA = CONCAT(V_CADENA, V_CADENA_DOS);
+	ELSEIF xVALOR = 6000 THEN
+		SET V_CADENA = CONCAT(V_CADENA, 'SEIS MIL');
+	ELSEIF xVALOR < 7000 THEN
+		SET V_CADENA = CONCAT(V_CADENA, 'SEIS MIL ');
+		SET V_CADENA_DOS = CENTENAS_LETRAS(SUBSTR(xVALOR,2,3));
+		SET V_CADENA = CONCAT(V_CADENA, V_CADENA_DOS);
+	ELSEIF xVALOR = 7000 THEN
+		SET V_CADENA = CONCAT(V_CADENA, 'SIETE MIL');
+	ELSEIF xVALOR < 8000 THEN
+		SET V_CADENA = CONCAT(V_CADENA, 'SIETE MIL ');
+		SET V_CADENA_DOS = CENTENAS_LETRAS(SUBSTR(xVALOR,2,3));
+		SET V_CADENA = CONCAT(V_CADENA, V_CADENA_DOS);
+	ELSEIF xVALOR = 8000 THEN
+		SET V_CADENA = CONCAT(V_CADENA, 'OCHO MIL');
+	ELSEIF xVALOR < 9000 THEN
+		SET V_CADENA = CONCAT(V_CADENA, 'OCHO MIL ');
+		SET V_CADENA_DOS = CENTENAS_LETRAS(SUBSTR(xVALOR,2,3));
+		SET V_CADENA = CONCAT(V_CADENA, V_CADENA_DOS);	
+	ELSEIF xVALOR = 9000 THEN
+		SET V_CADENA = CONCAT(V_CADENA, 'NUEVE MIL');
+	ELSEIF xVALOR < 10000 THEN
+		SET V_CADENA = CONCAT(V_CADENA, 'NUEVE MIL ');
+		SET V_CADENA_DOS = CENTENAS_LETRAS(SUBSTR(xVALOR,2,3));
+		SET V_CADENA = CONCAT(V_CADENA, V_CADENA_DOS);
+	ELSEIF xVALOR = 10000 THEN
+		SET V_CADENA = CONCAT(V_CADENA, 'DIEZ MIL');*/
+	
 	END IF;
+	
 	
 	RETURN V_CADENA;
 END//
@@ -25781,6 +25847,6 @@ INNER JOIN tipo_proveedor AS TP ON TP.idtipo = P.idtipo
 ORDER BY P.idproveedor ASC ;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
