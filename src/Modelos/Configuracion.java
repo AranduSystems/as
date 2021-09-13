@@ -13,6 +13,7 @@ public class Configuracion {
     private int rec_pag_rec;
     private int fac_con_emi;
     private int fac_cre_emi;
+    private String permitir_venta_negativa;
 
     public Configuracion() {
     }
@@ -71,6 +72,14 @@ public class Configuracion {
 
     public void setFac_cre_emi(int fac_cre_emi) {
         this.fac_cre_emi = fac_cre_emi;
+    }
+
+    public String getPermitir_venta_negativa() {
+        return permitir_venta_negativa;
+    }
+
+    public void setPermitir_venta_negativa(String permitir_venta_negativa) {
+        this.permitir_venta_negativa = permitir_venta_negativa;
     }
     
 }

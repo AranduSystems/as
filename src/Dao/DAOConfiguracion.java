@@ -25,8 +25,8 @@ public class DAOConfiguracion implements OperacionesConfiguracion {
     public boolean agregar(Object obj) {
         c = (Configuracion) obj;
         String sql = "INSERT INTO configuracion\n"
-                + "(idconfiguracion, idsucursal, fac_con_rec, fac_cre_rec, rec_pag_rec, fac_con_emi, fac_cre_emi)\n"
-                + "VALUES (?, ?, ?, ?, ?, ?, ?);";
+                + "(idconfiguracion, idsucursal, fac_con_rec, fac_cre_rec, rec_pag_rec, fac_con_emi, fac_cre_emi, permitir_venta_negativa)\n"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
         Connection con;
         PreparedStatement ps;
         try {
@@ -40,6 +40,7 @@ public class DAOConfiguracion implements OperacionesConfiguracion {
             ps.setInt(5, c.getRec_pag_rec());
             ps.setInt(6, c.getFac_con_emi());
             ps.setInt(7, c.getFac_cre_emi());
+            ps.setString(8, c.getPermitir_venta_negativa());
             int filas = ps.executeUpdate();
             if (filas > 0) {
                 con.close();
@@ -65,7 +66,8 @@ public class DAOConfiguracion implements OperacionesConfiguracion {
                 + "		fac_cre_rec=?,\n"
                 + "		rec_pag_rec=?,\n"
                 + "		fac_con_emi=?,\n"
-                + "		fac_cre_emi=?\n"
+                + "		fac_cre_emi=?,\n"
+                + "		permitir_venta_negativa=?\n"
                 + "	WHERE idconfiguracion=?;";
         Connection con;
         PreparedStatement ps;
@@ -79,7 +81,9 @@ public class DAOConfiguracion implements OperacionesConfiguracion {
             ps.setInt(4, c.getRec_pag_rec());
             ps.setInt(5, c.getFac_con_emi());
             ps.setInt(6, c.getFac_cre_emi());
-            ps.setInt(7, c.getIdconfiguracion());
+            ps.setString(7, c.getPermitir_venta_negativa());
+            ps.setInt(8, c.getIdconfiguracion());
+            
             int filas = ps.executeUpdate();
             if (filas > 0) {
                 con.close();
@@ -217,6 +221,7 @@ public class DAOConfiguracion implements OperacionesConfiguracion {
                 c.setRec_pag_rec(rs.getInt(5));
                 c.setFac_con_emi(rs.getInt(6));
                 c.setFac_cre_emi(rs.getInt(7));
+                c.setPermitir_venta_negativa(rs.getString(8));
                 con.close();
                 return true;
             } else {

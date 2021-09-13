@@ -46,6 +46,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.table.DefaultTableModel;
 import Controladores.valor_letra;
+import Dao.DAOArticuloDeposito;
+import Modelos.ArticuloDeposito;
 
 /**
  *
@@ -71,6 +73,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     ClienteListaPrecio clp = new ClienteListaPrecio();
     VentaDetalle vd = new VentaDetalle();
     VentaCuota vc = new VentaCuota();
+    ArticuloDeposito ad = new ArticuloDeposito();
 
     DAOCotizacion daoCotizacion = new DAOCotizacion();
     DAOConfiguracion daoConfiguracion = new DAOConfiguracion();
@@ -91,6 +94,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     DAOArticuloListaPrecio daoArticuloListaPrecio = new DAOArticuloListaPrecio();
     DAOVentaDetalle daoVentaDetalle = new DAOVentaDetalle();
     DAOVentaCuota daoVentaCuota = new DAOVentaCuota();
+    DAOArticuloDeposito daoArticuloDeposito = new DAOArticuloDeposito();
 
     ArrayList<Object[]> datosMoneda = new ArrayList<>();
     ArrayList<Object[]> datosCuenta = new ArrayList<>();
@@ -121,7 +125,8 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     Double valorTotalDocumentoCuota = 0.0;
     Double valorMontoCuota = 0.0;
     Double valorMontoCuotaEntrega = 0.0;
-
+    
+    String pvn;
     /**
      * Creates new form JFrmVenta
      */
@@ -145,6 +150,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         if (resultado == true) {
             idtipomovimientocontado = co.getFac_con_emi();
             idtipomovimientocredito = co.getFac_cre_emi();
+            pvn = co.getPermitir_venta_negativa();
         } else {
             JOptionPane.showMessageDialog(null, "NO SE HA ENCONTRADO LA CONFIGURACIÓN NECESARIA.\n"
                     + " VERIFIQUE EN SISTEMA GENERAL SI LA CONFIGURACIÓN ESTA CARGADA DE FORMA CORRECTA. ", "ADVERTENCIA", JOptionPane.ERROR_MESSAGE);
@@ -409,6 +415,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
                     porcentajedescuento = clp.getDescuento();
                     porcentajerecargo = clp.getRecargo();
                 }
+
                 alp.setIdarticulo(codigoarticulo);
                 alp.setIdlista(idlista);
                 boolean existeArticuloListaPrecio = daoArticuloListaPrecio.consultarDatos(alp);
@@ -426,8 +433,23 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
                         formatter = new DecimalFormat("#,###.000");
                     }
                     txtPrecio.setText(formatter.format(valorPrecio));
-                    txtCantidad.grabFocus();
-                    txtCantidad.selectAll();
+
+                    if (pvn.equals("N")) {
+                        int iddeposito = Integer.parseInt(txtCodigoDeposito.getText());
+                        consultarExistencias(codigoarticulo, iddeposito);
+                        double cantidad = ad.getCantidad();
+                        if (cantidad <= 0) {
+                            txtPrecio.setText(null);
+                            txtCodigoArticulo.grabFocus();
+                        } else {
+                            txtCantidad.grabFocus();
+                            txtCantidad.selectAll();
+                        }
+                    } else {
+                        txtCantidad.grabFocus();
+                        txtCantidad.selectAll();
+                    }
+
                 } else {
                     txtPrecio.setText(null);
                     JOptionPane.showMessageDialog(null, "EL ARTICULO INGRESADO NO POSEE PRECIO DE VENTA. ASIGNE EL PRECIO PRIMERO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
@@ -438,6 +460,21 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
                 txtDescripcionArticulo.setText(null);
                 txtCodigoArticulo.grabFocus();
             }
+        }
+    }
+
+    private void consultarExistencias(int idarticulo, int iddeposito) {
+        ad.setIdarticulo(idarticulo);
+        ad.setIddeposito(iddeposito);
+        double cantidad = 0.0;
+        boolean resultado = daoArticuloDeposito.consultarDatos(ad);
+        if (resultado == true) {
+            cantidad = ad.getCantidad();
+            if (cantidad <= 0) {
+                JOptionPane.showMessageDialog(null, "EXISTENCIA DEL ARTICULO EN EL DEPOSITO DE: " + cantidad, "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "NO EXISTE ARTICULO EN EL DEPOSITO ", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -551,7 +588,6 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         DecimalFormat formatoNuevo = new DecimalFormat("#.000");
 
         String str = formatoNuevo.format(valorTotalDocumento).replace(",", ".");
-        System.out.println(str);
         if (!str.isEmpty()) {
             int intNumber;
             int decNumberInt = 0;
