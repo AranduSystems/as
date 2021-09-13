@@ -45,6 +45,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.table.DefaultTableModel;
+import Controladores.valor_letra;
 
 /**
  *
@@ -493,9 +494,6 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     private void actualizarArticulo(int i, double cantidad, double costo) {
         Double CANTIDAD_ANTERIOR = Double.parseDouble(tablaDatos2.getValueAt(i, 5).toString());
         Double CANTIDAD_NUEVA = cantidad + CANTIDAD_ANTERIOR;
-        System.out.println("ubicacion: " + i);
-        System.out.println("cantidad: " + CANTIDAD_NUEVA);
-        System.out.println("costo: " + costo);
 
         if (CANTIDAD_NUEVA > 0.0) {
             //System.out.println("aqui");
@@ -548,6 +546,36 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         }
         valorTotalDocumento = TOTAL;
         txtTotal2.setText(formatter.format(TOTAL));
+        valor_letra v = new valor_letra();
+
+        DecimalFormat formatoNuevo = new DecimalFormat("#.000");
+
+        String str = formatoNuevo.format(valorTotalDocumento).replace(",", ".");
+        System.out.println(str);
+        if (!str.isEmpty()) {
+            int intNumber;
+            int decNumberInt = 0;
+            String parteEntera;
+            String parteDecimal = null;
+
+            if (idmoneda == 1) {
+                intNumber = Integer.parseInt(str.substring(0, str.indexOf('.')));
+                //decNumberInt = Integer.parseInt(str.substring(str.indexOf('.') + 1));
+                parteEntera = v.Convertir("" + intNumber, true);
+                //parteDecimal = v.Convertir("" + decNumberInt, true);
+            } else {
+                intNumber = Integer.parseInt(str.substring(0, str.indexOf('.')));
+                decNumberInt = Integer.parseInt(str.substring(str.indexOf('.') + 1));
+                parteEntera = v.Convertir("" + intNumber, true);
+                parteDecimal = v.Convertir("" + decNumberInt, true);
+            }
+
+            if (decNumberInt > 0) {
+                txtTotalLetras.setText(parteEntera + " CON " + parteDecimal);
+            } else {
+                txtTotalLetras.setText(parteEntera);
+            }
+        }
     }
 
     private void limpiarCamposArticulos() {
@@ -786,7 +814,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
             daoVentaDetalle.agregar(vd);
         }
     }
-    
+
     private void guardarCuotas(int idventa) {
         for (int i = 0; i < tablaCuotas.getRowCount(); i++) {
             int numeroCuota = Integer.parseInt(tablaCuotas.getValueAt(i, 0).toString());
@@ -829,6 +857,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         txtCodigoVendedor.setText(null);
         txtDescripcionVendedor.setText(null);
         txtTotal2.setText(null);
+        txtTotalLetras.setText(null);
         DefaultTableModel modelo = (DefaultTableModel) tablaDatos2.getModel();
         modelo.setRowCount(0);
         DefaultTableModel modeloCuotas = (DefaultTableModel) tablaCuotas.getModel();
@@ -1045,6 +1074,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         btnSalir2 = new javax.swing.JButton();
         txtTotal2 = new org.jdesktop.swingx.JXTextField();
         jLabel19 = new javax.swing.JLabel();
+        txtTotalLetras = new org.jdesktop.swingx.JXTextField();
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -1944,7 +1974,6 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         txtMontoTotalVenta.setEnabled(false);
         txtMontoTotalVenta.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         txtMontoTotalVenta.setPrompt("0");
-        txtMontoTotalVenta.setPromptForeground(new java.awt.Color(0, 0, 0));
 
         btnCancelarCuota1.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         btnCancelarCuota1.setText("Cancelar");
@@ -2707,6 +2736,13 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel19.setText("Total de la Venta:");
 
+        txtTotalLetras.setEditable(false);
+        txtTotalLetras.setBackground(new java.awt.Color(255, 255, 255));
+        txtTotalLetras.setForeground(new java.awt.Color(0, 153, 0));
+        txtTotalLetras.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtTotalLetras.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
+        txtTotalLetras.setPrompt("TOTAL EN LETRAS...");
+
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
@@ -2715,7 +2751,8 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel12Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(txtTotalLetras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtTotal2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2750,8 +2787,9 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtTotal2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtTotal2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(txtTotalLetras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -3779,6 +3817,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
     private org.jdesktop.swingx.JXTextField txtPuntoEmision;
     private org.jdesktop.swingx.JXTextField txtTimbrado;
     private org.jdesktop.swingx.JXTextField txtTotal2;
+    private org.jdesktop.swingx.JXTextField txtTotalLetras;
     private org.jdesktop.swingx.JXTextField txtTotalMontoCuotas;
     // End of variables declaration//GEN-END:variables
 }

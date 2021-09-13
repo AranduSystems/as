@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package otros;
+package Controladores;
 
 import java.util.regex.Pattern;
 
@@ -19,23 +14,22 @@ public class valor_letra {
         "cincuenta ", "sesenta ", "setenta ", "ochenta ", "noventa "};
     private final String[] CENTENAS = {"", "ciento ", "doscientos ", "trecientos ", "cuatrocientos ", "quinientos ", "seiscientos ",
         "setecientos ", "ochocientos ", "novecientos "};
-    public valor_letra() {
-   }
+
     public String Convertir(String numero, boolean mayusculas) {
         String literal = "";
-        String parte_decimal;    
-        //si el numero utiliza (.) en lugar de (,) -> se reemplaza
+        String parte_decimal;
+//si el numero utiliza (.) en lugar de (,) -> se reemplaza
         numero = numero.replace(".", ",");
-        //si el numero no tiene parte decimal, se le agrega ,00
-        if(numero.indexOf(",")==-1){
-            numero = numero + ",000";
+//si el numero no tiene parte decimal, se le agrega ,00
+        if (numero.indexOf(",") == -1) {
+            numero = numero + ",00";
         }
-        //se valida formato de entrada -> 0,00 y 999 999 999,00
+//se valida formato de entrada -> 0,00 y 999 999 999,00
         if (Pattern.matches("\\d{1,9},\\d{1,2}", numero)) {
             //se divide el numero 0000000,00 -> entero y decimal
-            String Num[] = numero.split(",");            
+            String Num[] = numero.split(",");
             //de da formato al numero decimal
-            parte_decimal = Num[1] + "/100.";
+            parte_decimal = Num[1] + "...";
             //se convierte el numero a literal
             if (Integer.parseInt(Num[0]) == 0) {//si el valor es cero
                 literal = "cero ";
@@ -52,9 +46,9 @@ public class valor_letra {
             }
             //devuelve el resultado en mayusculas o minusculas
             if (mayusculas) {
-                return (literal + parte_decimal).toUpperCase();
+                return (literal/* + parte_decimal*/).toUpperCase();
             } else {
-                return (literal + parte_decimal);
+                return (literal/* + parte_decimal*/);
             }
         } else {//error, no se puede convertir
             return literal = null;
@@ -62,9 +56,8 @@ public class valor_letra {
     }
 
     /* funciones para convertir los numeros a literales */
-
     private String getUnidades(String numero) {// 1 - 9
-        //si tuviera algun 0 antes se lo quita -> 09 = 9 o 009=9
+//si tuviera algun 0 antes se lo quita -> 09 = 9 o 009=9
         String num = numero.substring(numero.length() - 1);
         return UNIDADES[Integer.parseInt(num)];
     }
@@ -86,27 +79,27 @@ public class valor_letra {
     }
 
     private String getCentenas(String num) {// 999 o 099
-        if( Integer.parseInt(num)>99 ){//es centena
+        if (Integer.parseInt(num) > 99) {//es centena
             if (Integer.parseInt(num) == 100) {//caso especial
                 return " cien ";
             } else {
-                 return CENTENAS[Integer.parseInt(num.substring(0, 1))] + getDecenas(num.substring(1));
-            } 
-        }else{//por Ej. 099 
+                return CENTENAS[Integer.parseInt(num.substring(0, 1))] + getDecenas(num.substring(1));
+            }
+        } else {//por Ej. 099 
             //se quita el 0 antes de convertir a decenas
-            return getDecenas(Integer.parseInt(num)+"");            
-        }        
+            return getDecenas(Integer.parseInt(num) + "");
+        }
     }
 
     private String getMiles(String numero) {// 999 999
-        //obtiene las centenas
+//obtiene las centenas
         String c = numero.substring(numero.length() - 3);
-        //obtiene los miles
+//obtiene los miles
         String m = numero.substring(0, numero.length() - 3);
-        String n="";
-        //se comprueba que miles tenga valor entero
+        String n = "";
+//se comprueba que miles tenga valor entero
         if (Integer.parseInt(m) > 0) {
-            n = getCentenas(m);           
+            n = getCentenas(m);
             return n + "mil " + getCentenas(c);
         } else {
             return "" + getCentenas(c);
@@ -115,16 +108,16 @@ public class valor_letra {
     }
 
     private String getMillones(String numero) { //000 000 000        
-        //se obtiene los miles
+//se obtiene los miles
         String miles = numero.substring(numero.length() - 6);
-        //se obtiene los millones
+//se obtiene los millones
         String millon = numero.substring(0, numero.length() - 6);
         String n = "";
-        if(millon.length()>1){
+        if (millon.length() > 1) {
             n = getCentenas(millon) + "millones ";
-        }else{
+        } else {
             n = getUnidades(millon) + "millon ";
         }
-        return n + getMiles(miles);        
+        return n + getMiles(miles);
     }
 }

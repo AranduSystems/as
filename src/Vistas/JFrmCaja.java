@@ -2,14 +2,10 @@ package Vistas;
 
 import Dao.DAOCaja;
 import Modelos.Caja;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import otros.Numeros_a_letras;
-import otros.letras;
-import otros.valor_letra;
+import Controladores.valor_letra;
 
 /**
  *
@@ -202,8 +198,6 @@ public class JFrmCaja extends javax.swing.JInternalFrame {
         txtCriterio = new org.jdesktop.swingx.JXTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaDatos = new javax.swing.JTable();
-        btnConvertir = new javax.swing.JButton();
-        txtResultado = new org.jdesktop.swingx.JXTextField();
         pestanhaABM = new javax.swing.JPanel();
         txtDescripcion = new org.jdesktop.swingx.JXTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -312,30 +306,6 @@ public class JFrmCaja extends javax.swing.JInternalFrame {
             tablaDatos.getColumnModel().getColumn(0).setMaxWidth(60);
         }
 
-        btnConvertir.setBackground(new java.awt.Color(255, 204, 204));
-        btnConvertir.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
-        btnConvertir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8_cancel_16px.png"))); // NOI18N
-        btnConvertir.setLabel("Convertir");
-        btnConvertir.setOpaque(false);
-        btnConvertir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConvertirActionPerformed(evt);
-            }
-        });
-
-        txtResultado.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
-        txtResultado.setPrompt("Aqui puede ingresar los filtros para la busqueda..");
-        txtResultado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtResultadoActionPerformed(evt);
-            }
-        });
-        txtResultado.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtResultadoKeyTyped(evt);
-            }
-        });
-
         javax.swing.GroupLayout pestanhaListaLayout = new javax.swing.GroupLayout(pestanhaLista);
         pestanhaLista.setLayout(pestanhaListaLayout);
         pestanhaListaLayout.setHorizontalGroup(
@@ -343,25 +313,17 @@ public class JFrmCaja extends javax.swing.JInternalFrame {
             .addGroup(pestanhaListaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pestanhaListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtResultado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
-                    .addGroup(pestanhaListaLayout.createSequentialGroup()
-                        .addComponent(txtCriterio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnConvertir, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtCriterio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pestanhaListaLayout.setVerticalGroup(
             pestanhaListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pestanhaListaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pestanhaListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnConvertir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(txtCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtResultado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -574,26 +536,12 @@ public class JFrmCaja extends javax.swing.JInternalFrame {
         recuperarDatos();
     }//GEN-LAST:event_EliminarActionPerformed
 
-    private void btnConvertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConvertirActionPerformed
-        valor_letra vl = new valor_letra();
-        txtResultado.setText(vl.Convertir(txtCriterio.getText(), false));
-    }//GEN-LAST:event_btnConvertirActionPerformed
-
-    private void txtResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtResultadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtResultadoActionPerformed
-
-    private void txtResultadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtResultadoKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtResultadoKeyTyped
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Eliminar;
     private javax.swing.JMenuItem Modificar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnConfirmar;
-    private javax.swing.JButton btnConvertir;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -609,6 +557,5 @@ public class JFrmCaja extends javax.swing.JInternalFrame {
     private org.jdesktop.swingx.JXTextField txtCodigo;
     private org.jdesktop.swingx.JXTextField txtCriterio;
     private org.jdesktop.swingx.JXTextField txtDescripcion;
-    private org.jdesktop.swingx.JXTextField txtResultado;
     // End of variables declaration//GEN-END:variables
 }
