@@ -2,9 +2,11 @@ package Vistas;
 
 import Dao.DAOConfiguracion;
 import Dao.DAOSucursal;
+import Dao.DAOTipoArticulo;
 import Dao.DAOTipoMovimiento;
 import Modelos.Configuracion;
 import Modelos.Sucursal;
+import Modelos.TipoArticulo;
 import Modelos.TipoMovimiento;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -19,14 +21,17 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
     Configuracion c = new Configuracion();
     Sucursal s = new Sucursal();
     TipoMovimiento tm = new TipoMovimiento();
+    TipoArticulo ta = new TipoArticulo();
 
     DAOConfiguracion dao = new DAOConfiguracion();
     DAOSucursal daoSucursal = new DAOSucursal();
     DAOTipoMovimiento daoTipoMovimiento = new DAOTipoMovimiento();
+    DAOTipoArticulo daoTipoArticulo = new DAOTipoArticulo();
 
     ArrayList<Object[]> datos = new ArrayList<>();
     ArrayList<Object[]> datosSucursal = new ArrayList<>();
     ArrayList<Object[]> datosTipoMovimiento = new ArrayList<>();
+    ArrayList<Object[]> datosTipoArticulo = new ArrayList<>();
 
     //VARIABLE QUE MANEJA QUE TIPOS DE OPERACIONES SE REALIZARAN: SI VA A SER ALTA, BAJA O MODIFICACION DEL REGISTRO
     String operacion = "";
@@ -70,6 +75,16 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
         this.tablaDatosTipoMovimiento.setModel(modelo);
     }
 
+    public void cargarTipoArticulo() {
+        DefaultTableModel modelo = (DefaultTableModel) tablaDatosTipoArticulo.getModel();
+        modelo.setRowCount(0);
+        datosTipoArticulo = daoTipoArticulo.consultar(txtCriterioTipoArticulo.getText());
+        for (Object[] obj : datosTipoArticulo) {
+            modelo.addRow(obj);
+        }
+        this.tablaDatosTipoArticulo.setModel(modelo);
+    }
+
     public void habilitarCampos(String accion) {
         switch (accion) {
             case "NUEVO":
@@ -83,6 +98,7 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                 txtCodigoTipoMovimientoFCREE.setEnabled(true);
                 rbPermitir.setEnabled(true);
                 rbRestringir.setEnabled(true);
+                txtCodigoTipoArticulo.setEnabled(true);
                 //BOTONES
                 btnNuevo.setEnabled(false);
                 btnConfirmar.setEnabled(true);
@@ -101,6 +117,7 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                 txtCodigoTipoMovimientoFCREE.setEnabled(true);
                 rbPermitir.setEnabled(true);
                 rbRestringir.setEnabled(true);
+                txtCodigoTipoArticulo.setEnabled(true);
                 //BOTONES
                 btnNuevo.setEnabled(false);
                 btnConfirmar.setEnabled(true);
@@ -120,6 +137,7 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                 txtCodigoTipoMovimientoFCREE.setEnabled(false);
                 rbPermitir.setEnabled(false);
                 rbRestringir.setEnabled(false);
+                txtCodigoTipoArticulo.setEnabled(false);
                 //BOTONES
                 btnNuevo.setEnabled(false);
                 btnConfirmar.setEnabled(true);
@@ -139,6 +157,7 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                 txtCodigoTipoMovimientoFCREE.setEnabled(false);
                 rbPermitir.setEnabled(false);
                 rbRestringir.setEnabled(false);
+                txtCodigoTipoArticulo.setEnabled(false);
                 //BOTONES
                 btnNuevo.setEnabled(true);
                 btnConfirmar.setEnabled(false);
@@ -158,6 +177,7 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                 txtCodigoTipoMovimientoFCREE.setEnabled(false);
                 rbPermitir.setEnabled(false);
                 rbRestringir.setEnabled(false);
+                txtCodigoTipoArticulo.setEnabled(false);
                 //BOTONES
                 btnNuevo.setEnabled(true);
                 btnConfirmar.setEnabled(false);
@@ -180,12 +200,15 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
         txtCodigoTipoMovimientoRPAGR.setText(null);
         txtCodigoTipoMovimientoFCONE.setText(null);
         txtCodigoTipoMovimientoFCREE.setText(null);
+        txtCodigoTipoArticulo.setText(null);
         txtDescripcionTipoMovimiento.setText(null);
         txtDescripcionTipoMovimientoCCRER.setText(null);
         txtDescripcionTipoMovimientoRPAGR.setText(null);
         txtDescripcionTipoMovimientoFCONE.setText(null);
         txtDescripcionTipoMovimientoFCREE.setText(null);
+        txtDescripcionTipoArticulo.setText(null);
         rbPermitir.setSelected(true);
+        
         operacion = "";
     }
 
@@ -214,6 +237,7 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
         } else {
             estado = "N";
         }
+        int articulo_tipo_servicio = Integer.parseInt(txtCodigoTipoArticulo.getText());
         switch (accion) {
             case "NUEVO":
                 if (idsucursal == 0) {
@@ -234,6 +258,9 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                 if (fcree == 0) {
                     error += "NO PUEDE DEJAR EL CAMPO DE VENTA CREDITO EMITIDA VACIO.\n";
                 }
+                if (articulo_tipo_servicio == 0) {
+                    error += "NO PUEDE DEJAR EL CAMPO DE ARTICULO TIPO SERVICIO VACIO.\n";
+                }
                 if (error.isEmpty()) {
                     c.setIdconfiguracion(id);
                     c.setIdsucursal(idsucursal);
@@ -243,6 +270,7 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                     c.setFac_con_emi(fcone);
                     c.setFac_cre_emi(fcree);
                     c.setPermitir_venta_negativa(estado);
+                    c.setArticulo_tipo_servicio(articulo_tipo_servicio);
                     dao.agregar(c);
                     cargar();
                 } else {
@@ -268,6 +296,9 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                 if (fcree == 0) {
                     error += "NO PUEDE DEJAR EL CAMPO DE VENTA CREDITO EMITIDA VACIO.\n";
                 }
+                if (articulo_tipo_servicio == 0) {
+                    error += "NO PUEDE DEJAR EL CAMPO DE ARTICULO TIPO SERVICIO VACIO.\n";
+                }
                 if (error.isEmpty()) {
                     c.setIdconfiguracion(id);
                     c.setIdsucursal(idsucursal);
@@ -277,6 +308,7 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                     c.setFac_con_emi(fcone);
                     c.setFac_cre_emi(fcree);
                     c.setPermitir_venta_negativa(estado);
+                    c.setArticulo_tipo_servicio(articulo_tipo_servicio);
                     dao.modificar(c);
                     cargar();
                 } else {
@@ -341,6 +373,12 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
             } else {
                 rbRestringir.setSelected(true);
             }
+            
+            ta.setIdtipo(c.getArticulo_tipo_servicio());
+            daoTipoArticulo.consultarDatos(ta);
+            txtCodigoTipoArticulo.setText("" + ta.getIdtipo());
+            txtDescripcionTipoArticulo.setText(ta.getDescripcion());
+            
             habilitarCampos(operacion);
         } else {
             JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA", "ADVERTENCIA", JOptionPane.ERROR_MESSAGE);
@@ -443,6 +481,22 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
         }
     }
 
+    private void buscarTipoArticulo() {
+        cargarTipoArticulo();
+        BuscadorTipoArticulo.setModal(true);
+        BuscadorTipoArticulo.setSize(540, 285);
+        BuscadorTipoArticulo.setLocationRelativeTo(this);
+        BuscadorTipoArticulo.setVisible(true);
+        int fila = tablaDatosTipoArticulo.getSelectedRow();
+        if (fila >= 0) {
+            txtCodigoTipoArticulo.setText(tablaDatosTipoArticulo.getValueAt(fila, 0).toString());
+            txtDescripcionTipoArticulo.setText(tablaDatosTipoArticulo.getValueAt(fila, 1).toString());
+        } else {
+            txtCodigoTipoArticulo.setText(null);
+            txtDescripcionTipoArticulo.setText(null);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -468,6 +522,12 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaDatosTipoMovimiento = new javax.swing.JTable();
         grupoFacturacion = new javax.swing.ButtonGroup();
+        BuscadorTipoArticulo = new javax.swing.JDialog();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        txtCriterioTipoArticulo = new org.jdesktop.swingx.JXTextField();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        tablaDatosTipoArticulo = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -503,6 +563,9 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         rbPermitir = new javax.swing.JRadioButton();
         rbRestringir = new javax.swing.JRadioButton();
+        jLabel11 = new javax.swing.JLabel();
+        txtCodigoTipoArticulo = new org.jdesktop.swingx.JXTextField();
+        txtDescripcionTipoArticulo = new org.jdesktop.swingx.JXTextField();
 
         Modificar.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         Modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8_edit_file_16px.png"))); // NOI18N
@@ -729,6 +792,101 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel18.setBackground(new java.awt.Color(50, 104, 151));
+        jLabel18.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setText("BUSCADOR DE TIPOS DE ARTÍCULOS");
+        jLabel18.setOpaque(true);
+
+        txtCriterioTipoArticulo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtCriterioTipoArticulo.setPrompt("Aqui puede ingresar los filtros para la busqueda..");
+        txtCriterioTipoArticulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCriterioTipoArticuloActionPerformed(evt);
+            }
+        });
+        txtCriterioTipoArticulo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCriterioTipoArticuloKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCriterioTipoArticuloKeyTyped(evt);
+            }
+        });
+
+        tablaDatosTipoArticulo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        tablaDatosTipoArticulo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "<html><p style=\"text-align:center\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Código</span></span></span></p></html> ", "<html><p style=\"text-align:right\"><span style=\"color:#000066\"><span style=\"font-family:SansSerif\"><span style=\"font-size:10px\">Descripción</span></span></span></p></html> "
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaDatosTipoArticulo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaDatosTipoArticuloMouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(tablaDatosTipoArticulo);
+        if (tablaDatosTipoArticulo.getColumnModel().getColumnCount() > 0) {
+            tablaDatosTipoArticulo.getColumnModel().getColumn(0).setMinWidth(60);
+            tablaDatosTipoArticulo.getColumnModel().getColumn(0).setPreferredWidth(60);
+            tablaDatosTipoArticulo.getColumnModel().getColumn(0).setMaxWidth(60);
+        }
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCriterioTipoArticulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtCriterioTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout BuscadorTipoArticuloLayout = new javax.swing.GroupLayout(BuscadorTipoArticulo.getContentPane());
+        BuscadorTipoArticulo.getContentPane().setLayout(BuscadorTipoArticuloLayout);
+        BuscadorTipoArticuloLayout.setHorizontalGroup(
+            BuscadorTipoArticuloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        BuscadorTipoArticuloLayout.setVerticalGroup(
+            BuscadorTipoArticuloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         setClosable(true);
         setIconifiable(true);
 
@@ -840,7 +998,7 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(txtCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1118,6 +1276,40 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel11.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jLabel11.setText("Art. Tip. Serv.:");
+
+        txtCodigoTipoArticulo.setEnabled(false);
+        txtCodigoTipoArticulo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtCodigoTipoArticulo.setPrompt("Cód. T.A.");
+        txtCodigoTipoArticulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoTipoArticuloActionPerformed(evt);
+            }
+        });
+        txtCodigoTipoArticulo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodigoTipoArticuloKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoTipoArticuloKeyTyped(evt);
+            }
+        });
+
+        txtDescripcionTipoArticulo.setEnabled(false);
+        txtDescripcionTipoArticulo.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        txtDescripcionTipoArticulo.setPrompt("Descripción o nombre del tipo de articulo...");
+        txtDescripcionTipoArticulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDescripcionTipoArticuloActionPerformed(evt);
+            }
+        });
+        txtDescripcionTipoArticulo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDescripcionTipoArticuloKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout pestanhaABMLayout = new javax.swing.GroupLayout(pestanhaABM);
         pestanhaABM.setLayout(pestanhaABMLayout);
         pestanhaABMLayout.setHorizontalGroup(
@@ -1134,6 +1326,7 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pestanhaABMLayout.createSequentialGroup()
                         .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1146,9 +1339,9 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                         .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pestanhaABMLayout.createSequentialGroup()
                                 .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                                     .addComponent(txtCodigoSucursal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
-                                    .addComponent(txtCodigoTipoMovimiento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
+                                    .addComponent(txtCodigoTipoMovimiento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                                    .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtDescripcionTipoMovimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1169,9 +1362,12 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                                     .addComponent(txtDescripcionTipoMovimientoFCREE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(pestanhaABMLayout.createSequentialGroup()
                                 .addComponent(rbPermitir)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(rbRestringir))
+                            .addGroup(pestanhaABMLayout.createSequentialGroup()
+                                .addComponent(txtCodigoTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rbRestringir)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addComponent(txtDescripcionTipoArticulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         pestanhaABMLayout.setVerticalGroup(
@@ -1182,23 +1378,22 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                    .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtCodigoSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtDescripcionSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtCodigoSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDescripcionSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtCodigoTipoMovimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtDescripcionTipoMovimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtDescripcionTipoMovimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtCodigoTipoMovimientoCCRER, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtDescripcionTipoMovimientoCCRER, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1217,15 +1412,19 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(rbPermitir)
-                        .addComponent(rbRestringir)))
-                .addGap(29, 29, 29)
+                    .addComponent(rbPermitir)
+                    .addComponent(rbRestringir))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCodigoTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDescripcionTipoArticulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pestanhaABMLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGap(84, 84, 84))
         );
 
         pestanha.addTab("Operaciónes", pestanhaABM);
@@ -1241,10 +1440,10 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pestanha)
-                .addContainerGap())
+                .addComponent(pestanha, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1259,8 +1458,7 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -1650,24 +1848,102 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtDescripcionTipoMovimientoFCREEKeyTyped
 
     private void rbPermitirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbPermitirActionPerformed
-        btnConfirmar.grabFocus();
+        txtCodigoTipoArticulo.grabFocus();
     }//GEN-LAST:event_rbPermitirActionPerformed
 
     private void rbPermitirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbPermitirKeyPressed
-        btnConfirmar.grabFocus();
+        txtCodigoTipoArticulo.grabFocus();
     }//GEN-LAST:event_rbPermitirKeyPressed
 
     private void rbRestringirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbRestringirActionPerformed
-        btnConfirmar.grabFocus();
+        txtCodigoTipoArticulo.grabFocus();
     }//GEN-LAST:event_rbRestringirActionPerformed
 
     private void rbRestringirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbRestringirKeyPressed
-        btnConfirmar.grabFocus();
+        txtCodigoTipoArticulo.grabFocus();
     }//GEN-LAST:event_rbRestringirKeyPressed
+
+    private void txtCriterioTipoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCriterioTipoArticuloActionPerformed
+        buscarTipoArticulo();
+    }//GEN-LAST:event_txtCriterioTipoArticuloActionPerformed
+
+    private void txtCriterioTipoArticuloKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCriterioTipoArticuloKeyPressed
+        if (evt.VK_ESCAPE == evt.getKeyCode()) {
+            txtCodigoTipoArticulo.setText(null);
+            txtDescripcionTipoArticulo.setText(null);
+            txtCodigoTipoArticulo.grabFocus();
+            BuscadorTipoArticulo.dispose();
+        }
+    }//GEN-LAST:event_txtCriterioTipoArticuloKeyPressed
+
+    private void txtCriterioTipoArticuloKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCriterioTipoArticuloKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            evt.setKeyChar(Character.toUpperCase(c));
+        }
+        if (txtCriterioTipoArticulo.getText().length() == 100) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCriterioTipoArticuloKeyTyped
+
+    private void tablaDatosTipoArticuloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaDatosTipoArticuloMouseClicked
+        if (evt.getClickCount() == 2) {
+            if (tablaDatosTipoArticulo.getSelectedRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "SELECCIONE UNA FILA");
+            } else {
+                txtCriterioTipoArticulo.setText(null);
+                BuscadorTipoArticulo.dispose();
+            }
+        }
+    }//GEN-LAST:event_tablaDatosTipoArticuloMouseClicked
+
+    private void txtCodigoTipoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoTipoArticuloActionPerformed
+        if (txtCodigoTipoArticulo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "NO PUEDE DEJAR EL CAMPO VACIO", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int idtipo = Integer.parseInt(txtCodigoTipoArticulo.getText());
+            ta.setIdtipo(idtipo);
+            boolean resultado = daoTipoArticulo.consultarDatos(ta);
+            if (resultado == true) {
+                txtDescripcionTipoArticulo.setText(ta.getDescripcion());
+                btnConfirmar.grabFocus();
+            } else {
+                txtCodigoTipoArticulo.setText(null);
+                txtDescripcionTipoArticulo.setText(null);
+                txtCodigoTipoArticulo.grabFocus();
+            }
+        }
+    }//GEN-LAST:event_txtCodigoTipoArticuloActionPerformed
+
+    private void txtCodigoTipoArticuloKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoTipoArticuloKeyPressed
+        if (evt.VK_F1 == evt.getKeyCode()) {
+            buscarTipoArticulo();
+        }
+    }//GEN-LAST:event_txtCodigoTipoArticuloKeyPressed
+
+    private void txtCodigoTipoArticuloKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoTipoArticuloKeyTyped
+        char c = evt.getKeyChar();
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+            evt.consume();
+        }
+        if (txtCodigoTipoArticulo.getText().length() == 10) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCodigoTipoArticuloKeyTyped
+
+    private void txtDescripcionTipoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionTipoArticuloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDescripcionTipoArticuloActionPerformed
+
+    private void txtDescripcionTipoArticuloKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionTipoArticuloKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDescripcionTipoArticuloKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog BuscadorSucursal;
+    private javax.swing.JDialog BuscadorTipoArticulo;
     private javax.swing.JDialog BuscadorTipoMovimiento;
     private javax.swing.JMenuItem Eliminar;
     private javax.swing.JMenuItem Modificar;
@@ -1677,8 +1953,10 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
     private javax.swing.ButtonGroup grupoFacturacion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1690,9 +1968,11 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JPopupMenu menuDesplegable;
     private javax.swing.JTabbedPane pestanha;
     private javax.swing.JPanel pestanhaABM;
@@ -1701,9 +1981,11 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton rbRestringir;
     private javax.swing.JTable tablaDatos;
     private javax.swing.JTable tablaDatosSucursal;
+    private javax.swing.JTable tablaDatosTipoArticulo;
     private javax.swing.JTable tablaDatosTipoMovimiento;
     private org.jdesktop.swingx.JXTextField txtCodigo;
     private org.jdesktop.swingx.JXTextField txtCodigoSucursal;
+    private org.jdesktop.swingx.JXTextField txtCodigoTipoArticulo;
     private org.jdesktop.swingx.JXTextField txtCodigoTipoMovimiento;
     private org.jdesktop.swingx.JXTextField txtCodigoTipoMovimientoCCRER;
     private org.jdesktop.swingx.JXTextField txtCodigoTipoMovimientoFCONE;
@@ -1711,8 +1993,10 @@ public class JFrmConfiguracion extends javax.swing.JInternalFrame {
     private org.jdesktop.swingx.JXTextField txtCodigoTipoMovimientoRPAGR;
     private org.jdesktop.swingx.JXTextField txtCriterio;
     private org.jdesktop.swingx.JXTextField txtCriterioSucursal;
+    private org.jdesktop.swingx.JXTextField txtCriterioTipoArticulo;
     private org.jdesktop.swingx.JXTextField txtCriterioTipoMovimiento;
     private org.jdesktop.swingx.JXTextField txtDescripcionSucursal;
+    private org.jdesktop.swingx.JXTextField txtDescripcionTipoArticulo;
     private org.jdesktop.swingx.JXTextField txtDescripcionTipoMovimiento;
     private org.jdesktop.swingx.JXTextField txtDescripcionTipoMovimientoCCRER;
     private org.jdesktop.swingx.JXTextField txtDescripcionTipoMovimientoFCONE;

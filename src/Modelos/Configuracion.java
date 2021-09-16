@@ -14,6 +14,7 @@ public class Configuracion {
     private int fac_con_emi;
     private int fac_cre_emi;
     private String permitir_venta_negativa;
+    private int articulo_tipo_servicio;
 
     public Configuracion() {
     }
@@ -80,6 +81,14 @@ public class Configuracion {
 
     public void setPermitir_venta_negativa(String permitir_venta_negativa) {
         this.permitir_venta_negativa = permitir_venta_negativa;
+    }
+
+    public int getArticulo_tipo_servicio() {
+        return articulo_tipo_servicio;
+    }
+
+    public void setArticulo_tipo_servicio(int articulo_tipo_servicio) {
+        this.articulo_tipo_servicio = articulo_tipo_servicio;
     }
     
 }

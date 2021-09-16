@@ -15067,8 +15067,6 @@ CREATE TABLE IF NOT EXISTS `articulo_deposito` (
 
 -- Volcando datos para la tabla as.articulo_deposito: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `articulo_deposito` DISABLE KEYS */;
-REPLACE INTO `articulo_deposito` (`idarticulo`, `iddeposito`, `cantidad`) VALUES
-	(1, 1, -2);
 /*!40000 ALTER TABLE `articulo_deposito` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.articulo_lista_precio
@@ -15085,8 +15083,6 @@ CREATE TABLE IF NOT EXISTS `articulo_lista_precio` (
 
 -- Volcando datos para la tabla as.articulo_lista_precio: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `articulo_lista_precio` DISABLE KEYS */;
-REPLACE INTO `articulo_lista_precio` (`idarticulo`, `idlista`, `precio`) VALUES
-	(1, 1, 1950000);
 /*!40000 ALTER TABLE `articulo_lista_precio` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.articulo_periodo
@@ -15106,8 +15102,6 @@ CREATE TABLE IF NOT EXISTS `articulo_periodo` (
 
 -- Volcando datos para la tabla as.articulo_periodo: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `articulo_periodo` DISABLE KEYS */;
-REPLACE INTO `articulo_periodo` (`idarticulo`, `idperiodo`, `idmoneda`, `costo`) VALUES
-	(1, 2, 1, 1500000);
 /*!40000 ALTER TABLE `articulo_periodo` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.banco
@@ -21376,8 +21370,6 @@ CREATE TABLE IF NOT EXISTS `compra` (
 
 -- Volcando datos para la tabla as.compra: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `compra` DISABLE KEYS */;
-REPLACE INTO `compra` (`idcompra`, `numerodocumento`, `numerotimbrado`, `fecha`, `observacion`, `idmoneda`, `iddeposito`, `idtipomovimiento`, `idproveedor`, `idusuario`, `totalneto`, `totaliva`, `idcuenta`, `idempresa`, `idsucursal`) VALUES
-	(1, '001-001-0000001', 11111111, '2021-09-13', '', 1, 1, 1, 1, 1, 1363636, 136364, 1, 1, 1);
 /*!40000 ALTER TABLE `compra` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.compra_anulado
@@ -21446,8 +21438,6 @@ CREATE TABLE IF NOT EXISTS `compra_detalle` (
 
 -- Volcando datos para la tabla as.compra_detalle: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `compra_detalle` DISABLE KEYS */;
-REPLACE INTO `compra_detalle` (`idcompra`, `idarticulo`, `costo`, `cantidad`, `numeroitem`, `iva`, `porcentajeiva`) VALUES
-	(1, 1, 1363636, 1, 1, 136364, 10);
 /*!40000 ALTER TABLE `compra_detalle` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.compra_pago_cuota
@@ -21509,6 +21499,7 @@ CREATE TABLE IF NOT EXISTS `configuracion` (
   `fac_con_emi` int(11) NOT NULL,
   `fac_cre_emi` int(11) NOT NULL,
   `permitir_venta_negativa` varchar(1) NOT NULL,
+  `articulo_tipo_servicio` int(11) NOT NULL DEFAULT 1,
   PRIMARY KEY (`idconfiguracion`,`idsucursal`) USING BTREE,
   KEY `FK_CONFIGURACION_SUCURSAL` (`idsucursal`),
   KEY `FK_CONFIGURACION_TIPO_MOV_FCONR` (`fac_con_rec`),
@@ -21516,7 +21507,9 @@ CREATE TABLE IF NOT EXISTS `configuracion` (
   KEY `FK_CONFIGURACION_TIPO_MOV_RPAGR` (`rec_pag_rec`),
   KEY `FK_CONFIGURACION_TIPO_MOV_FCONE` (`fac_con_emi`),
   KEY `FK_CONFIGURACION_TIPO_MOV_FCREE` (`fac_cre_emi`),
+  KEY `FK_CONFIGURACION_TIPO_ARTICULO` (`articulo_tipo_servicio`),
   CONSTRAINT `FK_CONFIGURACION_SUCURSAL` FOREIGN KEY (`idsucursal`) REFERENCES `sucursal` (`idsucursal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_CONFIGURACION_TIPO_ARTICULO` FOREIGN KEY (`articulo_tipo_servicio`) REFERENCES `tipo_articulo` (`idtipo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_CONFIGURACION_TIPO_MOV_FCONE` FOREIGN KEY (`fac_con_emi`) REFERENCES `tipo_movimiento` (`idtipomovimiento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_CONFIGURACION_TIPO_MOV_FCONR` FOREIGN KEY (`fac_con_rec`) REFERENCES `tipo_movimiento` (`idtipomovimiento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_CONFIGURACION_TIPO_MOV_FCREE` FOREIGN KEY (`fac_cre_emi`) REFERENCES `tipo_movimiento` (`idtipomovimiento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -21526,8 +21519,8 @@ CREATE TABLE IF NOT EXISTS `configuracion` (
 
 -- Volcando datos para la tabla as.configuracion: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `configuracion` DISABLE KEYS */;
-REPLACE INTO `configuracion` (`idconfiguracion`, `idsucursal`, `fac_con_rec`, `fac_cre_rec`, `rec_pag_rec`, `fac_con_emi`, `fac_cre_emi`, `permitir_venta_negativa`) VALUES
-	(1, 1, 1, 2, 12, 3, 4, 'N');
+REPLACE INTO `configuracion` (`idconfiguracion`, `idsucursal`, `fac_con_rec`, `fac_cre_rec`, `rec_pag_rec`, `fac_con_emi`, `fac_cre_emi`, `permitir_venta_negativa`, `articulo_tipo_servicio`) VALUES
+	(1, 1, 1, 2, 12, 3, 4, 'S', 4);
 /*!40000 ALTER TABLE `configuracion` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.cotizacion
@@ -21543,8 +21536,6 @@ CREATE TABLE IF NOT EXISTS `cotizacion` (
 
 -- Volcando datos para la tabla as.cotizacion: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `cotizacion` DISABLE KEYS */;
-REPLACE INTO `cotizacion` (`idmoneda`, `fecha`, `tasacompra`, `tasaventa`) VALUES
-	(2, '2021-09-02', 6900, 7000);
 /*!40000 ALTER TABLE `cotizacion` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.cuenta
@@ -21582,8 +21573,6 @@ CREATE TABLE IF NOT EXISTS `cuenta_saldo` (
 
 -- Volcando datos para la tabla as.cuenta_saldo: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `cuenta_saldo` DISABLE KEYS */;
-REPLACE INTO `cuenta_saldo` (`idcuenta`, `fecha`, `entrada`, `salida`, `entrada_anulado`, `salida_anulado`) VALUES
-	(1, '2021-09-13', 5850000, 1500000, 0, 0);
 /*!40000 ALTER TABLE `cuenta_saldo` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.deposito
@@ -21643,7 +21632,7 @@ CREATE TABLE IF NOT EXISTS `impresora` (
 -- Volcando datos para la tabla as.impresora: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `impresora` DISABLE KEYS */;
 REPLACE INTO `impresora` (`idimpresora`, `descripcion`, `ultimo_numero_factura`, `ultimo_numero_recibo`, `ultimo_numero_nota_credito`, `ultimo_numero_nota_debito`) VALUES
-	(1, 'IMPRESORA N°1', '001-001-0000002', '001-001-0000000', '001-001-0000000', '001-001-0000000');
+	(1, 'IMPRESORA N°1', '001-001-0000000', '001-001-0000000', '001-001-0000000', '001-001-0000000');
 /*!40000 ALTER TABLE `impresora` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.impresora_timbrado
@@ -21837,11 +21826,8 @@ CREATE TABLE IF NOT EXISTS `periodo` (
   PRIMARY KEY (`idperiodo`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla as.periodo: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla as.periodo: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `periodo` DISABLE KEYS */;
-REPLACE INTO `periodo` (`idperiodo`, `fecha_desde`, `fecha_hasta`) VALUES
-	(1, '2021-08-01', '2021-08-31'),
-	(2, '2021-09-01', '2021-09-30');
 /*!40000 ALTER TABLE `periodo` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.programa
@@ -24134,12 +24120,13 @@ CREATE TABLE IF NOT EXISTS `tipo_articulo` (
   PRIMARY KEY (`idtipo`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla as.tipo_articulo: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla as.tipo_articulo: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `tipo_articulo` DISABLE KEYS */;
 REPLACE INTO `tipo_articulo` (`idtipo`, `descripcion`) VALUES
 	(1, 'ADQUIRIDO'),
 	(2, 'PRODUCIDO'),
-	(3, 'OTROS');
+	(3, 'OTROS'),
+	(4, 'SERVICIOS');
 /*!40000 ALTER TABLE `tipo_articulo` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.tipo_cliente
@@ -24411,11 +24398,8 @@ CREATE TABLE IF NOT EXISTS `venta` (
   CONSTRAINT `FK_VENTA_VENDEDOR` FOREIGN KEY (`idvendedor`) REFERENCES `vendedor` (`idvendedor`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.venta: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla as.venta: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `venta` DISABLE KEYS */;
-REPLACE INTO `venta` (`idventa`, `numerodocumento`, `numerotimbrado`, `fecha`, `observacion`, `idmoneda`, `iddeposito`, `idtipomovimiento`, `idcliente`, `idusuario`, `totalneto`, `totaliva`, `idcuenta`, `idempresa`, `idsucursal`, `idvendedor`) VALUES
-	(1, '001-001-0000001', 82563333, '2021-09-13', '', 1, 1, 3, 1, 1, 1772727, 177273, 1, 1, 1, 1),
-	(2, '001-001-0000002', 82563333, '2021-09-13', '', 1, 1, 3, 1, 1, 3545455, 354545, 1, 1, 1, 1);
 /*!40000 ALTER TABLE `venta` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.venta_cobro_cuota
@@ -24476,11 +24460,8 @@ CREATE TABLE IF NOT EXISTS `venta_detalle` (
   CONSTRAINT `FK_VENTA_DETALLE_VENTA` FOREIGN KEY (`idventa`) REFERENCES `venta` (`idventa`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.venta_detalle: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla as.venta_detalle: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `venta_detalle` DISABLE KEYS */;
-REPLACE INTO `venta_detalle` (`idventa`, `idarticulo`, `precio`, `cantidad`, `numeroitem`, `iva`, `porcentajeiva`, `referencia`) VALUES
-	(1, 1, 1772727, 1, 1, 177273, 10, '1'),
-	(2, 1, 1772727, 2, 1, 177273, 10, '1');
 /*!40000 ALTER TABLE `venta_detalle` ENABLE KEYS */;
 
 -- Volcando estructura para vista as.v_compra_anulado
@@ -24798,7 +24779,9 @@ CREATE PROCEDURE `P_ACT_ITEM_DEP`(
 	IN `xIDVENTA_COMPRA` INT,
 	IN `xCANTIDAD` DOUBLE,
 	IN `xOPERACION` VARCHAR(1),
-	IN `xTABLA` VARCHAR(100)
+	IN `xTABLA` VARCHAR(100),
+	IN `xEMPRESA` INT,
+	IN `xSUCURSAL` INT
 )
 BEGIN
 	DECLARE V_DEPOSITO INT;
@@ -24832,10 +24815,19 @@ CREATE PROCEDURE `P_ACT_ITEM_DEP_INS_UPD`(
 	IN `xIDDEPOSITO` INT,
 	IN `xIDARTICULO` INT,
 	IN `xCANTIDAD_ENTRADA` DOUBLE,
-	IN `xCANTIDAD_SALIDA` DOUBLE
+	IN `xCANTIDAD_SALIDA` DOUBLE,
+	IN `xIDEMPRESA` INT,
+	IN `xIDSUCURSAL` INT
 )
 BEGIN
-	DECLARE V_REGISTROS INT;	
+	DECLARE V_REGISTROS INT;
+	DECLARE V_TIPO_ARTICULO INT;	
+	
+	
+	
+	/*SE VERIFICA QUE TIPO DE ARTICULO ES PARA PODER CONTINUAR*/
+	
+	
 	SELECT COUNT(*) INTO V_REGISTROS FROM articulo_deposito
 	WHERE idarticulo	= xIDARTICULO
 	AND 	iddeposito	= xIDDEPOSITO;	
@@ -25047,6 +25039,22 @@ BEGIN
 	DECLARE V_FECHA_FORMATEADA VARCHAR(25);
 	SET V_FECHA_FORMATEADA = DATE_FORMAT(xFECHA, '%d/%m/%Y');
 	RETURN V_FECHA_FORMATEADA;
+END//
+DELIMITER ;
+
+-- Volcando estructura para función as.FP_TIPO_ARTICULO
+DELIMITER //
+CREATE FUNCTION `FP_TIPO_ARTICULO`(`xIDEMPRESA` INT,
+	`xIDSUCURSAL` INT
+) RETURNS varchar(1) CHARSET utf8mb4
+BEGIN
+	DECLARE V_TIPO_ART_CONF INT;
+	DECLARE V_VALOR_RETORNO VARCHAR(1);
+	
+	SELECT C.articulo_tipo_servicio INTO V_TIPO_ART_CONF
+	FROM configuracion AS C;
+	
+	RETURN V_VALOR_RETORNO;
 END//
 DELIMITER ;
 

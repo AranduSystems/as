@@ -2,10 +2,12 @@ package Vistas;
 
 import Dao.DAOArticulo;
 import Dao.DAOArticuloListaPrecio;
+import Dao.DAOArticuloPeriodo;
 import Dao.DAOListaPrecio;
 import Dao.DAOMoneda;
 import Modelos.Articulo;
 import Modelos.ArticuloListaPrecio;
+import Modelos.ArticuloPeriodo;
 import Modelos.ListaPrecio;
 import Modelos.Moneda;
 import java.text.DecimalFormat;
@@ -23,11 +25,13 @@ public class JFrmArticuloListaPrecio extends javax.swing.JInternalFrame {
     ListaPrecio lp = new ListaPrecio();
     Moneda m = new Moneda();
     ArticuloListaPrecio alp = new ArticuloListaPrecio();
+    ArticuloPeriodo ap = new ArticuloPeriodo();
 
     DAOArticuloListaPrecio dao = new DAOArticuloListaPrecio();
     DAOArticulo daoArticulo = new DAOArticulo();
     DAOListaPrecio daoListaPrecio = new DAOListaPrecio();
     DAOMoneda daoMoneda = new DAOMoneda();
+    DAOArticuloPeriodo daoArticuloPeriodo = new DAOArticuloPeriodo();
 
     ArrayList<Object[]> datos = new ArrayList<>();
     ArrayList<Object[]> datosArticulo = new ArrayList<>();
@@ -1247,7 +1251,13 @@ public class JFrmArticuloListaPrecio extends javax.swing.JInternalFrame {
                     operacion = "MODIFICAR";
                     txtPrecio.setText("" + alp.getPrecio());
                 }
-
+                //OBTENER EL ULTIMO COSTO INGRESADO EN EL SISTEMA
+                ap.setIdarticulo(Integer.parseInt(txtCodigoArticulo.getText()));
+                ap.setIdmoneda(idmoneda);
+                boolean resultadoTres = daoArticuloPeriodo.obtenerUltimoCosto(ap);
+                if (resultadoTres == true) {
+                    txtCosto.setText(""+ap.getCosto());
+                }
                 txtCosto.grabFocus();
             } else {
                 txtCodigoListaPrecio.setText(null);
