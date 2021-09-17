@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `articulo` (
   CONSTRAINT `FK_ARTICULO_UNIDAD_MEDIDA` FOREIGN KEY (`idunidad`) REFERENCES `unidad_medida` (`idunidad`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla as.articulo: ~15.001 rows (aproximadamente)
+-- Volcando datos para la tabla as.articulo: ~15.068 rows (aproximadamente)
 /*!40000 ALTER TABLE `articulo` DISABLE KEYS */;
 REPLACE INTO `articulo` (`idarticulo`, `descripcion`, `referencia`, `codigoalfanumerico`, `codigobarra`, `estado`, `observacion`, `idmarca`, `idlinea`, `idseccion`, `idtipo`, `idunidad`, `idimpuesto`) VALUES
 	(1, 'KIT CAMA PORTUGAL 160X190', '', '233-2', '', 'A', '', 1, 11, 1, 1, 1, 3),
@@ -15066,8 +15066,18 @@ CREATE TABLE IF NOT EXISTS `articulo_deposito` (
   CONSTRAINT `FK_ARTICULO_DEPOSITO_DEPOSITO` FOREIGN KEY (`iddeposito`) REFERENCES `deposito` (`iddeposito`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.articulo_deposito: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.articulo_deposito: ~9 rows (aproximadamente)
 /*!40000 ALTER TABLE `articulo_deposito` DISABLE KEYS */;
+REPLACE INTO `articulo_deposito` (`idarticulo`, `iddeposito`, `cantidad`) VALUES
+	(11, 1, -10),
+	(12, 1, -10),
+	(13, 1, -10),
+	(14, 1, -10),
+	(15, 1, -10),
+	(16, 1, -10),
+	(17, 1, -10),
+	(18, 1, -10),
+	(19, 1, -10);
 /*!40000 ALTER TABLE `articulo_deposito` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.articulo_lista_precio
@@ -15082,8 +15092,20 @@ CREATE TABLE IF NOT EXISTS `articulo_lista_precio` (
   CONSTRAINT `FK_ARTICULO_LISTA_PRECIO_LISTA_PRECIO` FOREIGN KEY (`idlista`) REFERENCES `lista_precio` (`idlista`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.articulo_lista_precio: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.articulo_lista_precio: ~11 rows (aproximadamente)
 /*!40000 ALTER TABLE `articulo_lista_precio` DISABLE KEYS */;
+REPLACE INTO `articulo_lista_precio` (`idarticulo`, `idlista`, `precio`) VALUES
+	(10, 1, 70),
+	(11, 1, 70),
+	(12, 1, 70),
+	(13, 1, 75),
+	(14, 1, 80),
+	(15, 1, 80),
+	(16, 1, 85),
+	(17, 1, 85),
+	(18, 1, 85),
+	(19, 1, 95),
+	(20, 1, 100);
 /*!40000 ALTER TABLE `articulo_lista_precio` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.articulo_periodo
@@ -15101,7 +15123,7 @@ CREATE TABLE IF NOT EXISTS `articulo_periodo` (
   CONSTRAINT `FK_ARTICULO_PERIODO_PERIODO` FOREIGN KEY (`idperiodo`) REFERENCES `periodo` (`idperiodo`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.articulo_periodo: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.articulo_periodo: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `articulo_periodo` DISABLE KEYS */;
 /*!40000 ALTER TABLE `articulo_periodo` ENABLE KEYS */;
 
@@ -15149,7 +15171,7 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   CONSTRAINT `FK_CLIENTE_TIPO_CLIENTE` FOREIGN KEY (`idtipo`) REFERENCES `tipo_cliente` (`idtipo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla as.cliente: ~6.164 rows (aproximadamente)
+-- Volcando datos para la tabla as.cliente: ~6.190 rows (aproximadamente)
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
 REPLACE INTO `cliente` (`idcliente`, `nombre`, `apellido`, `ruc`, `telefono`, `direccion`, `estado`, `idtipo`) VALUES
 	(1, 'DUARTE FERREIRA JUAN CARLOS', '.', '5084218', '975344364', '', 'A', 1),
@@ -21572,8 +21594,10 @@ CREATE TABLE IF NOT EXISTS `cuenta_saldo` (
   CONSTRAINT `FK_CUENTA_SALDO_CUENTA` FOREIGN KEY (`idcuenta`) REFERENCES `cuenta` (`idcuenta`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.cuenta_saldo: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.cuenta_saldo: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `cuenta_saldo` DISABLE KEYS */;
+REPLACE INTO `cuenta_saldo` (`idcuenta`, `fecha`, `entrada`, `salida`, `entrada_anulado`, `salida_anulado`) VALUES
+	(1, '2021-09-17', 7250, 0, 0, 0);
 /*!40000 ALTER TABLE `cuenta_saldo` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.deposito
@@ -21586,7 +21610,7 @@ CREATE TABLE IF NOT EXISTS `deposito` (
   CONSTRAINT `FK_DEPOSITO_SUCURSAL` FOREIGN KEY (`idsucursal`) REFERENCES `sucursal` (`idsucursal`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.deposito: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla as.deposito: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `deposito` DISABLE KEYS */;
 REPLACE INTO `deposito` (`iddeposito`, `descripcion`, `idsucursal`) VALUES
 	(1, 'SALON', 1);
@@ -21602,7 +21626,7 @@ CREATE TABLE IF NOT EXISTS `empresa` (
   PRIMARY KEY (`idempresa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.empresa: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla as.empresa: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `empresa` DISABLE KEYS */;
 REPLACE INTO `empresa` (`idempresa`, `razonsocial`, `ruc`, `telefono`, `direccion`) VALUES
 	(1, 'ARANDU SYSTEMS DE ARMANDO ARIEL PERALTA MARTINEZ', '5955455-0', '(+595) 975 489 075', 'SAN ANTONIO GUAZU CASI RUTA 7 - DR. JUAN MANUEL FRUTOS');
@@ -21630,10 +21654,10 @@ CREATE TABLE IF NOT EXISTS `impresora` (
   PRIMARY KEY (`idimpresora`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.impresora: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla as.impresora: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `impresora` DISABLE KEYS */;
 REPLACE INTO `impresora` (`idimpresora`, `descripcion`, `ultimo_numero_factura`, `ultimo_numero_recibo`, `ultimo_numero_nota_credito`, `ultimo_numero_nota_debito`) VALUES
-	(1, 'IMPRESORA N°1', '001-001-0000000', '001-001-0000000', '001-001-0000000', '001-001-0000000');
+	(1, 'IMPRESORA N°1', '001-001-0000001', '001-001-0000000', '001-001-0000000', '001-001-0000000');
 /*!40000 ALTER TABLE `impresora` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.impresora_timbrado
@@ -21655,7 +21679,7 @@ CREATE TABLE IF NOT EXISTS `impresora_timbrado` (
   CONSTRAINT `FK_IMPRESORA_TIMBRADO_TIPO_COMPROBANTE` FOREIGN KEY (`idtipocomprobante`) REFERENCES `tipo_comprobante` (`idtipo`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.impresora_timbrado: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla as.impresora_timbrado: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `impresora_timbrado` DISABLE KEYS */;
 REPLACE INTO `impresora_timbrado` (`idimpresora`, `idtimbrado`, `idtipocomprobante`, `establecimiento`, `puntoemision`, `numerotimbrado`, `numeroinicial`, `numerofinal`, `fechainicial`, `fechafinal`) VALUES
 	(1, 1, 1, 1, 1, 82563333, 1, 5000, '2021-01-01', '2021-12-31');
@@ -24072,7 +24096,7 @@ CREATE TABLE IF NOT EXISTS `seccion` (
   PRIMARY KEY (`idseccion`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla as.seccion: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla as.seccion: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `seccion` DISABLE KEYS */;
 REPLACE INTO `seccion` (`idseccion`, `descripcion`) VALUES
 	(1, 'SECCION GENERAL');
@@ -24121,7 +24145,7 @@ CREATE TABLE IF NOT EXISTS `tipo_articulo` (
   PRIMARY KEY (`idtipo`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla as.tipo_articulo: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla as.tipo_articulo: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `tipo_articulo` DISABLE KEYS */;
 REPLACE INTO `tipo_articulo` (`idtipo`, `descripcion`) VALUES
 	(1, 'ADQUIRIDO'),
@@ -24255,7 +24279,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   KEY `FK_USUARIO_SUCURSAL` (`idsucursal`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.usuario: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla as.usuario: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 REPLACE INTO `usuario` (`idusuario`, `nombre`, `apellido`, `cedula`, `telefono`, `direccion`, `alias`, `clave`, `idempresa`, `idsucursal`) VALUES
 	(1, 'ARMANDO ARIEL', 'PERALTA MARTINEZ', '5955455', '0975489075', 'BARRIO SAN JORGE - EX CAMPO 9', 'APERALTA', 'e3e7c47572ad938642bbc9cdcdce7e3f', 1, 1);
@@ -24272,7 +24296,7 @@ CREATE TABLE IF NOT EXISTS `usuario_impresora` (
   CONSTRAINT `FK_USUARIO_IMPRESORA_USUARIO` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.usuario_impresora: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla as.usuario_impresora: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuario_impresora` DISABLE KEYS */;
 REPLACE INTO `usuario_impresora` (`idusuario`, `idimpresora`) VALUES
 	(1, 1);
@@ -24356,7 +24380,7 @@ CREATE TABLE IF NOT EXISTS `vendedor` (
   CONSTRAINT `FK_VENDEDOR_SUCURSAL` FOREIGN KEY (`idsucursal`) REFERENCES `sucursal` (`idsucursal`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.vendedor: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla as.vendedor: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `vendedor` DISABLE KEYS */;
 REPLACE INTO `vendedor` (`idvendedor`, `nombre`, `apellido`, `estado`, `porcentajecomision`, `idempresa`, `idsucursal`) VALUES
 	(1, 'VENDEDOR', 'PRUEBA', 'A', 5, 1, 1);
@@ -24399,8 +24423,10 @@ CREATE TABLE IF NOT EXISTS `venta` (
   CONSTRAINT `FK_VENTA_VENDEDOR` FOREIGN KEY (`idvendedor`) REFERENCES `vendedor` (`idvendedor`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.venta: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.venta: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `venta` DISABLE KEYS */;
+REPLACE INTO `venta` (`idventa`, `numerodocumento`, `numerotimbrado`, `fecha`, `observacion`, `idmoneda`, `iddeposito`, `idtipomovimiento`, `idcliente`, `idusuario`, `totalneto`, `totaliva`, `idcuenta`, `idempresa`, `idsucursal`, `idvendedor`) VALUES
+	(1, '001-001-0000001', 82563333, '2021-09-17', '', 1, 1, 3, 1, 1, 6591, 659, 1, 1, 1, 1);
 /*!40000 ALTER TABLE `venta` ENABLE KEYS */;
 
 -- Volcando estructura para tabla as.venta_cobro_cuota
@@ -24461,8 +24487,18 @@ CREATE TABLE IF NOT EXISTS `venta_detalle` (
   CONSTRAINT `FK_VENTA_DETALLE_VENTA` FOREIGN KEY (`idventa`) REFERENCES `venta` (`idventa`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Volcando datos para la tabla as.venta_detalle: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla as.venta_detalle: ~9 rows (aproximadamente)
 /*!40000 ALTER TABLE `venta_detalle` DISABLE KEYS */;
+REPLACE INTO `venta_detalle` (`idventa`, `idarticulo`, `precio`, `cantidad`, `numeroitem`, `iva`, `porcentajeiva`, `referencia`) VALUES
+	(1, 11, 64, 10, 1, 6, 10, '11'),
+	(1, 12, 64, 10, 2, 6, 10, '12'),
+	(1, 13, 68, 10, 3, 7, 10, '13'),
+	(1, 14, 73, 10, 4, 7, 10, '14'),
+	(1, 15, 73, 10, 5, 7, 10, '15'),
+	(1, 16, 77, 10, 6, 8, 10, '16'),
+	(1, 17, 77, 10, 7, 8, 10, '17'),
+	(1, 18, 77, 10, 8, 8, 10, '18'),
+	(1, 19, 86, 10, 9, 9, 10, '19');
 /*!40000 ALTER TABLE `venta_detalle` ENABLE KEYS */;
 
 -- Volcando estructura para vista as.v_compra_anulado
@@ -24570,6 +24606,32 @@ CREATE TABLE `v_compra_saldo` (
 	`total_documento` DOUBLE NOT NULL,
 	`total_pagos` DOUBLE NULL,
 	`saldo_documento` DOUBLE NULL
+) ENGINE=MyISAM;
+
+-- Volcando estructura para vista as.v_factura_venta
+-- Creando tabla temporal para superar errores de dependencia de VIEW
+CREATE TABLE `v_factura_venta` (
+	`CODIGO_VENTA` INT(11) NOT NULL,
+	`DOCUMENTO` VARCHAR(25) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`fecha` DATE NOT NULL,
+	`CODIGO_CLIENTE` INT(11) NOT NULL,
+	`cliente` VARCHAR(201) NOT NULL COLLATE 'utf8_general_ci',
+	`DIRECCION_CLIENTE` VARCHAR(250) NULL COLLATE 'utf8_general_ci',
+	`RUC_CLIENTE` VARCHAR(25) NULL COLLATE 'utf8_general_ci',
+	`TELEFONO_CLIENTE` VARCHAR(25) NULL COLLATE 'utf8_general_ci',
+	`CODICION_VENTA` VARCHAR(7) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`CODIGO_MONEDA` INT(11) NOT NULL,
+	`SIMBOLO_MONEDA` VARCHAR(5) NOT NULL COLLATE 'utf8_general_ci',
+	`clave_venta` INT(11) NOT NULL,
+	`codigo_articulo` INT(11) NOT NULL,
+	`referencia_articulo` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`descripcion_articulo` VARCHAR(100) NOT NULL COLLATE 'utf8_general_ci',
+	`precio` DOUBLE NOT NULL,
+	`cantidad` DOUBLE NOT NULL,
+	`item` INT(11) NOT NULL,
+	`EXENTAS` DOUBLE NOT NULL,
+	`IVA_5` DOUBLE NOT NULL,
+	`IVA_10` DOUBLE NOT NULL
 ) ENGINE=MyISAM;
 
 -- Volcando estructura para vista as.v_listado_articulo
@@ -25064,6 +25126,49 @@ BEGIN
 END//
 DELIMITER ;
 
+-- Volcando estructura para función as.FP_TOTAL_SUB_TOTALES
+DELIMITER //
+CREATE FUNCTION `FP_TOTAL_SUB_TOTALES`(`xIMPUESTO` VARCHAR(10),
+	`xIDVENTA` INT
+) RETURNS double
+BEGIN
+	DECLARE V_MONTO_EXENTO DOUBLE;
+	DECLARE V_MONTO_IVA5 DOUBLE;
+	DECLARE V_MONTO_IVA10 DOUBLE;
+	DECLARE V_VALOR_RETORNO DOUBLE;
+	
+	SELECT
+	SUM(IF(VD.porcentajeiva=0, (VD.precio + VD.iva) * VD.cantidad, 0)) AS EXENTAS,
+	SUM(IF(VD.porcentajeiva=5, (VD.precio + VD.iva) * VD.cantidad, 0)) AS IVA_5,
+	SUM(IF(VD.porcentajeiva=10, (VD.precio + VD.iva) * VD.cantidad, 0)) AS IVA_10
+	INTO 
+	V_MONTO_EXENTO,
+	V_MONTO_IVA5,
+	V_MONTO_IVA10
+	/*---------FIN DETALLE---------*/
+	FROM venta AS V
+	INNER JOIN cliente AS C ON C.idcliente = V.idcliente
+	INNER JOIN venta_detalle AS VD ON VD.idventa = V.idventa
+	INNER JOIN articulo AS A ON A.idarticulo = VD.idarticulo
+	INNER JOIN tipo_movimiento AS TM ON TM.idtipomovimiento = V.idtipomovimiento
+	INNER JOIN moneda as M ON M.idmoneda = V.idmoneda
+	WHERE V.idventa = xIDVENTA
+	ORDER BY VD.numeroitem ASC;
+	
+	IF xIMPUESTO = 'IVA0' THEN
+		SET V_VALOR_RETORNO = V_MONTO_EXENTO;
+	END IF;
+	IF xIMPUESTO = 'IVA5' THEN
+		SET V_VALOR_RETORNO = V_MONTO_IVA5;
+	END IF;
+	IF xIMPUESTO = 'IVA10' THEN
+		SET V_VALOR_RETORNO = V_MONTO_IVA10;
+	END IF;
+	
+	RETURN V_VALOR_RETORNO;
+END//
+DELIMITER ;
+
 -- Volcando estructura para disparador as.TR_COMPRA_ANULADO_DEL
 SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ZERO_IN_DATE,NO_ZERO_DATE,NO_ENGINE_SUBSTITUTION';
 DELIMITER //
@@ -25326,6 +25431,44 @@ INNER JOIN compra AS C ON C.idcompra = CPC.idcompra
 GROUP BY C.idcompra,
 C.numerodocumento,
 C.numerotimbrado ;
+
+-- Volcando estructura para vista as.v_factura_venta
+-- Eliminando tabla temporal y crear estructura final de VIEW
+DROP TABLE IF EXISTS `v_factura_venta`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `v_factura_venta` AS SELECT
+/*---------CABECERA---------*/
+V.idventa AS CODIGO_VENTA,
+V.numerodocumento AS DOCUMENTO,
+V.fecha,
+V.idcliente AS CODIGO_CLIENTE,
+CONCAT(C.nombre,' ',C.apellido) AS cliente,
+C.direccion AS DIRECCION_CLIENTE,
+C.ruc AS RUC_CLIENTE,
+C.telefono AS TELEFONO_CLIENTE,
+IF(TM.abreviacion LIKE 'FCONE', 'CONTADO', 'CRÉDITO') AS CODICION_VENTA,
+V.idmoneda AS CODIGO_MONEDA,
+M.simbolo AS SIMBOLO_MONEDA,
+/*---------FIN CABECERA---------*/
+/*---------DETALLE---------*/
+VD.idventa AS clave_venta,
+VD.idarticulo AS codigo_articulo,
+VD.referencia AS referencia_articulo,
+A.descripcion AS descripcion_articulo,
+(VD.precio + VD.iva) AS precio,
+VD.cantidad AS cantidad, 
+VD.numeroitem AS item,
+IF(VD.porcentajeiva=0, (VD.precio + VD.iva) * VD.cantidad, 0) AS EXENTAS,
+IF(VD.porcentajeiva=5, (VD.precio + VD.iva) * VD.cantidad, 0) AS IVA_5,
+IF(VD.porcentajeiva=10, (VD.precio + VD.iva) * VD.cantidad, 0) AS IVA_10
+/*---------FIN DETALLE---------*/
+FROM venta AS V
+INNER JOIN cliente AS C ON C.idcliente = V.idcliente
+INNER JOIN venta_detalle AS VD ON VD.idventa = V.idventa
+INNER JOIN articulo AS A ON A.idarticulo = VD.idarticulo
+INNER JOIN tipo_movimiento AS TM ON TM.idtipomovimiento = V.idtipomovimiento
+INNER JOIN moneda as M ON M.idmoneda = V.idmoneda
+WHERE V.idventa = 1
+ORDER BY VD.numeroitem ASC ;
 
 -- Volcando estructura para vista as.v_listado_articulo
 -- Eliminando tabla temporal y crear estructura final de VIEW

@@ -900,6 +900,7 @@ public class JFrmVenta extends javax.swing.JInternalFrame {
         modeloCuotas.setRowCount(0);
         String fechaActual = formato.format(SYSDATE);
         txtFecha.setDate(daoCotizacion.parseFecha(fechaActual));
+        limpiarCamposArticulos();
         rbContado.grabFocus();
     }
 

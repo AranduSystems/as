@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Controladores.valor_letra;
+import java.awt.Toolkit;
 
 /**
  *
@@ -474,6 +475,7 @@ public class JFrmCaja extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtCriterioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCriterioActionPerformed
+        Toolkit.getDefaultToolkit().beep();
         cargar();
     }//GEN-LAST:event_txtCriterioActionPerformed
 
